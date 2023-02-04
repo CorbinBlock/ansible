@@ -152,6 +152,7 @@ function emerge_sync {
 }
 
 function emerge_update {
+    sudo emerge-webrsync
     sudo emerge --ask --verbose --update --deep --newuse @world
 }
 
