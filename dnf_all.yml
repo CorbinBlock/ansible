@@ -1,0 +1,59 @@
+---
+ - name: Ansible dnf module examples
+   hosts: rhel
+   become: true
+   tasks: 
+    - name: Dnf Update Cache and install module
+      dnf:
+        name:
+          - bash
+          - bash-completion
+          - bind
+          - bind-utils
+          - cargo
+          - cockpit
+          - cockpit-machines
+          - curl
+          # - ffmpeg
+          - firefox
+          - flatpak
+          # - gnucash
+          - htop
+          - git
+          - git-lfs
+          - go
+          - dos2unix
+          - keepassxc
+          - less
+          - nano
+          - neofetch
+          - openssh
+          - java-17-openjdk-devel.x86_64
+          - jq
+          - nmap
+          - parted
+          - pipewire
+          - python3
+          - python3-pip
+          - rsync
+          - rsyslog
+          - rust
+          - sqlite
+          - sudo
+          - tmux
+          - tree
+          # - tuxguitar
+          - vim
+          - bridge-utils
+          - libvirt
+          - virt-install
+          - qemu-kvm
+          - virt-top
+          - libguestfs-tools
+          - guestfs-tools
+          - virt-viewer
+          - xclip
+          - wget
+          - zstd
+        state: latest
+        update_cache: yes

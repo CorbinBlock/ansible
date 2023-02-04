@@ -1,0 +1,245 @@
+---
+ - name: Ansible apt module examples
+   hosts: debian
+   become: true
+   tasks: 
+    - name: Ansible Update Cache and install module
+      apt:
+        name:
+          - apt-transport-https
+          - apt-utils
+          - bash
+          - bash-completion 
+          - bind9-host
+          - bridge-utils
+          - btrfs-progs
+          - build-essential
+          - ca-certificates
+          - calendar 
+          - cockpit
+          - cockpit-pcp
+          - curl
+          - dbus-x11
+          - debianutils 
+          - default-jre
+          - diffutils
+          - dos2unix
+          - dpkg
+          - fdisk
+          # - ffmpeg
+          - file
+          - findutils
+          - flatpak
+          - gcc
+          # - gimp
+          - git
+          - git-lfs
+          # - gnome-metronome          
+          # - gnucash
+          - gnupg
+          - gnupg-agent
+          - golang-go
+          - htop
+          - ipheth-utils
+          - iproute2 
+          - iputils-ping
+          - isc-dhcp-client
+          - ispell
+          - iw
+          - jq
+          - keepassxc
+          - keyutils 
+          - less
+          - libvirt-clients
+          - libvirt-daemon-system
+          - lsb-release
+          - make
+          - nano
+          - neofetch
+          - net-tools
+          - nfs-common
+          - nfs-kernel-server
+          # - nginx-common
+          - nmap
+          - openssh-client
+          - openssh-server
+          - openssl
+          - parted
+          - pciutils
+          - pipewire
+          # - postgresql
+          # - postgresql-client
+          - procps
+          - python3
+          - python3-apt
+          # - python3-attr
+          # - python3-audioread
+          # - python3-autopep8
+          # - python3-bcrypt
+          # - python3-botocore
+          # - python3-cairo
+          # - python3-celery
+          # - python3-certbot 
+          # - python3-certifi
+          # - python3-certifi 
+          # - python3-cffi-backend
+          # - python3-chardet
+          # - python3-chardet
+          # - python3-colorama
+          # - python3-configargparse
+          # - python3-configobj
+          # - python3-crontab
+          # - python3-cryptography
+          # - python3-cups
+          # - python3-cupshelpers
+          # - python3-dateutil
+          # - python3-dbus
+          # - python3-debconf
+          # - python3-debconf
+          - python3-debian
+          - python3-debianbts
+          # - python3-debugpy
+          # - python3-distro
+          # - python3-distro-info
+          # - python3-distutils
+          # - python3-django
+          # - python3-dnspython
+          # - python3-docker
+          # - python3-flake8
+          # - python3-flask
+          # - python3-flask-sqlalchemy
+          # - python3-fs
+          # - python3-gi
+          # - python3-gi-cairo
+          # - python3-git
+          # - python3-google-auth
+          # - python3-gpg
+          # - python3-gps
+          # - python3-gunicorn
+          # - python3-httplib2
+          # - python3-icu
+          # - python3-idna
+          # - python3-idna
+          # - python3-importlib-metadata
+          # - python3-isc-dhcp-leases
+          # - python3-jenkins-job-builder
+          # - python3-jinja2
+          # - python3-keyring
+          # - python3-ldb
+          # - python3-libvirt
+          # - python3-lxml
+          # - python3-matplotlib
+          # - python3-mypy
+          # - python3-mypy-extensions
+          # - python3-neovim
+          # - python3-nftables
+          # - python3-nmap
+          # - python3-numpy
+          # - python3-oauthlib
+          # - python3-opencv
+          # - python3-openid
+          # - python3-openssl
+          # - python3-pandas
+          # - python3-paramiko
+          # - python3-parsedatetime
+          # - python3-parted
+          # - python3-pexpect
+          # - python3-pexpect
+          # - python3-pikepdf
+          # - python3-pil
+          - python3-pip
+          # - python3-pkg-resources
+          # - python3-pkg-resources
+          # - python3-plotly
+          # - python3-poetry-core
+          # - python3-prettytable
+          # - python3-psutil
+          # - python3-psycopg3
+          # - python3-ptyprocess
+          # - python3-pyaudio
+          # - python3-pychromecast
+          # - python3-pycurl
+          # - python3-pycurl
+          # - python3-pydantic
+          # - python3-pyflakes
+          # - python3-pygame
+          # - python3-pyinotify
+          # - python3-pyparsing
+          # - python3-pysimplesoap
+          # - python3-pysimplesoap
+          # - python3-pytest
+          # - python3-regex
+          # - python3-reportbug
+          # - python3-requests
+          # - python3-requests
+          # - python3-rsa
+          # - python3-samba
+          # - python3-searx
+          # - python3-selenium
+          # - python3-setproctitle
+          # - python3-setuptools
+          # - python3-simplejson
+          # - python3-six
+          # - python3-six
+          # - python3-sklearn-lib
+          # - python3-smbc
+          # - python3-software-properties
+          # - python3-sqlalchemy
+          # - python3-stack-data
+          # - python3-systemd
+          # - python3-tf
+          # - python3-tinycss
+          # - python3-tmuxp
+          # - python3-typer
+          # - python3-tz
+          # - python3-uno
+          # - python3-urllib3
+          # - python3-urllib3
+          # - python3-usb
+          # - python3-venv
+          # - python3-virtualenv
+          # - python3-wheel
+          # - python3-xdg
+          # - python3-xlsxwriter
+          # - python3-yaml
+          # - python3-zipp
+          # - python3-zope.component
+          # - python3-zope.event
+          # - python3-zope.hookable
+          # - python3-zope.interface
+          # - python3-zstandard
+          - realmd
+          - rsync
+          - rsyslog
+          - sed
+          - software-properties-common
+          - sqlite3
+          - ssl-cert
+          - sudo
+          - tar
+          # - thunderbird
+          - tmux
+          - traceroute
+          - tracker
+          - tree
+          # - tuxguitar
+          # - tuxguitar-jsa
+          - unzip
+          - usbutils
+          - vim
+          - virtinst
+          - virt-viewer
+          - wget
+          - whois
+          - wireguard
+          # - wireshark
+          - wireless-tools
+          - x11-common
+          - x11-utils
+          - xclip
+          - xfce4
+          - xfce4-terminal
+          - xz-utils
+          - zstd
+        state: latest
+        update_cache: yes
