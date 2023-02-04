@@ -220,7 +220,7 @@ function secret() {
 
 
 function source_profile() {
-    sudo cp ~/.local/share/docs/data/profile ~/.profile
+    sudo cp ~/.local/bin/ansible/profile ~/.profile
 	dos2unix ~/.profile
 	source ~/.profile
 }
