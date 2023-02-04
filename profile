@@ -261,6 +261,8 @@ function tmux_split() {
 
 function venv_create() {
     cd ~/.local/bin/
+    rm -rf ansible/
+    git clone https://github.com/CorbinBlock/ansible.git
     rm -rf venv/
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
