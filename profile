@@ -244,11 +244,11 @@ function rsync_git_win {
 }
 
 function rsync_nas_two {
-   ssh dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
+   ssh_dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
 }
 
 function rsync_vm_prod {
-   ssh prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
+   ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
 }
 
 function secret() {
@@ -297,23 +297,23 @@ function ssh_create() {
 }
 
 function ssh_dell() {
-    ssh -X dell "$1"
+    ssh_all dell "$1"
 }
 
 function ssh_dev() {
-    ssh -X dev "$1"
+    ssh_all dev "$1"
 }
 
 function ssh_lenovo() {
-    ssh -X lenovo "$1"
+    ssh_all lenovo "$1"
 }
 
 function ssh_localhost() {
-    ssh -X localhost "$1"
+    ssh_all localhost "$1"
 }
 
 function ssh_prod() {
-    ssh -X prod "$1"
+    ssh_all prod "$1"
 }
 
 function ssh_tunnel() {
