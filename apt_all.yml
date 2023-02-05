@@ -17,7 +17,7 @@
           - ca-certificates
           - calendar 
           - cockpit
-          - cockpit-machine
+          - cockpit-machines
           - cockpit-pcp
           - curl
           - dbus-x11
