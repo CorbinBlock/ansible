@@ -30,18 +30,19 @@ function apk_setup() {
     # GIT_USER=X
     # GIT_EMAIL=X
     apk_upgrade
-    sudo apk update
-    sudo apk add bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano
+    package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
+    for i in "${package_list[@]}"
+    do
+        echo "$i"
+        sudo apk add $i
+    done
+    apk_upgrade
+    # git config --global user.name $GIT_USER
+    # git config --global user.email $GIT_EMAIL
     sudo rc-update add docker
     sudo service docker start
     sudo docker run --rm hello-world
-    # git config --global user.name $GIT_USER
-    # git config --global user.email $GIT_EMAIL
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    sudo apk add neofetch openssh python3 py3-pip sudo tmux
-    sudo apk add vim tree lynx openjdk17 xfce4 xfce4-terminal
-    sudo apk add xfce4-screensaver lightdm-gtk-greeter dbus
-    sudo apk add pipewire wireplumber nmap rust go
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G docker,flatpak,kvm,libvirt,wheel $USER
 }
@@ -119,16 +120,13 @@ function dnf_upgrade() {
 }
 
 function emerge_setup {
-    # USER=cblock
-    # GIT_USER=X
-    # GIT_EMAIL=X
     sudo eselect profile set default/linux/amd64/17.1/desktop
     emerge_update
     package_list=(app-admin/sudo app-admin/keepassxc app-containers/docker app-containers/docker-compose app-editors/vim app-emulation/libvirt app-emulation/qemu app-emulation/virt-viewer app-misc/jq app-misc/neofetch app-misc/tmux app-text/dos2unix app-text/tree dev-java/openjdk dev-java/maven-bin dev-python/pip dev-vcs/git net-analyzer/nmap net-misc/rsync sys-apps/dmidecode sys-apps/flatpak sys-apps/lshw sys-devel/distcc virtual/cron www-client/lynx x11-misc/xclip)
     for i in "${package_list[@]}"
     do
         echo "$i"
-        sudo emerge -m $i
+        sudo emerge $i
     done
     # sudo emerge net-vpn/openvpn
     # sudo emerge app-admin/terraform
@@ -171,14 +169,7 @@ function git_push() {
     git push
 }
 
-function gpl() {
-    secret git
-    cd $DOCS_DIR
-    git pull --no-rebase
-    pwd
-}
-
-function gpu() {
+function git_push_docs() {
     secret git
     cd $DOCS_DIR
 	git add --all
@@ -198,7 +189,7 @@ function report() {
     clear
     neofetch
     date
-    tmux ls
+    tmux_list
     sudo docker ps
     df -BG
 }
@@ -248,13 +239,28 @@ function source_profile_nogit() {
 	source ~/.profile
 }
 
-function ssh_tunnel() {
-    ssh -p 50100 -L 3390:KVM_WIN:3389 -L 5902:PROD:5902 -L 8081:KVM_DEB_TEST:8080 -L 9091:KVM_DEB_TEST:9090 $USER@$DOMAIN
+function ssh_acer() {
+    ssh -X acer
 }
 
-function stop_lockscreen() {
-    xset -dpms
-	xset s off
+function ssh_dell() {
+    ssh -X dell
+}
+
+function ssh_dev() {
+    ssh -X dev
+}
+
+function ssh_lenovo() {
+    ssh -X lenovo
+}
+
+function ssh_prod() {
+    ssh -X prod
+}
+
+function ssh_tunnel() {
+    ssh -p 50100 -L 3390:KVM_WIN:3389 -L 5902:PROD:5902 -L 8081:KVM_DEB_TEST:8080 -L 9091:KVM_DEB_TEST:9090 $USER@$DOMAIN
 }
 
 function tmux_attach() {
@@ -282,12 +288,24 @@ function tmux_env {
     tmux_send prod "sleep 100; ssh -p 50100 \$DOMAIN"
 }
 
+function tmux_kill() {
+    tmux kill-session -t $1
+}
+
+function tmux_list() {
+    tmux ls
+}
+
 function tmux_send() {
     tmux send-keys -t $1 "$2" C-m
 }
 
 function tmux_session() {
     tmux new-session -dt $1
+}
+
+function tmux_split() {
+    tmux new-session \; split-window -h \; split-window -v \; attach
 }
 
 function tmux_wsl() {
@@ -298,7 +316,7 @@ function tmux_wsl() {
         echo "$i"
         tmux_session $i
     done
-    tmux ls
+    tmux_list
     tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
     tmux_send powershell "secret ad"
     tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
@@ -307,11 +325,6 @@ function tmux_wsl() {
     tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
     tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
     tmux_send vim "source ~/.profile; vim"
-}
-
-
-function tmux_split() {
-    tmux new-session \; split-window -h \; split-window -v \; attach
 }
 
 function venv_create() {
@@ -393,7 +406,23 @@ function vm_viewer_windows() {
     vm_list
 	VM="KVMWINTEST01"
     ssh -X prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+}
 
+function x_check_battery() {
+    upower -i "upower -e | grep 'BAT'"
+}
+
+function x_secret() {
+    tmux_kill secret
+    tmux_session secret
+    tmux_send secret "bash"
+    tmux_send secret "source ~/.profile; ssh_dev"
+    tmux_send secret "secret $1"
+}
+
+function x_stop_lockscreen() {
+    xset -dpms
+	xset s off
 }
 
 # Purpose: Call functions
