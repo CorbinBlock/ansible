@@ -93,6 +93,15 @@ function apt_setup() {
      fi
 }
 
+function apt_setup_all {
+    node_list=(dev localhost prod dell lenovo acer)
+    for i in "${node_list[@]}"
+    do
+        echo "$i"
+        ssh_$i "source ~/.profile; apt_setup"
+    done
+}
+
 function apt_upgrade() {
     sudo apt-get update
 	sudo apt-get --with-new-pkgs upgrade -y
@@ -235,11 +244,11 @@ function rsync_git_win {
 }
 
 function rsync_nas_two {
-   ssh dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
+   ssh_dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
 }
 
 function rsync_vm_prod {
-   ssh prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
+   ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
 }
 
 function secret() {
@@ -276,7 +285,15 @@ function source_profile_nogit() {
 }
 
 function ssh_acer() {
-    ssh -X acer "$1"
+    ssh_all acer "$1"
+}
+
+function ssh_all() {
+    ssh -X $1 "$2"
+}
+
+function ssh_terminal() {
+    ssh_prod "ssh -tt $1 '$2'"
 }
 
 function ssh_create() {
@@ -284,19 +301,27 @@ function ssh_create() {
 }
 
 function ssh_dell() {
-    ssh -X dell "$1"
+    ssh_all dell "$1"
 }
 
 function ssh_dev() {
-    ssh -X dev "$1"
+    ssh_all dev "$1"
+}
+
+function ssh_kvm_alpine_prod() {
+    ssh_terminal KVMALPINEPROD01 "$1"
 }
 
 function ssh_lenovo() {
-    ssh -X lenovo "$1"
+    ssh_all lenovo "$1"
+}
+
+function ssh_localhost() {
+    ssh_all localhost "$1"
 }
 
 function ssh_prod() {
-    ssh -X prod "$1"
+    ssh_all prod "$1"
 }
 
 function ssh_tunnel() {
