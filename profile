@@ -34,7 +34,7 @@ function apk_setup() {
     sudo apk add bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano
     sudo rc-update add docker
     sudo service docker start
-    docker version
+    sudo docker run --rm hello-world
     # git config --global user.name $GIT_USER
     # git config --global user.email $GIT_EMAIL
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -54,7 +54,6 @@ function apk_upgrade() {
 
 function apk_upgrade_ish() {
     source_profile_nogit
-    # venv_create
     sudo apk -U upgrade
 }
 
@@ -64,7 +63,7 @@ function apt_upgrade() {
 	sudo apt-get autoremove -y
 	source_profile
 	venv_create
-	ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
+	ansible-playbook ~/.local/bin/ansible/apt_all.yml
 }
 
 function apt_upgrade_wsl() {
@@ -124,44 +123,22 @@ function emerge_setup {
     # GIT_USER=X
     # GIT_EMAIL=X
     sudo eselect profile set default/linux/amd64/17.1/desktop
-    sudo emerge app-admin/sudo
-    sudo emerge-webrsync
-    sudo emerge --verbose --update --deep --newuse @world
-    sudo emerge --depclean
-    sudo emerge app-admin/keepassxc
-    sudo emerge app-containers/docker
-    sudo emerge app-containers/docker-compose
-    sudo emerge app-editors/vim
-    sudo emerge app-emulation/libvirt
-    sudo emerge app-emulation/qemu
-    sudo emerge app-emulation/virt-viewer
-    sudo emerge app-misc/jq
-    sudo emerge app-misc/neofetch
-    sudo emerge app-misc/tmux
-    sudo emerge app-text/dos2unix
-    sudo emerge app-text/tree
-    sudo emerge dev-java/openjdk
-    sudo emerge dev-java/maven-bin
-    sudo emerge dev-python/pip
-    sudo emerge dev-vcs/git
-     # git config --global user.name $GIT_USER
-     # git config --global user.email $GIT_EMAIL
-     sudo emerge net-analyzer/nmap
-     sudo emerge net-misc/rsync
-     sudo emerge sys-apps/dmidecode
-     sudo emerge sys-apps/flatpak
-     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || exit 0
-     sudo emerge sys-apps/lshw
-     # sudo emerge net-vpn/openvpn
-     # sudo emerge app-admin/terraform
-     sudo emerge sys-devel/distcc
-     sudo emerge virtual/cron
-     sudo emerge www-client/lynx
-     sudo emerge x11-misc/xclip
-     sudo emerge xfce-base/xfce4-meta --autounmask-write --autounmask=y
-     sudo eselect news read
-     sudo adduser $USER --shell /bin/bash
-     sudo usermod -G docker,kvm,wheel $USER
+    emerge_update
+    package_list=(app-admin/sudo app-admin/keepassxc app-containers/docker app-containers/docker-compose app-editors/vim app-emulation/libvirt app-emulation/qemu app-emulation/virt-viewer app-misc/jq app-misc/neofetch app-misc/tmux app-text/dos2unix app-text/tree dev-java/openjdk dev-java/maven-bin dev-python/pip dev-vcs/git net-analyzer/nmap net-misc/rsync sys-apps/dmidecode sys-apps/flatpak sys-apps/lshw sys-devel/distcc virtual/cron www-client/lynx x11-misc/xclip)
+    for i in "${package_list[@]}"
+    do
+        echo "$i"
+        sudo emerge -m $i
+    done
+    # sudo emerge net-vpn/openvpn
+    # sudo emerge app-admin/terraform
+    # git config --global user.name $GIT_USER
+    # git config --global user.email $GIT_EMAIL
+    sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || exit 0
+    sudo emerge xfce-base/xfce4-meta --autounmask-write --autounmask=y
+    sudo eselect news read
+    sudo adduser $USER --shell /bin/bash
+    sudo usermod -G docker,kvm,wheel $USER
 }
 
 function emerge_sync {
@@ -171,6 +148,7 @@ function emerge_sync {
 function emerge_update {
     sudo emerge-webrsync
     sudo emerge --ask --verbose --update --deep --newuse @world
+    sudo emerge --depclean
 }
 
 function git_update_all() {
@@ -265,9 +243,6 @@ function source_profile() {
 }
 
 function source_profile_nogit() {
-    # cd $XDG_STATE_HOME
-    # rm -rf ansible
-    # git clone https://github.com/CorbinBlock/ansible.git
     sudo cp ~/.local/bin/ansible/profile ~/.profile
 	dos2unix ~/.profile
 	source ~/.profile
@@ -317,22 +292,21 @@ function tmux_session() {
 
 function tmux_wsl() {
     pkill tmux
-    tmux new-session -dt emerge
-    tmux new-session -dt powershell
-    tmux new-session -dt htop
-    tmux new-session -dt scroll
-    tmux new-session -dt ssh
-    tmux new-session -dt prod
-    tmux new-session -dt vim
+    session_list=(emerge htop prod powershell prod scroll ssh vim)
+    for i in "${session_list[@]}"
+    do
+        echo "$i"
+        tmux_session $i
+    done
     tmux ls
-    tmux send-keys -t powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo" C-m
-    tmux send-keys -t powershell "secret ad" C-m
-    tmux send-keys -t emerge "source ~/.profile; sudo emerge-webrsync" C-m
-    tmux send-keys -t htop "source ~/.profile; htop" C-m
-    tmux send-keys -t prod "source ~/.profile; powershell.exe -c prod" C-m
-    tmux send-keys -t ssh "source ~/.profile; powershell.exe -c ssh_tunnel" C-m
-    tmux send-keys -t scroll "source ~/.profile; powershell.exe -c scroll" C-m
-    tmux send-keys -t vim "source ~/.profile; vim" C-m
+    tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
+    tmux_send powershell "secret ad"
+    tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
+    tmux_send htop "source ~/.profile; htop"
+    tmux_send prod "source ~/.profile; powershell.exe -c prod"
+    tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
+    tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
+    tmux_send vim "source ~/.profile; vim"
 }
 
 
@@ -346,12 +320,12 @@ function venv_create() {
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
     venv_activate
-    python3 -m pip install --upgrade pip
-    python3 -m pip install --upgrade setuptools
-    python3 -m pip install --upgrade wheel
-    python3 -m pip install --upgrade paramiko
-    python3 -m pip install --upgrade ansible
-    python3 -m pip install --upgrade pyspark
+    package_list=(pip setuptools wheel paramiko ansible pyspark)
+    for i in "${package_list[@]}"
+    do
+         echo "$i"
+         python3 -m pip install --upgrade $i
+    done
 }
 
 function venv_activate() {
@@ -421,7 +395,6 @@ function vm_viewer_windows() {
     ssh -X prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 
 }
-
 
 # Purpose: Call functions
 
