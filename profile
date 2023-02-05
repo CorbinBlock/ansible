@@ -296,7 +296,7 @@ function tmux_env {
     done
     tmux_send wifi "bash"
     tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
-    sleep 5
+    sleep 20
     tmux_send ssh_tunnel "bash"
     # USER and DOMAIN environment variable required
     tmux_send ssh_tunnel "source ~/.profile; sleep 10; ssh_tunnel"
