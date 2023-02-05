@@ -94,7 +94,7 @@ function apt_setup() {
 }
 
 function apt_setup_all {
-    node_list=(dev localhost prod dell lenovo acer)
+    node_list=(kvm_debian_test dev localhost prod dell lenovo acer)
     for i in "${node_list[@]}"
     do
         echo "$i"
