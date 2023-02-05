@@ -285,7 +285,11 @@ function source_profile_nogit() {
 }
 
 function ssh_acer() {
-    ssh -X acer "$1"
+    ssh_all acer "$1"
+}
+
+function ssh_all() {
+    ssh -X $1 "$2"
 }
 
 function ssh_create() {
