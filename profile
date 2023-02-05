@@ -50,12 +50,40 @@ function apk_setup() {
 function apk_upgrade() {
     source_profile
     venv_create
+    git_update_all
     sudo apk -U upgrade
 }
 
 function apk_upgrade_ish() {
     source_profile_nogit
     sudo apk -U upgrade
+}
+
+function apt_setup() {
+    sudo apt-get install dos2unix git python3
+    apt_upgrade
+    sudo adduser $USER --shell /bin/bash
+    sudo usermod -G kvm,libvirt $USER
+    sudo systemctl enable --now libvirtd
+    file=/opt/maven/bin/mvn
+     if [ ! -f $file ]; then
+     echo "$file not found!"
+     cd /tmp
+     curl -O https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+     sudo tar -zxvf apache-maven-3.8.6-bin.tar.gz
+     sudo mv apache-maven-3.8.6 /opt/maven
+     ls /opt/maven
+     mvn -version
+     fi
+     file=/etc/pipewire/media-session.d/with-pulseaudio
+     if [ ! -f $file ]; then
+     echo "$file not found!"
+     sudo su $USER -c "sudo touch $file"
+     sudo su $USER -c "sudo cp /usr/share/doc/pipewire/examples/systemd/user/pipewire-pulse.* /etc/systemd/user/"
+     sudo su $USER -c "systemctl --user daemon-reload"
+     sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
+     sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
+     fi
 }
 
 function apt_upgrade() {
@@ -73,12 +101,11 @@ function apt_upgrade_wsl() {
 	sudo apt-get autoremove -y
 	source_profile
 	venv_create
+	git_update_all
 	ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
 }
 
 function config() {
-    # USER=X
-    # DOMAIN_URL=X
     SEARCH_URL=duckduckgo.com
     JAVA_WIN=/c/Users/$USER/.local/share/docs/java/bin/
     JAVA_LINUX=/home/$USER/.local/share/docs/java/bin/
@@ -116,7 +143,6 @@ function docker_gentoo {
 
 function dnf_upgrade() {
     sudo dnf upgrade -y
-    # sudo dnf upgrade --skipbroken --allowerasing --nobest -y
 }
 
 function emerge_setup {
@@ -128,10 +154,6 @@ function emerge_setup {
         echo "$i"
         sudo emerge $i
     done
-    # sudo emerge net-vpn/openvpn
-    # sudo emerge app-admin/terraform
-    # git config --global user.name $GIT_USER
-    # git config --global user.email $GIT_EMAIL
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || exit 0
     sudo emerge xfce-base/xfce4-meta --autounmask-write --autounmask=y
     sudo eselect news read
@@ -155,13 +177,13 @@ function git_update_all() {
 }
 
 function git_pull() {
-    secret git
+    x_secret git
     pwd
     git pull --no-rebase
 }
 
 function git_push() {
-    secret git
+    x_secret git
     git add --all
     git add *
     git commit -m "+"
@@ -170,7 +192,7 @@ function git_push() {
 }
 
 function git_push_docs() {
-    secret git
+    x_secret git
     cd $DOCS_DIR
 	git add --all
 	git add all*
@@ -239,23 +261,23 @@ function source_profile_nogit() {
 }
 
 function ssh_acer() {
-    ssh -X acer
+    ssh -X acer "$1"
 }
 
 function ssh_dell() {
-    ssh -X dell
+    ssh -X dell "$1"
 }
 
 function ssh_dev() {
-    ssh -X dev
+    ssh -X dev "$1"
 }
 
 function ssh_lenovo() {
-    ssh -X lenovo
+    ssh -X lenovo "$1"
 }
 
 function ssh_prod() {
-    ssh -X prod
+    ssh -X prod "$1"
 }
 
 function ssh_tunnel() {
@@ -398,13 +420,13 @@ function vm_start_windows() {
 function vm_viewer_debian() {
     vm_list
 	VM="KVMDEBPROD01"
-	ssh -X prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+	ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 function vm_viewer_windows() {
     vm_list
 	VM="KVMWINTEST01"
-    ssh -X prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 function x_check_battery() {
