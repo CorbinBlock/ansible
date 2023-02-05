@@ -180,7 +180,7 @@ function git_update_all() {
 
 function git_pull() {
     secret git
-    pwdgit
+    pwd
     git pull --no-rebase
 }
 
