@@ -255,9 +255,8 @@ function secret() {
     eval $command
 }
 
-
 function source_profile() {
-    cd $XDG_STATE_HOME
+    cd ~/.local/bin/
     rm -rf ansible
     git clone https://github.com/CorbinBlock/ansible.git
     sudo cp ~/.local/bin/ansible/profile ~/.profile
