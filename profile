@@ -47,10 +47,27 @@ function apk_setup() {
 }
 
 function apk_upgrade() {
+    source_profile
+    venv_create
+    sudo apk -U upgrade
+}
+
+function apk_upgrade_ish() {
+    source_profile_nogit
+    # venv_create
     sudo apk -U upgrade
 }
 
 function apt_upgrade() {
+    sudo apt-get update
+	sudo apt-get --with-new-pkgs upgrade -y
+	sudo apt-get autoremove -y
+	source_profile
+	venv_create
+	ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
+}
+
+function apt_upgrade_wsl() {
     sudo apt-get update
 	sudo apt-get --with-new-pkgs upgrade -y
 	sudo apt-get autoremove -y
@@ -156,6 +173,26 @@ function emerge_update {
     sudo emerge --ask --verbose --update --deep --newuse @world
 }
 
+function git_update_all() {
+    rsync_git_dev
+    rsync_git_prod
+}
+
+function git_push() {
+    secret git
+    pwd
+    git pull --no-rebase
+}
+
+function git_push() {
+    secret git
+    git add --all
+    git add *
+    git commit -m "+"
+    pwd
+    git push
+}
+
 function gpl() {
     secret git
     cd $DOCS_DIR
@@ -220,6 +257,18 @@ function secret() {
 
 
 function source_profile() {
+    cd $XDG_STATE_HOME
+    rm -rf ansible
+    git clone https://github.com/CorbinBlock/ansible.git
+    sudo cp ~/.local/bin/ansible/profile ~/.profile
+	dos2unix ~/.profile
+	source ~/.profile
+}
+
+function source_profile_nogit() {
+    # cd $XDG_STATE_HOME
+    # rm -rf ansible
+    # git clone https://github.com/CorbinBlock/ansible.git
     sudo cp ~/.local/bin/ansible/profile ~/.profile
 	dos2unix ~/.profile
 	source ~/.profile
@@ -232,6 +281,39 @@ function ssh_tunnel() {
 function stop_lockscreen() {
     xset -dpms
 	xset s off
+}
+
+function tmux_attach() {
+    tmux attach -t $1
+}
+
+function tmux_env {
+    session_list=(firefox ide prod ssh_tunnel wifi )
+    for i in "${session_list[@]}"
+    do
+       echo "$i"
+       tmux_session $i
+    done
+    tmux_send wifi "bash"
+    tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
+    sleep 5
+    tmux_send ssh_tunnel "bash"
+    # USER and DOMAIN environment variable required
+    tmux_send ssh_tunnel "source ~/.profile; sleep 10; ssh_tunnel"
+    tmux_send firefox "bash"
+    tmux_send firefox "sleep 5; export DISPLAY=:0; flatpak run org.mozilla.firefox"
+    tmux_send ide "bash"
+    tmux_send ide "source ~/.profile; sleep 5; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
+    tmux_send prod "bash"
+    tmux_send prod "sleep 100; ssh -p 50100 \$DOMAIN"
+}
+
+function tmux_send() {
+    tmux send-keys -t $1 "$2" C-m
+}
+
+function tmux_session() {
+    tmux new-session -dt $1
 }
 
 function tmux_wsl() {
@@ -260,9 +342,7 @@ function tmux_split() {
 }
 
 function venv_create() {
-    cd ~/.local/bin/
-    rm -rf ansible/
-    git clone https://github.com/CorbinBlock/ansible.git
+    source_profile
     rm -rf venv/
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
@@ -303,7 +383,7 @@ function vm_list() {
      sudo virsh list --all
 }
 
-function vm_shutdown {
+function vm_shutdown() {
     vm_list
     sudo virsh shutdown KVMALPINEPROD01
 	sudo virsh shutdown KVMDEBPROD01
