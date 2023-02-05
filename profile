@@ -292,6 +292,10 @@ function ssh_all() {
     ssh -X $1 "$2"
 }
 
+function ssh_terminal() {
+    ssh_prod "ssh -tt $1 '$2'"
+}
+
 function ssh_create() {
     ssh-keygen -t ed25519 -b 4096
 }
@@ -302,6 +306,10 @@ function ssh_dell() {
 
 function ssh_dev() {
     ssh_all dev "$1"
+}
+
+function ssh_kvm_alpine_prod() {
+    ssh_terminal KVMALPINEPROD01 "$1"
 }
 
 function ssh_lenovo() {
