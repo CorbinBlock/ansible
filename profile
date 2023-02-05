@@ -181,7 +181,6 @@ function git_push_docs() {
 	git add db*
 	git commit -m "+"
 	git push
-	
 }
 
 function report() {
@@ -357,7 +356,7 @@ function vm_import_windows() {
 
 function vm_install_debian() {
     vm_list
-    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 2048 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst_20221112.qcow2,size=120 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst.iso --noautoconsole
+    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst_20221112.qcow2,size=120 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst.iso --noautoconsole
 }
 
 function vm_install_windows() {
