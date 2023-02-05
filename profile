@@ -93,6 +93,15 @@ function apt_setup() {
      fi
 }
 
+function apt_setup_all {
+    node_list=(dev prod dell lenovo acer)
+    for i in "${node_list[@]}"
+    do
+        echo "$i"
+        ssh_$i "source ~/.profile; apt_setup"
+    done
+}
+
 function apt_upgrade() {
     sudo apt-get update
 	sudo apt-get --with-new-pkgs upgrade -y
