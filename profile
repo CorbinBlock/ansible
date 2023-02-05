@@ -27,8 +27,7 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 function apk_setup() {
-    # GIT_USER=X
-    # GIT_EMAIL=X
+    mkdir -p ~/.local/bin/
     apk_upgrade
     package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
     for i in "${package_list[@]}"
@@ -37,8 +36,6 @@ function apk_setup() {
         sudo apk add $i
     done
     apk_upgrade
-    # git config --global user.name $GIT_USER
-    # git config --global user.email $GIT_EMAIL
     sudo rc-update add docker
     sudo service docker start
     sudo docker run --rm hello-world
@@ -59,8 +56,18 @@ function apk_upgrade_ish() {
     sudo apk -U upgrade
 }
 
+function apt_install () {
+    sudo apt-get install "$1"
+}
+
 function apt_setup() {
-    sudo apt-get install dos2unix git python3
+    package_list=(dos2unix git python3)
+    for i in "${package_list[@]}"
+    do
+        echo "$i"
+        apt_install $i
+    done
+    mkdir -p ~/.local/bin/
     apt_upgrade
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt $USER
@@ -240,8 +247,16 @@ function secret() {
     database=$XDG_DATA_HOME/docs/data/secrets.kdbx
     key_file=$XDG_DATA_HOME/docs/data/secrets.keyx
     password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
-    # command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | clip.exe"
     command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | set_clipboard"
+    eval $command
+}
+
+function secret_wsl() {
+    secret_path=$1
+    database=$XDG_DATA_HOME/docs/data/secrets.kdbx
+    key_file=$XDG_DATA_HOME/docs/data/secrets.keyx
+    password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
+    command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | clip.exe"
     eval $command
 }
 
@@ -262,6 +277,10 @@ function source_profile_nogit() {
 
 function ssh_acer() {
     ssh -X acer "$1"
+}
+
+function ssh_create() {
+    ssh-keygen -t ed25519 -b 4096
 }
 
 function ssh_dell() {
