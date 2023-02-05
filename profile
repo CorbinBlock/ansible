@@ -304,6 +304,10 @@ function ssh_lenovo() {
     ssh -X lenovo "$1"
 }
 
+function ssh_localhost() {
+    ssh -X localhost "$1"
+}
+
 function ssh_prod() {
     ssh -X prod "$1"
 }
