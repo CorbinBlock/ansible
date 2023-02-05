@@ -178,7 +178,7 @@ function git_update_all() {
     rsync_git_prod
 }
 
-function git_push() {
+function git_pull() {
     secret git
     pwd
     git pull --no-rebase
