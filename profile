@@ -313,7 +313,7 @@ function ssh_kvm_debian_prod() {
 }
 
 function ssh_kvm_debian_test() {
-    ssh_terminal KVMDEBPROD01 "$1"
+    ssh_terminal KVMDEBTEST01 "$1"
 }
 
 function ssh_kvm_alpine_prod() {
