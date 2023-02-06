@@ -421,21 +421,29 @@ function venv_activate() {
 }
 
 function vm_import_debian() {
-    sudo virt-install --name KVMDEBPROD01 --memory 2048 --vcpus 1 --disk ~/.local/state/kvm/debian-11.5.0-amd64-netinst_20221029.qcow2 --import --os-variant debian11 --network default
+    vm_list
+    vm="KVMDEBTEST01_20230201.qcow2"
+    sudo virt-install --name KVMDEBPROD01 --memory 2048 --vcpus 1 --disk ~/.local/state/kvm/$VM --import --os-variant debian11 --network default
 }
 
 function vm_import_windows() {
-    sudo virt-install --name KVMWINPROD01 --memory 16384 --vcpus 4 --disk ~/.local/state/kvm/Win10_21H2_English_x64_20221112.qcow2 --import --os-variant debian11 --network default
+    vm_list
+    vm="KVMDEBTEST01_20230201.qcow2"
+    sudo virt-install --name KVMWINPROD01 --memory 16384 --vcpus 4 --disk ~/.local/state/kvm/$VM --import --os-variant debian11 --network default
 }
 
 function vm_install_debian() {
     vm_list
-    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst_20221112.qcow2,size=120 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst.iso --noautoconsole
+    vm="KVMDEBTEST01_20230201.qcow2"
+    vm_size=120
+    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst.iso --noautoconsole
 }
 
 function vm_install_windows() {
     vm_list
-    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/Win10_21H2_English_x64_20221112.qcow2,size=300 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/Win10_21H2_English_x64.iso --noautoconsole
+    vm="KVMWINTEST01_20230119.qcow2"
+    vm_size=300
+    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/Win10_21H2_English_x64.iso --noautoconsole
 }
 
 function vm_list() {
@@ -444,12 +452,12 @@ function vm_list() {
 
 function vm_shutdown() {
     vm_list
-    sudo virsh shutdown KVMALPINEPROD01
-	sudo virsh shutdown KVMDEBPROD01
-	# sudo virsh shutdown KVMDEBTEST01
-	sudo virsh shutdown KVMFEDPROD01
-	sudo virsh shutdown KVMWINPROD01
-	sudo virsh shutdown KVMWINTEST01
+    session_list=(KVMALPINEPROD01 KVMDEBPROD01 KVMFEDPROD01 KVMWINPROD01 KVMWINTEST01)
+    for i in "${session_list[@]}"
+    do
+        echo "$i"
+        sudo virsh shutdown $i
+    done
 	sudo chown cblock ~/.local/state/kvm/*
 }
 
