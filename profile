@@ -461,6 +461,16 @@ function vm_shutdown() {
 	sudo chown cblock ~/.local/state/kvm/*
 }
 
+function vm_start {
+    vm_list
+    session_list=(KVMALPINEPROD01 KVMDEBTEST01 KVMFEDPROD01 KVMWINTEST01)
+    for i in "${session_list[@]}"
+    do
+        echo "$i"
+        sudo virsh start $i
+    done
+}
+
 function vm_start_debian() {
     vm_list
     sudo virsh start KVMDEBPROD01
@@ -479,7 +489,7 @@ function vm_start_windows() {
 
 function vm_viewer_debian() {
     vm_list
-	VM="KVMDEBPROD01"
+	VM="KVMDEBTEST01"
 	ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
