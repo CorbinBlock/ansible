@@ -362,7 +362,8 @@ function tmux_attach() {
 }
 
 function tmux_env {
-    session_list=(firefox ide prod ssh_tunnel wifi )
+    # ssh tunnel session created in crontab
+    session_list=(firefox ide prod wifi )
     for i in "${session_list[@]}"
     do
        echo "$i"
