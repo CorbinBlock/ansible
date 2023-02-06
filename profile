@@ -328,8 +328,15 @@ function ssh_localhost() {
     ssh_all localhost "$1"
 }
 
-function ssh_mount_dev {
-    sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@DEV:/home/$USER/.local/share/ /mnt/dev/
+function ssh_mount {
+    sudo chown $USER /mnt
+    node_list=(kvm_debian_test dev localhost prod dell lenovo acer)
+    for i in "${node_list[@]}"
+    do
+        echo "$i"
+        mkdir -p /mnt/$i
+        sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/.local/share/ /mnt/$i/
+    done
 }
 
 function ssh_prod() {
