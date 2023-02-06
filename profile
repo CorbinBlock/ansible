@@ -328,6 +328,10 @@ function ssh_localhost() {
     ssh_all localhost "$1"
 }
 
+function ssh_mount_dev {
+    sudo sshfs -o allow_other,IdentityFile=/home/cblock/.ssh/id_ed25519 $USER@DEV:/home/$USER/.local/share/ /mnt/dev/
+}
+
 function ssh_prod() {
     ssh_all prod "$1"
 }
