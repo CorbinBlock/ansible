@@ -215,6 +215,7 @@
           - sed
           - software-properties-common
           - sqlite3
+          - sshfs
           - ssl-cert
           - sudo
           - tar
