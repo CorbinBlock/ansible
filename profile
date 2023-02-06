@@ -335,7 +335,17 @@ function ssh_mount {
     do
         echo "$i"
         mkdir -p /mnt/$i
-        sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/.local/share/ /mnt/$i/
+        sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
+    done
+}
+
+function ssh_unmount {
+    sudo chown $USER /mnt
+    node_list=(dev prod dell lenovo)
+    for i in "${node_list[@]}"
+    do
+        echo "$i"
+        sudo umount /mnt/$i
     done
 }
 
