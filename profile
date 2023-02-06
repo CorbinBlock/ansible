@@ -329,7 +329,7 @@ function ssh_localhost() {
 }
 
 function ssh_mount_dev {
-    sudo sshfs -o allow_other,IdentityFile=/home/cblock/.ssh/id_ed25519 $USER@DEV:/home/$USER/.local/share/ /mnt/dev/
+    sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@DEV:/home/$USER/.local/share/ /mnt/dev/
 }
 
 function ssh_prod() {
