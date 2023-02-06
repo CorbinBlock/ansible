@@ -330,7 +330,7 @@ function ssh_localhost() {
 
 function ssh_mount {
     sudo chown $USER /mnt
-    node_list=(dev prod dell lenovo)
+    node_list=(kvm_debian_test dev prod dell lenovo)
     for i in "${node_list[@]}"
     do
         echo "$i"
@@ -341,7 +341,7 @@ function ssh_mount {
 
 function ssh_unmount {
     sudo chown $USER /mnt
-    node_list=(dev prod dell lenovo)
+    node_list=(kvm_debian_test dev prod dell lenovo)
     for i in "${node_list[@]}"
     do
         echo "$i"
