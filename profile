@@ -65,7 +65,6 @@ function apk_upgrade() {
 }
 
 function apk_upgrade_ish() {
-    rsync_git_ish
     source_profile_nogit
     sudo apk -U upgrade
 }
@@ -258,6 +257,7 @@ function rsync_git_ish {
     ssh 10.83.1.111 "source ~/.profile; source_profile"
     rsync -avP 10.83.1.111:~/.local/share/docs/ ~/.local/share/docs/
     rsync -avP 10.83.1.111:~/.local/bin/ansible/ ~/.local/bin/ansible/
+    rsync -avP 10.83.1.111:~/.profile ~/.profile
 }
 
 
@@ -301,7 +301,8 @@ function source_profile() {
 }
 
 function source_profile_nogit() {
-    cp ~/.local/bin/ansible/profile ~/.profile
+    rsync_git_ish
+    # cp ~/.local/bin/ansible/profile ~/.profile
 	dos2unix ~/.profile
 	source ~/.profile
 }
