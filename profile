@@ -51,7 +51,7 @@ function apk_setup_ish() {
     for i in "${package_list[@]}"
     do
         echo "$i"
-        sudo apk add $i
+        sudo apk add $package_list
     done
     sudo rc-update add sshd
     /usr/sbin/sshd
