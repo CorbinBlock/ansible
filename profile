@@ -320,7 +320,7 @@ function source_profile() {
 function source_profile_nogit() {
     rsync_git_ish
     # cp ~/.local/bin/ansible/profile ~/.profile
-	dos2unix ~/.profile
+	# dos2unix ~/.profile
 	source ~/.profile
 }
 
