@@ -310,8 +310,13 @@ function secret_wsl() {
 
 function source_profile() {
     cd ~/.local/bin/
-    rm -rf ansible
-    git clone https://github.com/CorbinBlock/ansible.git
+    FILE=~/.local/bin/ansible/
+    if [ ! -d "$FILE"]; then
+        echo "$FILE does not exist."
+        git clone https://github.com/CorbinBlock/ansible.git
+    fi
+    cd $FILE
+    git_pull
     sudo cp ~/.local/bin/ansible/profile ~/.profile
 	dos2unix ~/.profile
 	source ~/.profile
