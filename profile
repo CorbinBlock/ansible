@@ -555,7 +555,3 @@ function x_stop_lockscreen() {
 
 config
 neofetch
-
-if [ "$#" -eq 1 ] ; then
-        secret $1
-fi
