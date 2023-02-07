@@ -212,6 +212,18 @@ function git_pull() {
     git pull --no-rebase
 }
 
+function git_push_ansible() {
+    cd ~/.local/share/dev/ansible/
+    x_secret git
+    git add --all
+    git add *
+    git commit -m "+"
+    pwd
+    git push
+    rsync_git_dev_push
+    ssh_prod "source ~/.profile; source_profile; ssh -p 2222 iphone 'source ~/.profile; apk_setup_ish'
+}
+
 function git_push() {
     x_secret git
     git add --all
@@ -251,6 +263,10 @@ function rsync_git_prod {
 
 function rsync_git_dev {
     rsync -avP prod:~/.local/share/dev/ ~/.local/share/dev/
+}
+
+function rsync_git_dev {
+    rsync -avP ~/.local/share/dev/ prod:~/.local/share/dev/
 }
 
 function rsync_git_ish {
