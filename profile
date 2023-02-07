@@ -255,8 +255,8 @@ function rsync_git_dev {
 }
 
 function rsync_git_ish {
-    rsync -avP $prod:~/.local/share/dev/ ~/.local/share/docs/
-    rsync -avP $prod:~/.local/bin/ansible/ ~/.local/bin/ansible/
+    rsync -avP 10.83.1.111:~/.local/share/dev/ ~/.local/share/docs/
+    rsync -avP 10.83.1.111:~/.local/bin/ansible/ ~/.local/bin/ansible/
 }
 
 
