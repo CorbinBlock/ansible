@@ -311,7 +311,7 @@ function secret_wsl() {
 function source_profile() {
     cd ~/.local/bin/
     FILE=~/.local/bin/ansible/
-    if [ test ! -d $FILE]; then
+    if [ -d $FILE]; then
         echo "$FILE does not exist."
         git clone https://github.com/CorbinBlock/ansible.git
     fi
