@@ -324,8 +324,6 @@ function source_profile() {
 
 function source_profile_nogit() {
     rsync_git_ish
-    # cp ~/.local/bin/ansible/profile ~/.profile
-	# dos2unix ~/.profile
 	source ~/.profile
 }
 
@@ -469,7 +467,11 @@ function tmux_wsl() {
 
 function venv_create() {
     source_profile
-    rm -rf venv/
+    FILE=~/.local/bin/venv/
+    if [ -d "$FILE" ]  ; then
+        echo "$FILE does exist. Renaming to venv_bkp"
+        mv ~/.local/bin/venv/ ~/.local/bin/venv_bkp/
+    fi
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
     venv_activate
@@ -483,7 +485,12 @@ function venv_create() {
 
 function venv_activate() {
     cd ~/.local/bin/
-    source venv/bin/activate
+    FILE=~/.local/bin/venv/
+    if [ ! -d "$FILE" ]  ; then
+        echo "$FILE does not exist. Creating venv."
+        venv_create
+    fi
+    source ~/.local/bin/venv/bin/activate
     cd -
 }
 
