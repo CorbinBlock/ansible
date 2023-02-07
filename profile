@@ -47,7 +47,7 @@ function apk_setup() {
 function apk_setup_ish() {
     mkdir -p ~/.local/bin/
     apk_upgrade_ish
-    package_list=( bash dos2unix git git-lfs i3lock i3lock-doc i3status i3status-doc i3wm i3wm-doc lynx nano neofetch nmap openjdk7 openrc openssh python3 py3-pip rsync sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
+    package_list=( bash dos2unix git git-lfs i3lock i3lock-doc i3status i3status-doc i3wm i3wm-doc lynx nano neofetch nmap openrc openssh python3 py3-pip rsync sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
     for i in "${package_list[@]}"
     do
         echo "$i"
