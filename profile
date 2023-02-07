@@ -256,7 +256,7 @@ function rsync_git_dev {
 
 function rsync_git_ish {
     ssh 10.83.1.111 "source ~/.profile; source_profile"
-    rsync -avP 10.83.1.111:~/.local/share/dev/ ~/.local/share/dev/
+    rsync -avP 10.83.1.111:~/.local/share/docs/ ~/.local/share/docs/
     rsync -avP 10.83.1.111:~/.local/bin/ansible/ ~/.local/bin/ansible/
 }
 
