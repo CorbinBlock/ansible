@@ -265,7 +265,7 @@ function rsync_git_dev {
     rsync -avP prod:~/.local/share/dev/ ~/.local/share/dev/
 }
 
-function rsync_git_dev {
+function rsync_git_dev_push {
     rsync -avP ~/.local/share/dev/ prod:~/.local/share/dev/
 }
 
