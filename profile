@@ -65,6 +65,7 @@ function apk_upgrade() {
 }
 
 function apk_upgrade_ish() {
+    rsync_git_ish
     source_profile_nogit
     sudo apk -U upgrade
 }
@@ -255,6 +256,7 @@ function rsync_git_dev {
 
 function rsync_git_ish {
     rsync -avP $prod:~/.local/share/dev/ ~/.local/share/docs/
+    rsync -avP $prod:~/.local/bin/ansible/ ~/.local/bin/ansible/
 }
 
 
