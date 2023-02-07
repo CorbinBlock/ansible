@@ -467,6 +467,7 @@ function tmux_wsl() {
 
 function venv_create() {
     source_profile
+    cd ~/.local/bin/
     FILE=~/.local/bin/venv/
     if [ -d "$FILE" ]  ; then
         echo "$FILE does exist. Renaming to venv_bkp"
