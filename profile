@@ -46,14 +46,13 @@ function apk_setup() {
 
 function apk_setup_ish() {
     mkdir -p ~/.local/bin/
-    apk_upgrade
+    apk_upgrade_ish
     package_list=( bash dos2unix git git-lfs nano neofetch openrc openssh python3 py3-pip sudo tmux vim tree lynx nmap)
     for i in "${package_list[@]}"
     do
         echo "$i"
         sudo apk add $i
     done
-    apk_upgrade_ish
     sudo rc-update add sshd
     /usr/sbin/sshd
 }
