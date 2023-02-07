@@ -581,7 +581,7 @@ function x_stop_lockscreen() {
 
 function main () {
     config
-    neofetch
+    # neofetch
 }
 main
 # End profile
