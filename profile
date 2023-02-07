@@ -221,7 +221,7 @@ function git_push_ansible() {
     pwd
     git push
     rsync_git_dev_push
-    ssh_prod "source ~/.profile; source_profile; ssh -p 2222 iphone 'source ~/.profile; apk_setup_ish'
+    ssh_prod "source ~/.profile; source_profile; ssh -p 2222 iphone 'source ~/.profile; apk_setup_ish'"
 }
 
 function git_push() {
