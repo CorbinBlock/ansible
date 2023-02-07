@@ -50,7 +50,7 @@ function apk_setup_ish() {
     package_list=( bash dos2unix git git-lfs i3lock i3lock-doc i3status i3status-doc i3wm i3wm-doc lynx nano neofetch nmap openrc openssh python3 py3-pip rsync sqlite3 sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
     # for i in "${package_list[@]}"
     # do
-    echo "$package_list"
+    echo $package_list
     sudo apk add $package_list
     # done
     sudo rc-update add sshd
