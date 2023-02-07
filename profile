@@ -562,5 +562,9 @@ function x_stop_lockscreen() {
 
 # Purpose: Call functions
 
-config
-neofetch
+function main () {
+    config
+    neofetch
+}
+main
+# End profile
