@@ -474,7 +474,7 @@ function venv_create() {
     fi
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
-    # venv_activate
+    source ~/.local/bin/venv/bin/activate
     package_list=(pip setuptools wheel paramiko ansible pyspark)
     for i in "${package_list[@]}"
     do
