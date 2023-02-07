@@ -142,6 +142,7 @@ function config() {
     export DOCS_DIR=~/.local/share/docs
     export EDITOR=/usr/bin/vim
     export PAGER=/usr/bin/less
+    export PROD="10.83.1.111"
     export LIBGL_ALWAYS_INDIRECT=1
     export DONT_PROMPT_WSL_INSTALL=1
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
@@ -251,6 +252,11 @@ function rsync_git_prod {
 function rsync_git_dev {
     rsync -avP prod:~/.local/share/dev/ ~/.local/share/dev/
 }
+
+function rsync_git_ish {
+    rsync -avP $prod:~/.local/share/dev/ ~/.local/share/docs/
+}
+
 
 function rsync_git_win {
     rsync -avP prod:~/.local/share/docs/ /c/Users/$USER/.local/share/docs/
