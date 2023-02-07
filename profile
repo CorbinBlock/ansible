@@ -29,7 +29,7 @@ fi
 function apk_setup() {
     mkdir -p ~/.local/bin/
     apk_upgrade
-    package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
+    package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
     for i in "${package_list[@]}"
     do
         echo "$i"
@@ -42,6 +42,20 @@ function apk_setup() {
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G docker,flatpak,kvm,libvirt,wheel $USER
+}
+
+function apk_setup_ish() {
+    mkdir -p ~/.local/bin/
+    apk_upgrade
+    package_list=( bash dos2unix git git-lfs nano neofetch openrc openssh python3 py3-pip sudo tmux vim tree lynx nmap)
+    for i in "${package_list[@]}"
+    do
+        echo "$i"
+        sudo apk add $i
+    done
+    apk_upgrade
+    sudo rc-update add sshd
+    /usr/sbin/sshd
 }
 
 function apk_upgrade() {
