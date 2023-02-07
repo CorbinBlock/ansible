@@ -53,7 +53,7 @@ function apk_setup_ish() {
         echo "$i"
         sudo apk add $i
     done
-    apk_upgrade
+    apk_upgrade_ish
     sudo rc-update add sshd
     /usr/sbin/sshd
 }
