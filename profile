@@ -84,7 +84,7 @@ function apt_install () {
 }
 
 function apt_setup() {
-    echo "apk: Setup alpine server for iSH iOS app."
+    echo "apt: Setup debian server."
     package_list=(dos2unix git python3)
     for i in "${package_list[@]}"
     do
