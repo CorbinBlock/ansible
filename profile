@@ -353,7 +353,7 @@ function ssh_all() {
     for i in "${port_list[@]}"
     do
     echo "ssh: Attempt connection via port $i"
-    if ssh_helper "$i" "$1" "$2" ; then
+    if ssh_helper "X" "$i" "$1" "$2" ; then
         echo "ssh: Connection succeeded"
     else
         echo "ssh: Connection failed, retrying."
@@ -363,11 +363,11 @@ function ssh_all() {
 }
 
 function ssh_helper() {
-    ssh -p $1 -X $2 "$3"
+    ssh -p -$1 $2 $3 "$4"
 }
 
 function ssh_terminal() {
-    ssh_prod "ssh -tt $1 '$2'"
+    ssh_prod "ssh_helper 'X' $1 $2 '$3'"
 }
 
 function ssh_create() {
