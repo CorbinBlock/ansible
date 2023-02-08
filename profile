@@ -26,15 +26,19 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+function apk_install () {
+    echo "apk: Attempting to install or update - $i"
+    sudo apt-get install "$1"
+}
+
 function apk_setup() {
-    echo "apk: Setup alpine server for iSH iOS app."
+    echo "apk: Setup alpine server."
     mkdir -p ~/.local/bin/
     apk_upgrade
     package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
     for i in "${package_list[@]}"
     do
-        echo "apk: Attempting to install or update: $i"
-        sudo apk add $i
+        apk_install $i
     done
     apk_upgrade
     ssh_create
@@ -53,8 +57,7 @@ function apk_setup_ish() {
     package_list=( bash dos2unix git git-lfs i3lock i3lock-doc i3status i3status-doc i3wm i3wm-doc lynx nano neofetch nmap openrc openssh python3 py3-pip rsync sqlite sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
     for i in "${package_list[@]}"
     do
-        echo "apk: Attempting to install or update: $i"
-        sudo apk add $i
+        echo "apk: Attempting to install or update - $i"
     done
     ssh_create
     sudo rc-update add sshd
@@ -62,28 +65,29 @@ function apk_setup_ish() {
 }
 
 function apk_upgrade() {
-    echo "apk: Upgrading Alpine Linux node"
     source_profile
     venv_create
     git_update_all
+    echo "apk: Upgrading Alpine Linux node"
     sudo apk -U upgrade
 }
 
 function apk_upgrade_ish() {
-    echo "apk: Upgrading Alpine Linux node"
     source_profile_nogit
+    echo "apk: Upgrading Alpine Linux node"
     sudo apk -U upgrade
 }
 
 function apt_install () {
+    echo "apt: Attempting to install or update - $i"
     sudo apt-get install "$1"
 }
 
 function apt_setup() {
+    echo "apk: Setup alpine server for iSH iOS app."
     package_list=(dos2unix git python3)
     for i in "${package_list[@]}"
     do
-        echo "$i"
         apt_install $i
     done
     mkdir -p ~/.local/bin/
@@ -117,12 +121,13 @@ function apt_setup_all {
     node_list=(kvm_debian_test dev localhost prod dell lenovo acer)
     for i in "${node_list[@]}"
     do
-        echo "$i"
+        echo "apt - Updating all debian nodes - Current node: $i"
         ssh_$i "source ~/.profile; apt_setup"
     done
 }
 
 function apt_upgrade() {
+    echo "apt: Update debian server."
     sudo apt-get update
 	sudo apt-get --with-new-pkgs upgrade -y
 	sudo apt-get autoremove -y
