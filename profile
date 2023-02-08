@@ -222,7 +222,7 @@ function git_push_ansible() {
     git push
     source_profile
     rsync_git_dev_push
-    ssh_prod "source ~/.profile; source_profile; ssh -p 2222 iphone 'source ~/.profile; apk_setup_ish'"
+    ssh_prod "source ~/.profile; source_profile; dev_iphone 'source ~/.profile; apk_setup_ish'"
 }
 
 function git_push() {
@@ -363,6 +363,14 @@ function ssh_dell() {
 
 function ssh_dev() {
     ssh_all dev "$1"
+}
+
+function ssh_ipad() {
+    ssh_all ipad "$1"
+}
+
+function ssh_iphone() {
+    ssh_all iphone "$1"
 }
 
 function ssh_kvm_debian_prod() {
