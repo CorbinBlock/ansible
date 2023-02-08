@@ -339,6 +339,7 @@ function ssh_all() {
     port_list=( 22 2222 3333 50100 50200 50300 50400 50500 4444 5555 6666)
     for i in "${port_list[@]}"
     do
+    echo "Attempt ssh via port $i"
     if ssh_helper "$i" "$1" "$2" ; then
         echo "Connection succeeded"
     else
