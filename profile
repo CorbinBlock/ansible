@@ -341,7 +341,7 @@ function ssh_all() {
         echo "Connection failed, retrying."
         port=3333
         ssh_helper "$port" "$1" "$2"
-        echo "Connection failed!"
+        echo "SSH exiting!"
     fi
 }
 
