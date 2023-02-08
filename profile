@@ -27,6 +27,7 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 function apk_setup() {
+    echo "apk: Setup alpine server for iSH iOS app."
     mkdir -p ~/.local/bin/
     apk_upgrade
     package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
@@ -46,6 +47,7 @@ function apk_setup() {
 }
 
 function apk_setup_ish() {
+    echo "apk: Setup alpine server for iSH iOS app."
     mkdir -p ~/.local/bin/
     apk_upgrade_ish
     package_list=( bash dos2unix git git-lfs i3lock i3lock-doc i3status i3status-doc i3wm i3wm-doc lynx nano neofetch nmap openrc openssh python3 py3-pip rsync sqlite sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
@@ -60,6 +62,7 @@ function apk_setup_ish() {
 }
 
 function apk_upgrade() {
+    echo "apk: Upgrading Alpine Linux node"
     source_profile
     venv_create
     git_update_all
@@ -67,6 +70,7 @@ function apk_upgrade() {
 }
 
 function apk_upgrade_ish() {
+    echo "apk: Upgrading Alpine Linux node"
     source_profile_nogit
     sudo apk -U upgrade
 }
@@ -211,12 +215,14 @@ function git_update_all() {
 }
 
 function git_pull() {
+    echo "git: Update repo in current directory"
     x_secret git
     pwd
     git pull --no-rebase
 }
 
 function git_push_ansible() {
+    echo "git: Push ansible repo to main branch + Test on nodes"
     cd ~/.local/share/dev/ansible/
     x_secret git
     git add --all
@@ -313,6 +319,7 @@ function secret_wsl() {
 }
 
 function source_profile() {
+    echo "git: Update profile from Git and load into session"
     cd ~/.local/bin/
     FILE=~/.local/bin/ansible/
     if [ ! -d "$FILE" ]  ; then
@@ -327,6 +334,7 @@ function source_profile() {
 }
 
 function source_profile_nogit() {
+    echo "git: Update profile from Git and load into session"
     rsync_git_ish
 	source ~/.profile
 }
