@@ -336,17 +336,16 @@ function ssh_acer() {
 }
 
 function ssh_all() {
-    port=22
-    if ssh_helper "$port" "$1" "$2" ; then
-        echo "Connection succeeded"
-    elif $(port=2222; ssh_helper "$port" "$1" "$2") ; then
+    port_list=( 22 2222 3333 50100 50200 50300 50400 50500)
+    for i in "${port_list[@]}"
+    do
+    if ssh_helper "$i" "$1" "$2" ; then
         echo "Connection succeeded"
     else
         echo "Connection failed, retrying."
-        port=3333
-        ssh_helper "$port" "$1" "$2"
-        echo "SSH exiting!"
     fi
+    done
+    echo "SSH exiting!"
 }
 
 function ssh_helper() {
@@ -626,8 +625,6 @@ function x_stop_lockscreen() {
     xset -dpms
 	xset s off
 }
-
-# Purpose: Call functions
 
 function main () {
     config
