@@ -28,7 +28,7 @@ fi
 
 function apk_install () {
     echo "apk: Attempting to install or update - $i"
-    sudo apt-get install "$1"
+    sudo apk add "$1"
 }
 
 function apk_setup() {
@@ -229,12 +229,7 @@ function git_pull() {
 function git_push_ansible() {
     echo "git: Push ansible repo to main branch + Test on nodes"
     cd ~/.local/share/dev/ansible/
-    x_secret git
-    git add --all
-    git add *
-    git commit -m "+"
-    pwd
-    git push
+    git_push
     source_profile
     rsync_git_dev_push
     ssh_prod "source ~/.profile; source_profile; ssh_iphone 'source ~/.profile; apk_setup_ish'"
@@ -243,6 +238,12 @@ function git_push_ansible() {
 function git_push() {
     x_secret git
     git add --all
+    git add all*
+    git add be*
+    git add data*
+    git add python*
+    git add linux*
+    git add db*
     git add *
     git commit -m "+"
     pwd
@@ -252,15 +253,7 @@ function git_push() {
 function git_push_docs() {
     x_secret git
     cd $DOCS_DIR
-	git add --all
-	git add all*
-	git add be*
-	git add data*
-	git add python*
-	git add linux*
-	git add db*
-	git commit -m "+"
-	git push
+	git_push
 }
 
 function report() {
@@ -291,7 +284,6 @@ function rsync_git_ish {
     rsync -avP 10.83.1.111:~/.local/bin/ansible/ ~/.local/bin/ansible/
     rsync -avP 10.83.1.111:~/.profile ~/.profile
 }
-
 
 function rsync_git_win {
     rsync -avP prod:~/.local/share/docs/ /c/Users/$USER/.local/share/docs/
