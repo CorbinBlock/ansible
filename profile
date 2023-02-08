@@ -369,9 +369,10 @@ function ssh_lenovo() {
 
 function ssh_localhost() {
     if ssh_all localhost "$1" ; then
-        echo "Command succeeded"
+        echo "Connection succeeded"
     else
-        echo "Command failed"
+        echo "Connection failed, retrying."
+        ssh -p 2222 localhost
     fi
 }
 
