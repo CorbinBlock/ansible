@@ -28,7 +28,7 @@ fi
 
 function apk_install () {
     echo "apk: Attempting to install or update - $1"
-    sudo apk add "$1"
+    sudo apk add $1
 }
 
 function apk_setup() {
@@ -80,7 +80,7 @@ function apk_upgrade_ish() {
 }
 
 function apt_install () {
-    echo "apt: Attempting to install or update - $i"
+    echo "apt: Attempting to install or update - $1"
     sudo apt-get install "$1"
 }
 
