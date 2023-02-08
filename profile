@@ -359,6 +359,7 @@ function ssh_all() {
     echo "ssh: Attempt connection via port $i"
     if ssh_helper "X" "$i" "$1" "$2" ; then
         echo "ssh: Connection succeeded"
+        break
     else
         echo "ssh: Connection failed, retrying."
     fi
