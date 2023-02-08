@@ -334,12 +334,12 @@ function ssh_acer() {
 function ssh_all() {
     port=22
     ssh_string='ssh -p $port -X $1 "$2"'
-    if eval($ssh_string) ; then
+    if eval $ssh_string ; then
         echo "Connection succeeded"
     else
         echo "Connection failed, retrying."
         port=2222
-        eval($ssh_string)
+        eval $ssh_string
     fi
 }
 
