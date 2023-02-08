@@ -475,7 +475,7 @@ function venv_create() {
     fi
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
-    source ~/.local/bin/venv/bin/activate
+    venv_activate_source
     package_list=(pip setuptools wheel paramiko ansible pyspark)
     for i in "${package_list[@]}"
     do
@@ -491,8 +491,12 @@ function venv_activate() {
         echo "$FILE does not exist. Creating venv."
         venv_create
     fi
-    source ~/.local/bin/venv/bin/activate
+    venv_activate_source
     cd -
+}
+
+function venv_activate_source {
+    source ~/.local/bin/venv/bin/activate
 }
 
 function vm_import_debian() {
