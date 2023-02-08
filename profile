@@ -335,7 +335,7 @@ function ssh_all() {
     port=22
     if ssh_helper "$port" "$1" "$2" ; then
         echo "Connection succeeded"
-    else
+    elif
         echo "Connection failed, retrying."
         port=2222
         ssh_helper "$port" "$1" "$2"
