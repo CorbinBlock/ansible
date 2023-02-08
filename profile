@@ -33,7 +33,7 @@ function apk_setup() {
     package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
     for i in "${package_list[@]}"
     do
-        echo "$i"
+        echo "apk: Attempting to install or update: $i"
         sudo apk add $i
     done
     apk_upgrade
@@ -53,7 +53,7 @@ function apk_setup_ish() {
     package_list=( bash dos2unix git git-lfs i3lock i3lock-doc i3status i3status-doc i3wm i3wm-doc lynx nano neofetch nmap openrc openssh python3 py3-pip rsync sqlite sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
     for i in "${package_list[@]}"
     do
-        echo $i
+        echo "apk: Attempting to install or update: $i"
         sudo apk add $i
     done
     ssh_create
