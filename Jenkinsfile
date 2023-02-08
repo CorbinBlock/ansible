@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh"""
                 sudo su cblock -c "source ~/.profile; rsync_git_prod; rsync_git_dev" || exit 0
-                sudo su cblock -c "source ~/.profile; apt_upgrade" || exit 0
+                sudo su cblock -c "source ~/.profile; apt_setup" || exit 0
                 """
             }
         }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh"""
                 sudo su cblock -c "source ~/.profile; rsync_git_prod; rsync_git_dev" || exit 0
-                sudo su cblock -c "source ~/.profile; apt_upgrade" || exit 0
+                sudo su cblock -c "source ~/.profile; apt_setup" || exit 0
                 """
             }
         }
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh"""
                 sudo su cblock -c "source ~/.profile; rsync_git_prod; rsync_git_dev" || exit 0
-                sudo su cblock -c "source ~/.profile; apt_upgrade" || exit 0
+                sudo su cblock -c "source ~/.profile; apt_setup" || exit 0
                 """
             }
         }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 sh"""
                 sudo su cblock -c "source ~/.profile; rsync_git_prod; rsync_git_dev" || exit 0
-                sudo su cblock -c "source ~/.profile; apt_upgrade" || exit 0
+                sudo su cblock -c "source ~/.profile; apt_setup" || exit 0
                 """
             }
         }
@@ -51,7 +51,7 @@ pipeline {
             }
             steps {
                 sh"""
-                sudo su cblock -c "source ~/.profile; apt_upgrade" || exit 0
+                sudo su cblock -c "source ~/.profile; apt_setup" || exit 0
                 """
             }
         }
