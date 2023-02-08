@@ -513,7 +513,7 @@ function venv_create() {
     FILE=~/.local/bin/venv/
     if [ -d "$FILE" ]  ; then
         echo "$FILE does exist. Renaming to venv_bkp"
-        mv ~/.local/bin/venv/ ~/.local/bin/venv_bkp/
+        rsync -avP ~/.local/bin/venv/ ~/.local/bin/venv_bkp/
     fi
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
