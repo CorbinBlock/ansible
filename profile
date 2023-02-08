@@ -122,7 +122,7 @@ function apt_setup_all {
     for i in "${node_list[@]}"
     do
         echo "apt - Updating all debian nodes - Current node: $i"
-        ssh_$i "source ~/.profile; apt_setup"
+        ssh_helper "X" "22" "$i" "source ~/.profile; apt_setup"
     done
 }
 
