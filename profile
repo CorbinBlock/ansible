@@ -368,7 +368,11 @@ function ssh_lenovo() {
 }
 
 function ssh_localhost() {
-    ssh_all localhost "$1"
+    if ssh_all localhost "$1" ; then
+        echo "Command succeeded"
+    else
+        echo "Command failed"
+    fi
 }
 
 function ssh_mount {
