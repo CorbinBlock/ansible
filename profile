@@ -332,7 +332,15 @@ function ssh_acer() {
 }
 
 function ssh_all() {
-    ssh -X $1 "$2"
+    port=22
+    ssh_string='ssh -p $port -X $1 "$2"'
+    if eval($ssh_string) ; then
+        echo "Connection succeeded"
+    else
+        echo "Connection failed, retrying."
+        port=2222
+        eval($ssh_string)
+    fi
 }
 
 function ssh_terminal() {
@@ -368,12 +376,7 @@ function ssh_lenovo() {
 }
 
 function ssh_localhost() {
-    if ssh_all localhost "$1" ; then
-        echo "Connection succeeded"
-    else
-        echo "Connection failed, retrying."
-        ssh -p 2222 localhost
-    fi
+    ssh_all localhost "$1"
 }
 
 function ssh_mount {
