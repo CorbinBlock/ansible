@@ -36,6 +36,7 @@ function apk_setup() {
         sudo apk add $i
     done
     apk_upgrade
+    ssh_create
     sudo rc-update add docker
     sudo service docker start
     sudo docker run --rm hello-world
@@ -53,6 +54,7 @@ function apk_setup_ish() {
         echo $i
         sudo apk add $i
     done
+    ssh_create
     sudo rc-update add sshd
     /usr/sbin/sshd
 }
@@ -85,6 +87,7 @@ function apt_setup() {
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt $USER
     sudo systemctl enable --now libvirtd
+    ssh_create
     file=/opt/maven/bin/mvn
      if [ ! -f $file ]; then
      echo "$file not found!"
@@ -189,6 +192,7 @@ function emerge_setup {
     sudo eselect news read
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G docker,kvm,wheel $USER
+    ssh_create
 }
 
 function emerge_sync {
@@ -354,7 +358,13 @@ function ssh_terminal() {
 }
 
 function ssh_create() {
-    ssh-keygen -t ed25519 -b 4096
+    FILE=~/.ssh/id_ed25519
+    if [ ! -f "$FILE" ]  ; then
+        echo "$FILE does not exist. Creating ssh key pair."
+        ssh-keygen -t ed25519 -b 4096
+    else
+        echo "$FILE exists!"
+    fi
 }
 
 function ssh_dell() {
