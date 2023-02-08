@@ -459,11 +459,11 @@ function tmux_env {
     sleep 20
     tmux_send ssh_tunnel "bash"
     # USER and DOMAIN environment variable required
-    tmux_send ssh_tunnel "source ~/.profile; sleep 10; ssh_tunnel"
+    tmux_send ssh_tunnel "source ~/.profile; sleep 3; ssh_tunnel"
     tmux_send firefox "bash"
-    tmux_send firefox "sleep 5; export DISPLAY=:0; flatpak run org.mozilla.firefox"
+    tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
     tmux_send ide "bash"
-    tmux_send ide "source ~/.profile; sleep 5; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
+    tmux_send ide "source ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
     tmux_send prod "bash"
     tmux_send prod "sleep 100; ssh -p 50100 \$DOMAIN"
 }
