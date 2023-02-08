@@ -27,8 +27,8 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 function apk_install () {
-    echo "apk: Attempting to install or update - $i"
-    sudo apk add "$i"
+    echo "apk: Attempting to install or update - $1"
+    sudo apk add "$1"
 }
 
 function apk_setup() {
@@ -58,6 +58,7 @@ function apk_setup_ish() {
     for i in "${package_list[@]}"
     do
         echo "apk: Attempting to install or update - $i"
+        apk_install $i
     done
     ssh_create
     sudo rc-update add sshd
