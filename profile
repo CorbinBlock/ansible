@@ -28,7 +28,7 @@ fi
 
 function apk_install () {
     echo "apk: Attempting to install or update - $i"
-    sudo apk add "$1"
+    sudo apk add "$i"
 }
 
 function apk_setup() {
