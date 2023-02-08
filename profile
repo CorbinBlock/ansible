@@ -348,6 +348,11 @@ function ssh_acer() {
     ssh_all acer "$1"
 }
 
+function ssh_any() {
+    ssh_all $1 "$2"
+}
+
+
 function ssh_all() {
     port_list=( 22 2222 3333 50100 50200 50300 50400 50500 4444 5555 6666)
     for i in "${port_list[@]}"
