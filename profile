@@ -363,11 +363,11 @@ function ssh_all() {
 }
 
 function ssh_helper() {
-    ssh -p -$1 $2 $3 "$4"
+    ssh -$1 -p $2 $3 "$4"
 }
 
 function ssh_terminal() {
-    ssh_prod "ssh_helper 'X' $1 $2 '$3'"
+    ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
 }
 
 function ssh_create() {
