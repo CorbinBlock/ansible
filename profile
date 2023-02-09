@@ -459,13 +459,13 @@ function tmux_env {
     sleep 20
     tmux_send ssh_tunnel "bash"
     # USER and DOMAIN environment variable required
-    tmux_send ssh_tunnel "source ~/.profile; sleep 3; ssh_tunnel"
-    tmux_send firefox "bash"
-    tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
-    tmux_send ide "bash"
-    tmux_send ide "source ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
-    tmux_send prod "bash"
-    tmux_send prod "sleep 100; ssh -p 50100 \$DOMAIN"
+    tmux_send ssh_tunnel "source ~/.profile; sleep 3; vm_viewer_debian"
+    # tmux_send firefox "bash"
+    # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
+    # tmux_send ide "bash"
+    # tmux_send ide "source ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
+    # tmux_send prod "bash"
+    # tmux_send prod "sleep 100; ssh -p 50100 \$DOMAIN"
 }
 
 function tmux_kill() {
@@ -498,10 +498,12 @@ function tmux_wsl() {
     done
     tmux_list
     tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
-    tmux_send powershell "sleep 5; secret ad"
+    # tmux_send powershell "sleep 5; secret ad"
     tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
     tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
     tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
+    tmux_session wsl
+    tmux_send wsl "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
 }
 
 function venv_create() {
