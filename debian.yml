@@ -1,6 +1,0 @@
----
- - name: Run debian.py script
-   hosts: localhost
-   tasks: 
-    - name: Run debian.py script
-      ansible.builtin.shell: python3 /home/cblock/.local/share/docs/linux/debian/debian.py
