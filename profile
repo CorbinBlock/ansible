@@ -490,7 +490,7 @@ function tmux_split() {
 
 function tmux_wsl() {
     pkill tmux
-    session_list=(emerge htop prod powershell prod scroll ssh vim)
+    session_list=(emerge powershell scroll ssh)
     for i in "${session_list[@]}"
     do
         echo "$i"
@@ -498,13 +498,13 @@ function tmux_wsl() {
     done
     tmux_list
     tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
-    tmux_send powershell "secret ad"
+    tmux_send powershell "sleep 5; secret ad"
     tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
-    tmux_send htop "source ~/.profile; htop"
-    tmux_send prod "source ~/.profile; powershell.exe -c prod"
+    # tmux_send htop "source ~/.profile; htop"
+    # tmux_send prod "source ~/.profile; powershell.exe -c prod"
     tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
     tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
-    tmux_send vim "source ~/.profile; vim"
+    # tmux_send vim "source ~/.profile; vim"
 }
 
 function venv_create() {
