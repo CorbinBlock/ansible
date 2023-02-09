@@ -1,0 +1,11 @@
+---
+    - name: Install IntellIJ
+      hosts: debian
+      tasks: 
+       - name: Download IntelliJ tar.gz
+         ansible.builtin.shell: cd ~/.local/share/; wget https://download.jetbrains.com/idea/ideaIC-2022.3.1.tar.gz
+    - name: Install IntellIJ
+      hosts: debian
+      tasks: 
+       - name: Extract IntellIJ
+         ansible.builtin.shell: cd ~/.local/share/; tar -zxvf ideaIC-*.tar.gz; sudo mkdir /opt/idea/;  sudo chmod 777 /opt/idea/; mv idea-*/* /opt/idea/

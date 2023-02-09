@@ -1,0 +1,9 @@
+---
+ - name: Ansible dnf module examples
+   hosts: rhel
+   become: true
+   tasks: 
+    - name: Ansible Update Cache and upgrade module
+      dnf:
+        state: latest
+        update_cache: yes

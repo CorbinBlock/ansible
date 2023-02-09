@@ -1,0 +1,287 @@
+---
+ - name: Ansible apt module examples
+   hosts: localhost
+   become: true
+   tasks: 
+    - name: Ansible Update Cache and install apt-transport-https
+      apt:
+        update_cache: yes
+        name:
+          - apt-transport-https
+        state: latest
+    - name: Ansible Update Cache and install bridge-utils
+      apt:
+        update_cache: yes
+        name:
+          - bridge-utils
+        state: latest
+    - name: Ansible Update Cache and install build-essential
+      apt:
+        update_cache: yes
+        name:
+          - build-essential
+        state: latest
+    - name: Ansible Update Cache and install ca-certificates
+      apt:
+        update_cache: yes
+        name:
+          - ca-certificates
+        state: latest
+    - name: Ansible Update Cache and install cockpit
+      apt:
+        update_cache: yes
+        name:
+          - cockpit
+        state: latest
+    - name: Ansible Update Cache and install cockpit-pcp
+      apt:
+        update_cache: yes
+        name:
+          - cockpit-pcp
+        state: latest
+    - name: Ansible Update Cache and install containerd.io
+      apt:
+        update_cache: yes
+        name:
+          - containerd.io
+        state: latest
+    - name: Ansible Update Cache and install curl
+      apt:
+        update_cache: yes
+        name:
+          - curl
+        state: latest
+    - name: Ansible Update Cache and install dbus-x11
+      apt:
+        update_cache: yes
+        name:
+          - dbus-x11
+        state: latest
+    - name: Ansible Update Cache and install default-jre
+      apt:
+        update_cache: yes
+        name:
+          - default-jre
+        state: latest
+    - name: Ansible Update Cache and install docker-ce
+      apt:
+        update_cache: yes
+        name:
+          - docker-ce
+        state: latest
+    - name: Ansible Update Cache and install docker-ce-cli
+      apt:
+        update_cache: yes
+        name:
+          - docker-ce-cli
+        state: latest
+    - name: Ansible Update Cache and install docker-compose-plugin
+      apt:
+        update_cache: yes
+        name:
+          - docker-compose-plugin
+        state: latest
+    - name: Ansible Update Cache and install dos2unix
+      apt:
+        update_cache: yes
+        name:
+          - dos2unix
+        state: latest
+    - name: Ansible Update Cache and install flatpak
+      apt:
+        update_cache: yes
+        name:
+          - flatpak
+        state: latest
+    - name: Ansible Update Cache and install git
+      apt:
+        update_cache: yes
+        name:
+          - git
+        state: latest
+    - name: Ansible Update Cache and install git-lfs
+      apt:
+        update_cache: yes
+        name:
+          - git-lfs
+        state: latest
+    - name: Ansible Update Cache and install gnupg
+      apt:
+        update_cache: yes
+        name:
+          - gnupg
+        state: latest
+    - name: Ansible Update Cache and install golang-go
+      apt:
+        update_cache: yes
+        name:
+          - golang-go
+        state: latest
+    - name: Ansible Update Cache and install keepassxc
+      apt:
+        update_cache: yes
+        name:
+          - keepassxc
+        state: latest
+    - name: Ansible Update Cache and install libvirt-clients
+      apt:
+        update_cache: yes
+        name:
+          - libvirt-clients
+        state: latest
+    - name: Ansible Update Cache and install libvirt-daemon-system
+      apt:
+        update_cache: yes
+        name:
+          - libvirt-daemon-system
+        state: latest
+    - name: Ansible Update Cache and install lsb-release
+      apt:
+        update_cache: yes
+        name:
+          - lsb-release
+        state: latest
+    - name: Ansible Update Cache and install lynx
+      apt:
+        update_cache: yes
+        name:
+          - lynx
+        state: latest
+    - name: Ansible Update Cache and install nano
+      apt:
+        update_cache: yes
+        name:
+          - nano
+        state: latest
+    - name: Ansible Update Cache and install neofetch
+      apt:
+        update_cache: yes
+        name:
+          - neofetch
+        state: latest
+    - name: Ansible Update Cache and install nfs-common
+      apt:
+        update_cache: yes
+        name:
+          - nfs-common
+        state: latest
+    - name: Ansible Update Cache and install nftables
+      apt:
+        update_cache: yes
+        name:
+          - nftables
+        state: latest
+    - name: Ansible Update Cache and install nmap
+      apt:
+        update_cache: yes
+        name:
+          - nmap
+        state: latest
+    - name: Ansible Update Cache and install openssh-server
+      apt:
+        update_cache: yes
+        name:
+          - openssh-server
+        state: latest
+    - name: Ansible Update Cache and install pipewire
+      apt:
+        update_cache: yes
+        name:
+          - pipewire
+        state: latest
+    - name: Ansible Update Cache and install postgresql
+      apt:
+        update_cache: yes
+        name:
+          - postgresql
+        state: latest
+    - name: Ansible Update Cache and install postgresql-contrib
+      apt:
+        update_cache: yes
+        name:
+          - postgresql-contrib
+        state: latest
+    - name: Ansible Update Cache and install python3
+      apt:
+        update_cache: yes
+        name:
+          - python3
+        state: latest
+    - name: Ansible Update Cache and install python3-pip
+      apt:
+        update_cache: yes
+        name:
+          - python3-pip
+        state: latest
+    - name: Ansible Update Cache and install python3-venv
+      apt:
+        update_cache: yes
+        name:
+          - python3-venv
+        state: latest
+    - name: Ansible Update Cache and install qemu-kvm
+      apt:
+        update_cache: yes
+        name:
+          - qemu-kvm
+        state: latest
+    - name: Ansible Update Cache and install realmd
+      apt:
+        update_cache: yes
+        name:
+          - realmd
+        state: latest
+    - name: Ansible Update Cache and install rsync
+      apt:
+        update_cache: yes
+        name:
+          - rsync
+        state: latest
+    - name: Ansible Update Cache and install tmux
+      apt:
+        update_cache: yes
+        name:
+          - tmux
+        state: latest
+    - name: Ansible Update Cache and install tree
+      apt:
+        update_cache: yes
+        name:
+          - tree
+        state: latest
+    - name: Ansible Update Cache and install vim
+      apt:
+        update_cache: yes
+        name:
+          - vim
+        state: latest
+    - name: Ansible Update Cache and install virtinst
+      apt:
+        update_cache: yes
+        name:
+          - virtinst
+        state: latest
+    - name: Ansible Update Cache and install virt-viewer
+      apt:
+        update_cache: yes
+        name:
+          - virt-viewer
+        state: latest
+    - name: Ansible Update Cache and install wget
+      apt:
+        update_cache: yes
+        name:
+          - wget
+        state: latest
+    - name: Ansible Update Cache and install xclip
+      apt:
+        update_cache: yes
+        name:
+          - xclip
+        state: latest
+    - name: Ansible Update Cache and install xfce4
+      apt:
+        update_cache: yes
+        name:
+          - xfce4
+        state: latest

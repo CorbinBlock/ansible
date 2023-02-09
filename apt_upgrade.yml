@@ -1,0 +1,9 @@
+---
+ - name: Ansible apt module examples
+   hosts: debian
+   become: true
+   tasks: 
+    - name: Ansible Update Cache and upgrade module
+      apt:
+        state: latest
+        update_cache: yes

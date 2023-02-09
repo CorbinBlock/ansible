@@ -439,7 +439,7 @@ function ssh_prod() {
 }
 
 function ssh_tunnel() {
-    ssh -p 50100 -L 3390:KVM_WIN:3389 -L 5902:PROD:5902 -L 8081:KVM_DEB_TEST:8080 -L 9091:KVM_DEB_TEST:9090 $USER@$DOMAIN
+    ssh -p 50100 -L 3390:KVMDEBTEST01:3389 -L 5902:HQDEBPROD01:5902 -L 8081:KVMDEBTEST01:8080 -L 9091:KVMDEBTEST01:9090 $USER@$DOMAIN
 }
 
 function tmux_attach() {
@@ -500,11 +500,8 @@ function tmux_wsl() {
     tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
     tmux_send powershell "sleep 5; secret ad"
     tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
-    # tmux_send htop "source ~/.profile; htop"
-    # tmux_send prod "source ~/.profile; powershell.exe -c prod"
     tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
     tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
-    # tmux_send vim "source ~/.profile; vim"
 }
 
 function venv_create() {

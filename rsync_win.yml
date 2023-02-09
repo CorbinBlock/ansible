@@ -1,0 +1,16 @@
+---
+    - name: Rsync - WSL
+      hosts: localhost
+      tasks: 
+       - name: Rsync - WSL
+         ansible.builtin.shell: rsync --archive --exclude '.git' --progress --verbose '/c/Users/cblock/docs/' '/home/cblock/.local/share/docs/'
+    - name: Rsync - Dev
+      hosts: localhost
+      tasks: 
+       - name: Rsync - Dev
+         ansible.builtin.shell: rsync --archive --exclude '.git' --progress --rsh 'ssh -p 50200' --verbose '/c/Users/cblock/docs/' 'cblock@devenvzone.com:/home/cblock/.local/share/docs/'
+    - name: Rsync - Prod
+      hosts: localhost
+      tasks: 
+       - name: Rsync - Prod
+         ansible.builtin.shell: rsync --archive --exclude '.git' --progress --rsh 'ssh -p 50100' --verbose '/c/Users/cblock/docs/' 'cblock@devenvzone.com:/home/cblock/.local/share/docs/'
