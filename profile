@@ -637,7 +637,7 @@ function vm_viewer_windows() {
 }
 
 function x_check_battery() {
-    # upower -i "upower -e | grep 'BAT'"
+    upower -i "upower -e | grep '''BAT'''"
 }
 
 function x_secret() {
@@ -645,12 +645,11 @@ function x_secret() {
     tmux_session secret
     tmux_send secret "bash"
     tmux_send secret "source ~/.profile; ssh_dev"
-    tmux_send secret "secret $1"
 }
 
 function x_stop_lockscreen() {
     xset -dpms
-	xset s off
+    xset s off
 }
 
 function main () {
