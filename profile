@@ -637,7 +637,7 @@ function vm_viewer_windows() {
 }
 
 function x_check_battery() {
-    upower -i "upower -e | grep 'BAT'"
+    # upower -i "upower -e | grep 'BAT'"
 }
 
 function x_secret() {
