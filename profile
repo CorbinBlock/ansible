@@ -446,6 +446,23 @@ function tmux_attach() {
     tmux attach -t $1
 }
 
+
+function tmux_cygwin() {
+    pkill tmux
+    session_list=(alpine debian gentoo powershell rsync scroll ssh_tunnel)
+    for i in "${session_list[@]}"
+    do
+        echo "$i"
+        tmux_session $i
+    done
+    tmux_list
+    tmux_send powershell "powershell.exe -c pwsh.exe -nologo" C-m
+    tmux_send gentoo "wsl.exe" C-m
+    tmux_send ssh_tunnel "source ~/.profile; powershell.exe -c ssh_tunnel"
+    tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
+    # tmux_send wsl "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
+}
+
 function tmux_env {
     # ssh tunnel session created in crontab
     session_list=(firefox ide prod wifi )
