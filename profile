@@ -129,21 +129,21 @@ function apt_setup_all {
 function apt_upgrade() {
     echo "apt: Update debian server."
     sudo apt-get update
-	sudo apt-get --with-new-pkgs upgrade -y
-	sudo apt-get autoremove -y
-	source_profile
-	venv_create
-	ansible-playbook ~/.local/bin/ansible/apt_all.yml
+    sudo apt-get --with-new-pkgs upgrade -y
+    sudo apt-get autoremove -y
+    source_profile
+    venv_create
+    ansible-playbook ~/.local/bin/ansible/apt_all.yml
 }
 
 function apt_upgrade_wsl() {
     sudo apt-get update
-	sudo apt-get --with-new-pkgs upgrade -y
-	sudo apt-get autoremove -y
-	source_profile
-	venv_create
-	git_update_all
-	ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
+    sudo apt-get --with-new-pkgs upgrade -y
+    sudo apt-get autoremove -y
+    source_profile
+    venv_create
+    git_update_all
+    ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
 }
 
 function config() {
@@ -253,7 +253,7 @@ function git_push() {
 function git_push_docs() {
     x_secret git
     cd $DOCS_DIR
-	git_push
+    git_push
 }
 
 function report() {
@@ -326,14 +326,14 @@ function source_profile() {
     cd $FILE
     git_pull
     sudo cp ~/.local/bin/ansible/profile ~/.profile
-	dos2unix ~/.profile
-	source ~/.profile
+    dos2unix ~/.profile
+    source ~/.profile
 }
 
 function source_profile_nogit() {
     echo "git: Update profile from Git and load into session"
     rsync_git_ish
-	source ~/.profile
+    source ~/.profile
 }
 
 function ssh_acer() {
@@ -604,18 +604,18 @@ function vm_start_network() {
 
 function vm_start_windows() {
     vm_list
-	sudo virsh start KVMWINPROD01
+    sudo virsh start KVMWINPROD01
 }
 
 function vm_viewer_debian() {
     vm_list
-	VM="KVMDEBTEST01"
-	ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    VM="KVMDEBTEST01"
+    ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 function vm_viewer_windows() {
     vm_list
-	VM="KVMWINTEST01"
+    VM="KVMWINTEST01"
     ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
@@ -633,7 +633,7 @@ function x_secret() {
 
 function x_stop_lockscreen() {
     xset -dpms
-	xset s off
+    xset s off
 }
 
 function main () {
