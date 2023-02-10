@@ -467,7 +467,7 @@ function tmux_cygwin() {
 
 function tmux_env {
     # ssh tunnel session created in crontab
-    session_list=(firefox ide prod wifi )
+    session_list=(firefox ide prod ssh_tunnel_vm wifi )
     for i in "${session_list[@]}"
     do
        echo "$i"
@@ -476,15 +476,14 @@ function tmux_env {
     tmux_send wifi "bash"
     tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
     sleep 20
-    tmux_send ssh_tunnel "bash"
+    tmux_send ssh_tunnel_vm "bash"
     # USER and DOMAIN environment variable required
-    tmux_send ssh_tunnel "source ~/.profile; sleep 3; vm_viewer_debian"
-    # tmux_send firefox "bash"
+    tmux_send ssh_tunnel_vm "source ~/.profile; sleep 3; vm_viewer_debian"
+    tmux_send firefox "bash"
     # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
-    # tmux_send ide "bash"
+    tmux_send ide "bash"
     # tmux_send ide "source ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
-    # tmux_send prod "bash"
-    # tmux_send prod "sleep 100; ssh -p 50100 \$DOMAIN"
+    tmux_send prod "bash"
 }
 
 function tmux_kill() {
