@@ -448,7 +448,7 @@ function tmux_attach() {
 
 function tmux_cygwin() {
     powershell.exe -c "test_process_kill('tmux')"
-    session_list=(alpine debian gentoo powershell rsync scroll ssh_tunnel)
+    session_list=(alpine debian gentoo powershell rsync vim scroll ssh_tunnel)
     for i in "${session_list[@]}"
     do
         echo "$i"
@@ -462,6 +462,7 @@ function tmux_cygwin() {
     tmux_send ssh_tunnel "powershell.exe -c ssh_tunnel" C-m
     tmux_send scroll "powershell.exe -c scroll" C-m
     tmux_send rsync "powershell.exe -c rsync_git" C-m
+    tmux_send vim "wsl.exe vim" C-m
 }
 
 function tmux_env {
