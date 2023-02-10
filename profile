@@ -415,7 +415,7 @@ function ssh_localhost() {
 
 function ssh_mount {
     sudo chown $USER /mnt
-    node_list=(acer KVMDEBTEST01 dev prod dell lenovo)
+    node_list=(kvm_debian_test dev prod dell lenovo)
     for i in "${node_list[@]}"
     do
         echo "$i"
@@ -426,7 +426,7 @@ function ssh_mount {
 
 function ssh_unmount {
     sudo chown $USER /mnt
-    node_list=(acer KVMDEBTEST01 dev prod dell lenovo)
+    node_list=(kvm_debian_test dev prod dell lenovo)
     for i in "${node_list[@]}"
     do
         echo "$i"
@@ -444,23 +444,6 @@ function ssh_tunnel() {
 
 function tmux_attach() {
     tmux attach -t $1
-}
-
-
-function tmux_cygwin() {
-    powershell.exe -c "test_process_kill('tmux')
-    session_list=(alpine debian gentoo powershell rsync scroll ssh_tunnel)
-    for i in "${session_list[@]}"
-    do
-        echo "$i"
-        tmux_session $i
-    done
-    tmux_list
-    tmux_send powershell "powershell.exe -c pwsh.exe -nologo" C-m
-    tmux_send gentoo "wsl.exe" C-m
-    tmux_send ssh_tunnel "powershell.exe -c ssh_tunnel" C-m
-    tmux_send scroll "powershell.exe -c scroll" C-m
-    tmux_send rsync "powershell.exe -c rsync_git" C-m
 }
 
 function tmux_env {
@@ -637,7 +620,7 @@ function vm_viewer_windows() {
 }
 
 function x_check_battery() {
-    upower -i "upower -e | grep '''BAT'''"
+    upower -i `upower -e | grep 'BAT'`
 }
 
 function x_secret() {
@@ -645,11 +628,12 @@ function x_secret() {
     tmux_session secret
     tmux_send secret "bash"
     tmux_send secret "source ~/.profile; ssh_dev"
+    tmux_send secret "secret $1"
 }
 
 function x_stop_lockscreen() {
     xset -dpms
-    xset s off
+	xset s off
 }
 
 function main () {
