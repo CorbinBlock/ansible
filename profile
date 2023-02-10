@@ -456,9 +456,9 @@ function tmux_cygwin() {
     done
     tmux_list
     tmux_send powershell "powershell.exe -c pwsh.exe -nologo" C-m
-    tmux_send alpine "wsl.exe" C-m
-    tmux_send debian "wsl.exe" C-m
-    tmux_send gentoo "wsl.exe" C-m
+    tmux_send alpine "wsl.exe -d WSLALPINEPROD01" C-m
+    tmux_send debian "wsl.exe -d WSLDEBPROD01" C-m
+    tmux_send gentoo "wsl.exe -d WSLGENTOOPROD01" C-m
     tmux_send ssh_tunnel "powershell.exe -c ssh_tunnel" C-m
     tmux_send scroll "powershell.exe -c scroll" C-m
     tmux_send rsync "powershell.exe -c rsync_git" C-m
