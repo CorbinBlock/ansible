@@ -574,14 +574,21 @@ function vm_install_debian() {
     vm_list
     vm="KVMDEBTEST01_20230201.qcow2"
     vm_size=120
-    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/debian-11.5.0-amd64-netinst.iso --noautoconsole
+    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --noautoconsole
 }
 
 function vm_install_windows() {
     vm_list
     vm="KVMWINTEST01_20230119.qcow2"
     vm_size=300
-    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/kvm/Win10_21H2_English_x64.iso --noautoconsole
+    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --noautoconsole
+}
+
+function vm_install_windows11() {
+    vm_list
+    vm="KVMWIN11TEST01_20230210.qcow2"
+    vm_size=300
+    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
 }
 
 function vm_list() {
