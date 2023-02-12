@@ -597,7 +597,7 @@ function vm_list() {
 
 function vm_shutdown() {
     vm_list
-    session_list=(KVMALPINEPROD01 KVMDEBPROD01 KVMFEDPROD01 KVMWINPROD01 KVMWINTEST01)
+    session_list=(KVMALPINEPROD01 KVMDEBTEST01 KVMFEDPROD01 KVMWINPROD01 KVMWINTEST01)
     for i in "${session_list[@]}"
     do
         echo "$i"
