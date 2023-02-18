@@ -294,7 +294,7 @@ function rsync_nas_two {
 }
 
 function rsync_vm_prod {
-   ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
+   ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/* dev:~/.local/share/hdd/kvm/"
 }
 
 function secret() {
@@ -603,7 +603,7 @@ function vm_shutdown() {
         echo "$i"
         sudo virsh shutdown $i
     done
-	sudo chown cblock ~/.local/state/kvm/*
+	sudo chown cblock ~/.local/state/*
 }
 
 function vm_start {
