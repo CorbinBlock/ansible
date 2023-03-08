@@ -294,7 +294,7 @@ function rsync_nas_two {
 }
 
 function rsync_vm_prod {
-   ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/* dev:~/.local/share/hdd/kvm/"
+   ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
 }
 
 function secret() {
@@ -439,7 +439,7 @@ function ssh_prod() {
 }
 
 function ssh_tunnel() {
-    ssh -p 50100 -L 3390:KVMDEBTEST01:3389 -L 5902:HQDEBPROD01:5902 -L 8081:KVMDEBTEST01:8080 -L 9091:KVMDEBTEST01:9090 $USER@$DOMAIN
+    ssh -p 50100 -L 3391:KVMWINPROD01:3389 -L 5901:KVMDEBPROD01:5901 -L 5902:KVMDEBDEV01:5902 -L 8081:KVMDEBPROD01:8080 -L 9091:KVMDEBPROD01:9090 $USER@$DOMAIN
 }
 
 function tmux_attach() {
@@ -603,7 +603,7 @@ function vm_shutdown() {
         echo "$i"
         sudo virsh shutdown $i
     done
-	sudo chown cblock ~/.local/state/*
+	sudo chown cblock ~/.local/state/kvm/*
 }
 
 function vm_start {
