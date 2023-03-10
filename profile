@@ -301,8 +301,9 @@ function secret() {
     secret_path=$1
     database=$XDG_DATA_HOME/docs/data/secrets.kdbx
     key_file=$XDG_DATA_HOME/docs/data/secrets.keyx
-    password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
-    command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | set_clipboard"
+    # password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
+    # command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | set_clipboard"
+	keepassxc-cli show -sa $KEEPASS -k $key_file $database $secret_path | set_clipboard"
     eval $command
 }
 
@@ -520,7 +521,6 @@ function tmux_wsl() {
     done
     tmux_list
     tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
-    # tmux_send powershell "sleep 5; secret ad"
     tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
     tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
     tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
