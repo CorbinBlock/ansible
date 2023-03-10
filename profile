@@ -345,7 +345,7 @@ function ssh_any() {
 }
 
 function ssh_all() {
-    port_list=( 22 2222 3333 50100 50200 50300 50400 50500 )
+    port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
     for i in "${port_list[@]}"
     do
     echo "ssh: Attempt connection via port $i"
@@ -442,7 +442,7 @@ function ssh_tunnel() {
     ssh -p 50100 -L 3391:KVMWINPROD01:3389 -L 3392:KVMWINDEV01:3389 -L 8081:KVMDEBPROD01:8080 -L 9091:KVMDEBPROD01:9090 -L 5911:HQDEBPROD01:5901 -L 5912:HQDEBPROD01:5902 $USER@$DOMAIN
 }
 
-function ssh_dev() {
+function ssh_tunnel_dev() {
     ssh -p 50200 -L 3393:KVMWINPROD02:3389 -L 3394:KVMWINDEV02:3389 $USER@$DOMAIN
 }
 
@@ -520,7 +520,6 @@ function tmux_wsl() {
     done
     tmux_list
     tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
-    # tmux_send powershell "sleep 5; secret ad"
     tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
     tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
     tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
