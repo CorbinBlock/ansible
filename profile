@@ -346,7 +346,7 @@ function ssh_any() {
 }
 
 function ssh_all() {
-    port_list=( 22 2222 3333 50100 50200 50300 50400 50500 )
+    port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
     for i in "${port_list[@]}"
     do
     echo "ssh: Attempt connection via port $i"
