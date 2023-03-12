@@ -243,6 +243,7 @@
           - xfce4
           - xfce4-terminal
           - xz-utils
+          - zsh
           - zstd
         state: latest
         update_cache: yes
