@@ -117,6 +117,8 @@ function apt_setup() {
      fi	 
 	 apt_upgrade
 	 source_profile
+	 # Return code set as 0 so non-interactive session will not fail
+	 x_stop_lockscreen || exit 0
 	 docker_delete
 	 docker_firefox
 }
