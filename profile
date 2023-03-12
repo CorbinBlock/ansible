@@ -114,7 +114,11 @@ function apt_setup() {
      sudo su $USER -c "systemctl --user daemon-reload"
      sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
      sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
-     fi
+     fi	 
+	 apt_upgrade
+	 source_profile
+	 docker_delete
+	 docker_firefox
 }
 
 function apt_setup_all {
@@ -175,6 +179,12 @@ function config() {
 function docker_delete {
     sudo docker rm$(docker ps --filter status=exited -q)
     sudo docker system prune --all --force --volumes
+}
+
+function docker_firefox {
+    docker_delete
+    cd $XDG_DATA_HOME/docs/docker/docker_firefox/
+    ./setup.sh
 }
 
 function docker_gentoo {
