@@ -122,7 +122,8 @@ function apt_setup() {
 	 x_secret firefox || exit 0
 	 docker_delete || exit 0
 	 docker_firefox || exit 0
-	 ~/.local/bin/idea/bin/idea.sh || exit 0
+	 ide || exit 0
+	 # ~/.local/bin/idea/bin/idea.sh || exit 0
 }
 
 function apt_setup_all {
@@ -231,6 +232,12 @@ function emerge_update {
 function git_update_all() {
     rsync_git_dev
     rsync_git_prod
+}
+
+function ide() {
+    tmux_kill ide
+    tmux_session ide
+	tmux_attach ide
 }
 
 function git_pull() {
