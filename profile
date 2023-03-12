@@ -119,8 +119,10 @@ function apt_setup() {
 	 source_profile
 	 # Return code set as 0 so non-interactive session will not fail
 	 x_stop_lockscreen || exit 0
-	 docker_delete
-	 docker_firefox
+	 x_secret git || exit 0
+	 docker_delete || exit 0
+	 docker_firefox || exit 0
+	 ~/.local/bin/idea/bin/idea.sh || exit 0
 }
 
 function apt_setup_all {
