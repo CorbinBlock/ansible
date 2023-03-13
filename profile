@@ -640,7 +640,7 @@ function virsh_viewer_debian() {
 
 function virsh_viewer_windows() {
     virsh_list
-    VM="KVMWINPROD01"
+    VM="KVMWINPROD02"
     ssh_dev "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
