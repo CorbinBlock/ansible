@@ -54,8 +54,8 @@ function apk_setup_ish() {
     echo "apk: Setup alpine server for iSH iOS app."
     mkdir -p ~/.local/bin/
     apk_upgrade_ish
-	# i3lock i3lock-doc
-    package_list=( bash dos2unix git git-lfs i3status i3status-doc i3wm i3wm-doc lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
+	# i3status i3status-doc i3wm i3wm-doc i3lock i3lock-doc
+    package_list=( bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sshfs sudo tmux tree ttf-dejavu vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy xorg-server xterm xvfb)
     for i in "${package_list[@]}"
     do
         apk_install $i
