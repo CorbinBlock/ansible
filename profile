@@ -124,6 +124,7 @@ function apt_setup() {
 	 docker_firefox || exit 0
 	 ide || exit 0
 	 # ~/.local/bin/idea/bin/idea.sh || exit 0
+	 exit
 }
 
 function apt_setup_all {
@@ -418,10 +419,6 @@ function ssh_kvm_debian_prod() {
     ssh_terminal KVMDEBPROD01 "$1"
 }
 
-function ssh_kvm_debian_test() {
-    ssh_terminal KVMDEBTEST01 "$1"
-}
-
 function ssh_kvm_alpine_prod() {
     ssh_terminal KVMALPINEPROD01 "$1"
 }
@@ -460,11 +457,11 @@ function ssh_prod() {
 }
 
 function ssh_tunnel() {
-    ssh -p 50100 -L 3391:KVMWINPROD01:3389 -L 3392:KVMWINDEV01:3389 -L 8081:KVMDEBPROD01:8080 -L 9091:KVMDEBPROD01:9090 -L 5911:HQDEBPROD01:5901 -L 5912:HQDEBPROD01:5902 $USER@$DOMAIN
+    ssh -p 50100 -L 3391:KVMWINPROD01:3389 -L 3392:KVMWINDEV01:3389 -L 8081:KVMDEBPROD01:8080 -L 9091:KVMDEBPROD01:9090 -L 5911:HQDEBPROD01:5901 -L 5912:HQDEBPROD01:5902 $USER@$DOMAIN "$1"
 }
 
 function ssh_tunnel_dev() {
-    ssh -p 50200 -L 3393:KVMWINPROD02:3389 -L 3394:KVMWINDEV02:3389 $USER@$DOMAIN
+    ssh -p 50200 -L 3393:KVMWINPROD02:3389 -L 3394:KVMWINDEV02:3389 $USER@$DOMAIN "$1"
 }
 
 function tmux_attach() {
@@ -582,70 +579,48 @@ function venv_activate_source {
     source ~/.local/bin/venv/bin/activate
 }
 
-function vm_import_debian() {
+function virsh_dhcp {
+    sudo virsh net-dhcp-leases default
+}
+
+function virsh_import_debian() {
     vm_list
     vm="KVMDEBTEST01_20230201.qcow2"
     sudo virt-install --name KVMDEBPROD01 --memory 2048 --vcpus 1 --disk ~/.local/state/kvm/$VM --import --os-variant debian11 --network default
 }
 
-function vm_import_windows() {
+function virsh_import_windows() {
     vm_list
     vm="KVMDEBTEST01_20230201.qcow2"
     sudo virt-install --name KVMWINPROD01 --memory 16384 --vcpus 4 --disk ~/.local/state/kvm/$VM --import --os-variant debian11 --network default
 }
 
-function vm_install_debian() {
+function virsh_install_debian() {
     vm_list
     vm="KVMDEBTEST01_20230201.qcow2"
     vm_size=120
     sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --noautoconsole
 }
 
-function vm_install_windows() {
+function virsh_install_windows() {
     vm_list
     vm="KVMWINTEST01_20230119.qcow2"
     vm_size=300
     sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --noautoconsole
 }
 
-function vm_install_windows11() {
+function virsh_install_windows11() {
     vm_list
     vm="KVMWIN11TEST01_20230210.qcow2"
     vm_size=300
     sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
 }
 
-function vm_list() {
+function virsh_list() {
      sudo virsh list --all
 }
 
-function vm_shutdown() {
-    vm_list
-    session_list=(KVMALPINEPROD01 KVMDEBTEST01 KVMFEDPROD01 KVMWINPROD01 KVMWINTEST01)
-    for i in "${session_list[@]}"
-    do
-        echo "$i"
-        sudo virsh shutdown $i
-    done
-	sudo chown cblock ~/.local/state/kvm/*
-}
-
-function vm_start {
-    vm_list
-    session_list=(KVMALPINEPROD01 KVMDEBTEST01 KVMFEDPROD01 KVMWINTEST01)
-    for i in "${session_list[@]}"
-    do
-        echo "$i"
-        sudo virsh start $i
-    done
-}
-
-function vm_start_debian() {
-    vm_list
-    sudo virsh start KVMDEBPROD01
-}
-
-function vm_start_network() {
+function virsh_start_network() {
     vm_list
     sudo virsh net-create ~/.local/share/docs/data/default.xml
 	sudo virsh net-start default
@@ -656,16 +631,16 @@ function vm_start_windows() {
     sudo virsh start KVMWINPROD01
 }
 
-function vm_viewer_debian() {
+function virsh_viewer_debian() {
     vm_list
-    VM="KVMDEBTEST01"
+    VM="KVMDEBPROD01"
     ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
-function vm_viewer_windows() {
+function virsh_viewer_windows() {
     vm_list
-    VM="KVMWINTEST01"
-    ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    VM="KVMWINPROD01"
+    ssh_dev "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 function x_check_battery() {
