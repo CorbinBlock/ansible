@@ -286,6 +286,7 @@ function report() {
     date
     tmux_list
     sudo docker ps
+    virsh_list
     df -BG
 }
 
