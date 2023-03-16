@@ -54,12 +54,13 @@ function apk_setup_ish() {
     echo "apk: Setup alpine server for iSH iOS app."
     mkdir -p ~/.local/bin/
     apk_upgrade_ish
-	# i3status i3status-doc i3wm i3wm-doc i3lock i3lock-doc sshfs ttf-dejavu xorg-server xterm xvfb
-    package_list=( bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy)
-    for i in "${package_list[@]}"
-    do
-        apk_install $i
-    done
+    # i3status i3status-doc i3wm i3wm-doc i3lock i3lock-doc sshfs ttf-dejavu xorg-server xterm xvfb
+    # package_list=( bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy)
+    #for i in "${package_list[@]}"
+    #do
+    #    apk_install $i
+    # done
+    apk_install bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
     ssh_create
     sudo rc-update add sshd
     /usr/sbin/sshd
