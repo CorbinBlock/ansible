@@ -60,7 +60,7 @@ function apk_setup_ish() {
     #do
     #    apk_install $i
     # done
-    apk_install bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
+    sudo apk add bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
     ssh_create
     sudo rc-update add sshd
     /usr/sbin/sshd
