@@ -596,9 +596,12 @@ function virsh_import_windows() {
 
 function virsh_install_debian() {
     virsh_list
-    vm="KVMDEBTEST01_20230201.qcow2"
-    vm_size=120
-    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 4096 --vcpus 1 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --noautoconsole
+	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 400 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
+}
+
+function virsh_install_debian_dev() {
+    virsh_list
+	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 400 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_windows() {
