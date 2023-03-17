@@ -603,9 +603,12 @@ function virsh_install_debian() {
 
 function virsh_install_windows() {
     virsh_list
-    vm="KVMWINTEST01_20230119.qcow2"
-    vm_size=300
-    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --noautoconsole
+    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 8000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
+}
+
+function virsh_install_windows_dev() {
+    virsh_list
+    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 8000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_windows11() {
