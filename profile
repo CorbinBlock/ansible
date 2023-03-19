@@ -85,19 +85,17 @@ function apt_install () {
     sudo apt-get install "$1"
 }
 
+
 function apt_setup() {
     echo "apt: Setup debian server."
-    package_list=(dos2unix git python3)
+    package_list=(dos2unix git python3 sudo vim)
     for i in "${package_list[@]}"
     do
         apt_install $i
     done
-    mkdir -p ~/.local/bin/
-    apt_upgrade
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt $USER
     sudo systemctl enable --now libvirtd
-    ssh_create
     file=/opt/maven/bin/mvn
      if [ ! -f $file ]; then
      echo "$file not found!"
@@ -108,6 +106,7 @@ function apt_setup() {
      ls /opt/maven
      mvn -version
      fi
+     echo "apt: Setup $user."
      file=/etc/pipewire/media-session.d/with-pulseaudio
      if [ ! -f $file ]; then
      echo "$file not found!"
@@ -116,18 +115,19 @@ function apt_setup() {
      sudo su $USER -c "systemctl --user daemon-reload"
      sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
      sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
-     fi	 
-	 apt_upgrade
-	 source_profile
-	 # Return code set as 0 so non-interactive session will not fail
-	 x_stop_lockscreen || exit 0
-	 x_secret firefox || exit 0
-	 docker_delete || exit 0
-	 docker_firefox || exit 0
-	 ide || exit 0
-	 # ~/.local/bin/idea/bin/idea.sh || exit 0
-	 exit
+     fi
+     sudo su $USER -c "mkdir -p ~/.local/"
+     sudo su $USER -c "mkdir -p ~/.local/bin/"
+     sudo su $USER -c "mkdir -p ~/.local/share/"
+     sudo su $USER -c "mkdir -p ~/.local/state/"
+     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
+     sudo su $USER -c "source ~/.profile; apt_upgrade"
+     sudo su $USER -c "source ~/.profile; ssh_create"
+     sudo su $USER -c "source ~/.profile; x_stop_lockscreen"
+     # sudo su $USER -c "source ~/.profile; x_secret firefox"
+     # sudo su $USER -c "source ~/.profile; ide"
 }
+
 
 function apt_setup_all {
     node_list=(kvm_debian_test dev localhost prod dell lenovo acer)
@@ -240,7 +240,7 @@ function git_update_all() {
 function ide() {
     tmux_kill ide
     tmux_session ide
-	tmux_attach ide
+	tmux_send "~/.local/bin/idea/bin/idea.sh"
 }
 
 function git_pull() {
@@ -280,6 +280,12 @@ function git_push_docs() {
     git_push
 }
 
+function nas_setup () {
+    sudo mount /dev/sdb ~/.local/share/ssd/
+    sudo mount /dev/sdc ~/.local/share/hdd/
+    sudo mount /dev/sdd ~/.local/share/hdd_two/
+}
+
 function report() {
     source ~/.profile
     clear
@@ -292,7 +298,15 @@ function report() {
 }
 
 function rsync_git_prod {
-    rsync -avP prod:~/.local/share/docs/ ~/.local/share/docs/
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/hosts /tmp
+    sudo mv /tmp/hosts /etc
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/profile /tmp
+    sudo mv /tmp/profile /etc
+    ssh -p $PORT $USER@$DOMAIN "source ~/.profile; source_profile"
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.profile ~/.profile
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.zshrc ~/.zshrc
 }
 
 function rsync_git_dev {
@@ -301,13 +315,6 @@ function rsync_git_dev {
 
 function rsync_git_dev_push {
     rsync -avP ~/.local/share/dev/ prod:~/.local/share/dev/
-}
-
-function rsync_git_ish {
-    ssh 10.83.1.111 "source ~/.profile; source_profile"
-    rsync -avP 10.83.1.111:~/.local/share/docs/ ~/.local/share/docs/
-    rsync -avP 10.83.1.111:~/.local/bin/ansible/ ~/.local/bin/ansible/
-    rsync -avP 10.83.1.111:~/.profile ~/.profile
 }
 
 function rsync_git_win {
@@ -357,7 +364,7 @@ function source_profile() {
 
 function source_profile_nogit() {
     echo "git: Update profile from Git and load into session"
-    rsync_git_ish
+    rsync_git_prod
     source ~/.profile
 }
 
