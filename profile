@@ -644,17 +644,17 @@ function virsh_viewer_windows() {
 }
 
 function vnc_all {
-    remote-viewer --full-screen vnc://localhost:5911
-    remote-viewer --full-screen vnc://localhost:5912
-    remote-viewer --full-screen vnc://localhost:5913
-    remote-viewer --full-screen vnc://localhost:5914
-    remote-viewer --full-screen vnc://localhost:5915
-    remote-viewer --full-screen vnc://localhost:5916
-	remote-viewer --full-screen vnc://localhost:5917
-	remote-viewer --full-screen vnc://localhost:5918
-	remote-viewer --full-screen vnc://localhost:5919
-	remote-viewer --full-screen vnc://localhost:5920
-	remote-viewer --full-screen vnc://localhost:5921
+    remote-viewer --full-screen vnc://localhost:5911 &
+    remote-viewer --full-screen vnc://localhost:5912 &
+    remote-viewer --full-screen vnc://localhost:5913 &
+    remote-viewer --full-screen vnc://localhost:5914 &
+    remote-viewer --full-screen vnc://localhost:5915 &
+    remote-viewer --full-screen vnc://localhost:5916 &
+	remote-viewer --full-screen vnc://localhost:5917 &
+	remote-viewer --full-screen vnc://localhost:5918 &
+	remote-viewer --full-screen vnc://localhost:5919 &
+	remote-viewer --full-screen vnc://localhost:5920 &
+	remote-viewer --full-screen vnc://localhost:5921 &
 }
 
 function x_check_battery() {
