@@ -298,10 +298,14 @@ function report() {
 }
 
 function rsync_git_prod {
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/hosts /tmp
-    sudo mv /tmp/hosts /etc
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/profile /tmp
-    sudo mv /tmp/profile /etc
+    sudo cp /etc/hosts $XDG_DATA_HOME
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/hosts $XDG_DATA_HOME
+    sudo mv $XDG_DATA_HOME/hosts /etc
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/profile $XDG_DATA_HOME
+    sudo mv $XDG_DATA_HOME/profile /etc
+    sudo mkdir -p /etc/ansible
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME
+    sudo mv $XDG_DATA_HOME/hosts /etc/ansible
     ssh -p $PORT $USER@$DOMAIN "source ~/.profile; source_profile"
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
