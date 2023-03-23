@@ -589,22 +589,22 @@ function virsh_dhcp {
 
 function virsh_import_debian() {
     virsh_list
-    sudo virt-install --name KVMDEBPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMDEBPROD01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMDEBPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMDEBPROD01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_import_debian_dev() {
     virsh_list
-    sudo virt-install --name KVMDEBDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMDEBDEV01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMDEBDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMDEBDEV01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_import_windows() {
     virsh_list
-    sudo virt-install --name KVMWINPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMWINPROD01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMWINPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMWINPROD01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_import_windows_dev() {
     virsh_list
-    sudo virt-install --name KVMWINDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMWINDEV01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMWINDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMWINDEV01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_debian() {
