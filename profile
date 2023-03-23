@@ -589,41 +589,49 @@ function virsh_dhcp {
 
 function virsh_import_debian() {
     virsh_list
-    vm="KVMDEBTEST01_20230201.qcow2"
-    sudo virt-install --name KVMDEBPROD01 --memory 2048 --vcpus 1 --disk ~/.local/state/kvm/$VM --import --os-variant debian11 --network default
+    sudo virt-install --name KVMDEBPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMDEBPROD01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
+}
+
+function virsh_import_debian_dev() {
+    virsh_list
+    sudo virt-install --name KVMDEBDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMDEBDEV01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_import_windows() {
     virsh_list
-    vm="KVMDEBTEST01_20230201.qcow2"
-    sudo virt-install --name KVMWINPROD01 --memory 16384 --vcpus 4 --disk ~/.local/state/kvm/$VM --import --os-variant debian11 --network default
+    sudo virt-install --name KVMWINPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMWINPROD01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
+}
+
+function virsh_import_windows_dev() {
+    virsh_list
+    sudo virt-install --name KVMWINDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/kvm/KVMWINDEV01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_debian() {
     virsh_list
-	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 400 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
+	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_debian_dev() {
     virsh_list
-	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 400 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
+	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_windows() {
     virsh_list
-    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 8000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_windows_dev() {
     virsh_list
-    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 8000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
 }
 
 function virsh_install_windows11() {
     virsh_list
     vm="KVMWIN11TEST01_20230210.qcow2"
     vm_size=300
-    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 16384 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
+    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
 }
 
 function virsh_list() {
