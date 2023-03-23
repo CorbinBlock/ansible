@@ -75,7 +75,8 @@ function apk_upgrade() {
 }
 
 function apk_upgrade_ish() {
-    source_profile_nogit
+    rsync_git_prod
+    source ~/.profile
     echo "apk: Upgrading Alpine Linux node"
     sudo apk -U upgrade
 }
@@ -124,8 +125,7 @@ function apt_setup() {
      sudo su $USER -c "source ~/.profile; apt_upgrade"
      sudo su $USER -c "source ~/.profile; ssh_create"
      sudo su $USER -c "source ~/.profile; x_stop_lockscreen"
-     # sudo su $USER -c "source ~/.profile; x_secret firefox"
-     # sudo su $USER -c "source ~/.profile; ide"
+     sudo su $USER -c "source ~/.profile; rsync_git_prod"
 }
 
 
@@ -363,12 +363,6 @@ function source_profile() {
     git_pull
     sudo cp ~/.local/bin/ansible/profile ~/.profile
     dos2unix ~/.profile
-    source ~/.profile
-}
-
-function source_profile_nogit() {
-    echo "git: Update profile from Git and load into session"
-    rsync_git_prod
     source ~/.profile
 }
 
