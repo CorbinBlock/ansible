@@ -130,7 +130,7 @@ function apt_setup() {
 
 
 function apt_setup_all {
-    node_list=(kvm_debian_test dev localhost prod dell lenovo acer)
+    node_list=(KVMDEBPROD01 KVMDEBDEV01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
     for i in "${node_list[@]}"
     do
         echo "apt - Updating all debian nodes - Current node: $i"
