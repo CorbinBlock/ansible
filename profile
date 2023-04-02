@@ -126,6 +126,8 @@ function apt_setup() {
      sudo su $USER -c "source ~/.profile; ssh_create"
      sudo su $USER -c "source ~/.profile; x_stop_lockscreen"
      sudo su $USER -c "source ~/.profile; rsync_git_prod"
+     sudo su $USER -c "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+
 }
 
 
