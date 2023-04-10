@@ -62,7 +62,7 @@ function apk_setup_ish() {
     # done
     sudo apk add bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
     ssh_create
-    sudo rc-update add sshd
+    # sudo rc-update add sshd
     /usr/sbin/sshd
 }
 
@@ -95,7 +95,7 @@ function apt_setup() {
         apt_install $i
     done
     sudo adduser $USER --shell /bin/bash
-    sudo usermod -G kvm,libvirt $USER
+    sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
     file=/opt/maven/bin/mvn
      if [ ! -f $file ]; then
@@ -144,7 +144,7 @@ function apt_upgrade() {
     echo "apt: Update debian server."
     sudo apt-get update
     sudo apt-get --with-new-pkgs upgrade -y
-    sudo apt-get autoremove -y
+    yes | sudo apt-get autoremove
     source_profile
     venv_create
     ansible-playbook ~/.local/bin/ansible/apt_all.yml
