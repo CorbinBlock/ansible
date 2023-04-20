@@ -254,11 +254,12 @@ function git_pull() {
 
 function git_push_ansible() {
     echo "git: Push ansible repo to main branch + Test on nodes"
-    cd ~/.local/share/dev/ansible/
+    cd ~/.local/bin/ansible/
+    cp ~/.local/share/docs/ansible/.profile ~/.local/share/docs/ansible/profile
+    cp ~/.local/share/docs/ansible/profile ~/.local/bin/ansible/
+	cp ~/.local/share/docs/ansible/apt_all.yml ~/.local/bin/ansible/
     git_push
-    source_profile
-    rsync_git_dev_push
-    ssh_prod "source ~/.profile; source_profile; ssh_iphone 'source ~/.profile; apk_setup_ish'"
+    # ssh_prod "source ~/.profile; source_profile; apt_setup"
 }
 
 function git_push() {
@@ -658,18 +659,18 @@ function virsh_viewer_windows() {
     ssh_dev "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
-function vnc_all {
-    remote-viewer --full-screen vnc://localhost:5911 &
-    remote-viewer --full-screen vnc://localhost:5912 &
-    remote-viewer --full-screen vnc://localhost:5913 &
-    remote-viewer --full-screen vnc://localhost:5914 &
-    remote-viewer --full-screen vnc://localhost:5915 &
-    remote-viewer --full-screen vnc://localhost:5916 &
-	remote-viewer --full-screen vnc://localhost:5917 &
-	remote-viewer --full-screen vnc://localhost:5918 &
-	remote-viewer --full-screen vnc://localhost:5919 &
-	remote-viewer --full-screen vnc://localhost:5920 &
-	remote-viewer --full-screen vnc://localhost:5921 &
+function spice_all {
+    remote-viewer --full-screen spice://localhost:5911 &
+    remote-viewer --full-screen spice://localhost:5912 &
+    remote-viewer --full-screen spice://localhost:5913 &
+    remote-viewer --full-screen spice://localhost:5914 &
+    remote-viewer --full-screen spice://localhost:5915 &
+    remote-viewer --full-screen spice://localhost:5916 &
+	remote-viewer --full-screen spice://localhost:5917 &
+	remote-viewer --full-screen spice://localhost:5918 &
+	remote-viewer --full-screen spice://localhost:5919 &
+	remote-viewer --full-screen spice://localhost:5920 &
+	remote-viewer --full-screen spice://localhost:5921 &
 }
 
 function x_check_battery() {
