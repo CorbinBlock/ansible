@@ -140,6 +140,7 @@ function apt_setup_all {
     done
     ssh_prod "source ~/.profile; apt_setup"
     ssh_dev "source ~/.profile; apt_setup"
+    ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; apt_setup'"
     ssh_dell "source ~/.profile; apt_setup"
     ssh_lenovo "source ~/.profile; apt_setup"
     ssh_acer "source ~/.profile; apt_setup"
