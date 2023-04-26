@@ -132,12 +132,17 @@ function apt_setup() {
 
 
 function apt_setup_all {
-    node_list=(KVMDEBPROD01 KVMDEBDEV01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
+    node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
     for i in "${node_list[@]}"
     do
         echo "apt - Updating all debian nodes - Current node: $i"
         ssh_helper "X" "22" "$i" "source ~/.profile; apt_setup"
     done
+    ssh_prod "source ~/.profile; apt_setup"
+    ssh_dev "source ~/.profile; apt_setup"
+    ssh_dell "source ~/.profile; apt_setup"
+    ssh_lenovo "source ~/.profile; apt_setup"
+    ssh_acer "source ~/.profile; apt_setup"
 }
 
 function apt_upgrade() {
@@ -411,7 +416,7 @@ function ssh_create() {
 }
 
 function ssh_dell() {
-    ssh_all dell "$1"
+    ssh -X -p 50300 $DOMAIN
 }
 
 function ssh_dev() {
@@ -426,16 +431,8 @@ function ssh_iphone() {
     ssh_all iphone "$1"
 }
 
-function ssh_kvm_debian_prod() {
-    ssh_terminal KVMDEBPROD01 "$1"
-}
-
-function ssh_kvm_alpine_prod() {
-    ssh_terminal KVMALPINEPROD01 "$1"
-}
-
 function ssh_lenovo() {
-    ssh_all lenovo "$1"
+    ssh -X -p 50300 $DOMAIN
 }
 
 function ssh_localhost() {
