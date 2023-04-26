@@ -138,9 +138,9 @@ function apt_setup_all {
         echo "apt - Updating all debian nodes - Current node: $i"
         ssh_helper "X" "22" "$i" "source ~/.profile; apt_setup"
     done
+    ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; apt_setup'"
     ssh_prod "source ~/.profile; apt_setup"
     ssh_dev "source ~/.profile; apt_setup"
-    ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; apt_setup'"
     ssh_dell "source ~/.profile; apt_setup"
     ssh_lenovo "source ~/.profile; apt_setup"
     ssh_acer "source ~/.profile; apt_setup"
