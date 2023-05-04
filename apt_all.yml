@@ -21,13 +21,13 @@
           - cockpit-pcp
           - curl
           - dbus-x11
+          - dnsutils
           - debian-goodies
           - debianutils 
           - default-jre
           - diffutils
           - dos2unix
           - dpkg
-          # - fdisk
           - file
           - findutils
           - flatpak
@@ -59,7 +59,7 @@
           - openssh-client
           - openssh-server
           - openssl
-          # - postgresql
+          - postgresql
           - pciutils
           - pipewire
           - procps
@@ -76,7 +76,6 @@
           - sed
           - software-properties-common
           - sqlite3
-          # - sshfs
           - ssl-cert
           - sudo
           - tar
@@ -90,6 +89,7 @@
           - virtinst
           - virt-manager
           - virt-viewer
+          - vrms
           - wget
           - whois
           - wireguard
@@ -101,5 +101,6 @@
           - xfce4-terminal
           - xz-utils
           - zstd
+          - zsh
         state: latest
         update_cache: yes
