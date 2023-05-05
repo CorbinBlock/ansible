@@ -212,10 +212,10 @@ function system_apt_setup() {
      sudo su $USER -c "mkdir -p ~/.local/share/"
      sudo su $USER -c "mkdir -p ~/.local/state/"
      sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-     sudo su $USER -c "source ~/.profile; apt_upgrade"
-     sudo su $USER -c "source ~/.profile; ssh_create"
-     sudo su $USER -c "source ~/.profile; x_stop_lockscreen"
-     sudo su $USER -c "source ~/.profile; rsync_git_prod"
+     sudo su $USER -c "source ~/.profile; system_apt_upgrade"
+     sudo su $USER -c "source ~/.profile; system_ssh_create"
+     sudo su $USER -c "source ~/.profile; system_x_stop_lockscreen"
+     sudo su $USER -c "source ~/.profile; system_rsync_git_prod"
      sudo su $USER -c "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 
 }
@@ -226,14 +226,14 @@ function system_apt_setup_all {
     for i in "${node_list[@]}"
     do
         echo "apt - Updating all debian nodes - Current node: $i"
-        system_ssh_helper "X" "22" "$i" "source ~/.profile; apt_setup"
+        system_ssh_helper "X" "22" "$i" "source ~/.profile; system_apt_setup"
     done
-    system_ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; apt_setup'"
-    system_ssh_prod "source ~/.profile; apt_setup"
-    system_ssh_dev "source ~/.profile; apt_setup"
-    system_ssh_dell "source ~/.profile; apt_setup"
-    system_ssh_lenovo "source ~/.profile; apt_setup"
-    system_ssh_acer "source ~/.profile; apt_setup"
+    system_ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; system_apt_setup'"
+    system_ssh_prod "source ~/.profile; system_apt_setup"
+    system_ssh_dev "source ~/.profile; system_apt_setup"
+    system_ssh_dell "source ~/.profile; system_apt_setup"
+    system_ssh_lenovo "source ~/.profile; system_apt_setup"
+    system_ssh_acer "source ~/.profile; system_apt_setup"
 }
 
 function system_apt_upgrade() {
@@ -350,7 +350,6 @@ function system_git_push_ansible() {
     cp ~/.local/share/docs/ansible/profile ~/.local/bin/ansible/
 	cp ~/.local/share/docs/ansible/apt_all.yml ~/.local/bin/ansible/
     system_git_push
-    # ssh_prod "source ~/.profile; source_profile; apt_setup"
 }
 
 function system_git_push() {
