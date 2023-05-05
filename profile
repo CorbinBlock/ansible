@@ -399,7 +399,7 @@ function system_rsync_git_prod {
     sudo mkdir -p /etc/ansible
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME
     sudo mv $XDG_DATA_HOME/hosts /etc/ansible
-    ssh -p $PORT $USER@$DOMAIN "source ~/.profile; source_profile"
+    ssh -p $PORT $USER@$DOMAIN "source ~/.profile; system_source_profile"
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.profile ~/.profile
