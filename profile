@@ -552,7 +552,7 @@ function system_tmux_env {
     sleep 20
     system_tmux_send ssh_tunnel_vm "bash"
     # USER and DOMAIN environment variable required
-    system_tmux_send ssh_tunnel_vm "source ~/.profile; sleep 3; vm_viewer_debian"
+    system_tmux_send ssh_tunnel_vm "source ~/.profile; sleep 3; api_virsh_viewer_debian"
     system_tmux_send firefox "bash"
     # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
     system_tmux_send ide "bash"
