@@ -9,7 +9,8 @@
           - apt-transport-https
           - apt-utils
           - bash
-          - bash-completion 
+          - bash-completion
+          - bind9
           - bind9-host
           - bridge-utils
           - btrfs-progs
