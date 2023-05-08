@@ -442,7 +442,7 @@ function system_source_profile() {
 }
 
 function system_ssh_acer() {
-    system_ssh_all acer "$1"
+    ssh -X -p 50500 $DOMAIN  "$1"
 }
 
 function system_ssh_any() {
@@ -483,7 +483,7 @@ function system_ssh_create() {
 }
 
 function system_ssh_dell() {
-    ssh -X -p 50300 $DOMAIN
+    ssh -X -p 50400 $DOMAIN  "$1"
 }
 
 function system_ssh_dev() {
@@ -499,7 +499,7 @@ function system_ssh_iphone() {
 }
 
 function system_ssh_lenovo() {
-    ssh -X -p 50300 $DOMAIN
+    ssh -X -p 50300 $DOMAIN  "$1"
 }
 
 function system_ssh_localhost() {
