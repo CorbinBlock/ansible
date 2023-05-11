@@ -349,12 +349,12 @@ system_emerge_setup()
 {
     sudo eselect profile set default/linux/amd64/17.1/desktop
     system_emerge_update
-    package_list=(app-admin/sudo app-admin/keepassxc app-containers/docker app-containers/docker-compose app-editors/vim app-emulation/libvirt app-emulation/qemu app-emulation/virt-viewer app-misc/jq app-misc/neofetch app-misc/tmux app-text/dos2unix app-text/tree dev-java/openjdk dev-java/maven-bin dev-python/pip dev-vcs/git net-analyzer/nmap net-misc/rsync sys-apps/dmidecode sys-apps/flatpak sys-apps/lshw sys-devel/distcc virtual/cron www-client/lynx x11-misc/xclip)
-    for i in "${package_list[@]}"
-    do
-        echo "$i"
-        sudo emerge $i
-    done
+    # package_list=(app-admin/sudo app-admin/keepassxc app-containers/docker app-containers/docker-compose app-editors/vim app-emulation/libvirt app-emulation/qemu app-emulation/virt-viewer app-misc/jq app-misc/neofetch app-misc/tmux app-text/dos2unix app-text/tree dev-java/openjdk dev-java/maven-bin dev-python/pip dev-vcs/git net-analyzer/nmap net-misc/rsync sys-apps/dmidecode sys-apps/flatpak sys-apps/lshw sys-devel/distcc virtual/cron www-client/lynx x11-misc/xclip)
+    # for i in "${package_list[@]}"
+    # do
+    #     echo "$i"
+    #     sudo emerge $i
+    # done
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || exit 0
     sudo emerge xfce-base/xfce4-meta --autounmask-write --autounmask=y
     sudo eselect news read
