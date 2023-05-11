@@ -693,12 +693,18 @@ system_venv_create()
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
     system_venv_activate_source
-    package_list=(pip setuptools wheel paramiko ansible pyspark)
-    for i in "${package_list[@]}"
-    do
-         echo "$i"
-         python3 -m pip install --upgrade $i
-    done
+    # package_list=(pip setuptools wheel paramiko ansible pyspark)
+    # for i in "${package_list[@]}"
+    # do
+    #      echo "$i"
+    #      python3 -m pip install --upgrade $i
+    # done
+    python3 -m pip install --upgrade pip
+    python3 -m pip install --upgrade setuptools
+    python3 -m pip install --upgrade wheel
+    python3 -m pip install --upgrade paramiko
+    python3 -m pip install --upgrade ansible
+    python3 -m pip install --upgrade pyspark
 }
 
 system_venv_activate()
