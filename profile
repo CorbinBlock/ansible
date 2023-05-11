@@ -26,7 +26,7 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-function api_secret {
+api_secret {
     secret_path=$1
     database=$XDG_DATA_HOME/docs/data/secrets.kdbx
     key_file=$XDG_DATA_HOME/docs/data/secrets.keyx
@@ -643,11 +643,11 @@ function system_spice_all {
     remote-viewer --full-screen spice://localhost:5914 &
     remote-viewer --full-screen spice://localhost:5915 &
     remote-viewer --full-screen spice://localhost:5916 &
-	remote-viewer --full-screen spice://localhost:5917 &
-	remote-viewer --full-screen spice://localhost:5918 &
-	remote-viewer --full-screen spice://localhost:5919 &
-	remote-viewer --full-screen spice://localhost:5920 &
-	remote-viewer --full-screen spice://localhost:5921 &
+    remote-viewer --full-screen spice://localhost:5917 &
+    remote-viewer --full-screen spice://localhost:5918 &
+    remote-viewer --full-screen spice://localhost:5919 &
+    remote-viewer --full-screen spice://localhost:5920 &
+    remote-viewer --full-screen spice://localhost:5921 &
 }
 
 function system_x_check_battery {
