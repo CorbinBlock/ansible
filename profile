@@ -143,11 +143,11 @@ system_apk_setup()
     echo "apk: Setup alpine server."
     mkdir -p ~/.local/bin/
     system_apk_upgrade
-    package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
-    for i in "${package_list[@]}"
-    do
-        system_apk_install $i
-    done
+    # package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
+    # for i in "${package_list[@]}"
+    # do
+    #     system_apk_install $i
+    # done
     system_apk_upgrade
     system_ssh_create
     sudo rc-update add docker
