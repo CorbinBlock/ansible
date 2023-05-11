@@ -303,6 +303,11 @@ function system_dnf_upgrade() {
     sudo dnf upgrade -y
 }
 
+function system_email_source_profile {
+    cd $XDG_DATA_HOME/docs/python
+    python send_email.py "$(hostname) - The profile was refreshed. - $(system_utc)" "system_source_profile"
+}
+
 function system_emerge_setup {
     sudo eselect profile set default/linux/amd64/17.1/desktop
     system_emerge_update
