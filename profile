@@ -586,7 +586,7 @@ system_ssh_mount()
     #     echo "$i"
     #     mkdir -p /mnt/$i
     #     sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
-    done
+    # done
 }
 
 system_ssh_unmount()
