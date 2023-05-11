@@ -592,12 +592,12 @@ system_ssh_mount()
 system_ssh_unmount()
 {
     sudo chown $USER /mnt
-    node_list=(kvm_debian_test dev prod dell lenovo)
-    for i in "${node_list[@]}"
-    do
-        echo "$i"
-        sudo umount /mnt/$i
-    done
+    # node_list=(kvm_debian_test dev prod dell lenovo)
+    # for i in "${node_list[@]}"
+    # do
+    #     echo "$i"
+    #     sudo umount /mnt/$i
+    # done
 }
 
 system_ssh_prod()
