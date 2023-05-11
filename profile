@@ -230,7 +230,7 @@ function system_apt_setup_all {
     done
     system_ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; system_apt_setup'"
     system_ssh_prod "source ~/.profile; system_apt_setup"
-    system_ssh_dev "source ~/.profile; system_apt_setup"
+    # system_ssh_dev "source ~/.profile; system_apt_setup"
     system_ssh_dell "source ~/.profile; system_apt_setup"
     system_ssh_lenovo "source ~/.profile; system_apt_setup"
     system_ssh_acer "source ~/.profile; system_apt_setup"
