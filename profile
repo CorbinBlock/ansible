@@ -512,17 +512,17 @@ system_ssh_any()
 
 system_ssh_all()
 {
-    port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
-    for i in "${port_list[@]}"
-    do
-    echo "ssh: Attempt connection via port $i"
-    if system_ssh_helper "X" "$i" "$1" "$2" ; then
-        echo "ssh: Connection succeeded"
-        break
-    else
-        echo "ssh: Connection failed, retrying."
-    fi
-    done
+    # port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
+    # for i in "${port_list[@]}"
+    # do
+    # echo "ssh: Attempt connection via port $i"
+    # if system_ssh_helper "X" "$i" "$1" "$2" ; then
+    #     echo "ssh: Connection succeeded"
+    #     break
+    # else
+    #     echo "ssh: Connection failed, retrying."
+    # fi
+    # done
     echo "ssh: Exiting!"
 }
 
