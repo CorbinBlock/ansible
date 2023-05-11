@@ -580,12 +580,12 @@ system_ssh_localhost()
 system_ssh_mount()
 {
     sudo chown $USER /mnt
-    node_list=(kvm_debian_test dev prod dell lenovo)
-    for i in "${node_list[@]}"
-    do
-        echo "$i"
-        mkdir -p /mnt/$i
-        sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
+    # node_list=(kvm_debian_test dev prod dell lenovo)
+    # for i in "${node_list[@]}"
+    # do
+    #     echo "$i"
+    #     mkdir -p /mnt/$i
+    #     sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
     done
 }
 
@@ -618,23 +618,24 @@ system_tmux_attach()
 system_tmux_env()
 {
     # ssh tunnel session created in crontab
-    session_list=(firefox ide prod ssh_tunnel_vm wifi )
-    for i in "${session_list[@]}"
-    do
-       echo "$i"
-       system_tmux_session $i
-    done
+    # session_list=(firefox ide prod ssh_tunnel_vm wifi )
+    # for i in "${session_list[@]}"
+    # do
+    #    echo "$i"
+    #    system_tmux_session $i
+    # done
+    system_tmux_session wifi
+    system_tmux_session ssh_tunnel
     system_tmux_send wifi "bash"
     system_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
     sleep 20
-    system_tmux_send ssh_tunnel_vm "bash"
-    # USER and DOMAIN environment variable required
-    system_tmux_send ssh_tunnel_vm "source ~/.profile; sleep 3; api_virsh_viewer_debian"
-    system_tmux_send firefox "bash"
+    system_tmux_send ssh_tunnel "bash"
+    system_tmux_send ssh_tunnel "source ~/.profile; sleep 3; system_ssh_tunnel"
+    # system_tmux_send firefox "bash"
     # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
-    system_tmux_send ide "bash"
+    # system_tmux_send ide "bash"
     # tmux_send ide "source ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
-    system_tmux_send prod "bash"
+    # system_tmux_send prod "bash"
 }
 
 system_tmux_kill()
@@ -665,12 +666,12 @@ system_tmux_split()
 system_tmux_wsl()
 {
     pkill tmux
-    session_list=(emerge powershell scroll ssh)
-    for i in "${session_list[@]}"
-    do
-        echo "$i"
-        system_tmux_session $i
-    done
+    # session_list=(emerge powershell scroll ssh)
+    # for i in "${session_list[@]}"
+    # do
+    #     echo "$i"
+    #     system_tmux_session $i
+    # done
     system_tmux_list
     system_tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
     system_tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
