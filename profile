@@ -251,15 +251,15 @@ system_apt_setup()
 
 system_apt_setup_all()
 {
-    node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
-    for i in "${node_list[@]}"
-    do
-        echo "apt - Updating all debian nodes - Current node: $i"
-        system_ssh_helper "X" "22" "$i" "source ~/.profile; system_apt_setup"
-    done
+    # node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
+    # for i in "${node_list[@]}"
+    # do
+    #     echo "apt - Updating all debian nodes - Current node: $i"
+    #     system_ssh_helper "X" "22" "$i" "source ~/.profile; system_apt_setup"
+    # done
     system_ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; system_apt_setup'"
     system_ssh_prod "source ~/.profile; system_apt_setup"
-    # system_ssh_dev "source ~/.profile; system_apt_setup"
+    system_ssh_dev "source ~/.profile; system_apt_setup"
     system_ssh_dell "source ~/.profile; system_apt_setup"
     system_ssh_lenovo "source ~/.profile; system_apt_setup"
     system_ssh_acer "source ~/.profile; system_apt_setup"
