@@ -305,7 +305,7 @@ function system_dnf_upgrade() {
 
 function system_email_source_profile {
     cd $XDG_DATA_HOME/docs/python
-    python send_email.py "$(hostname) - The profile was refreshed. - $(system_utc)" "system_source_profile"
+    python send_email.py "$(hostname) - The profile was refreshed. - $(date)" "system_source_profile"
 }
 
 function system_emerge_setup {
