@@ -207,11 +207,13 @@ system_apt_setup()
     # do
     #     system_apt_install $i
     # done
-    system_apt_install dos2unix
-    system_apt_install git
-    system_apt_install python3
-    system_apt_install sudo
-    system_apt_install vim
+    set -- dos2unix git python3 sudo vim
+    for item in "$@"; do system_apt_install "$item"; done
+    # system_apt_install dos2unix
+    # system_apt_install git
+    # system_apt_install python3
+    # system_apt_install sudo
+    # system_apt_install vim
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
