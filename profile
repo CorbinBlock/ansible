@@ -202,18 +202,9 @@ system_apt_install()
 system_apt_setup()
 {
     echo "apt: Setup debian server."
-    # package_list=(dos2unix git python3 sudo vim)
-    # for i in "${package_list[@]}"
-    # do
-    #     system_apt_install $i
-    # done
+    # Using positional parameters as makeshift array to use POSIX shell instead of bash for maximum OS compatibility 
     set -- dos2unix git python3 sudo vim
     for item in "$@"; do system_apt_install "$item"; done
-    # system_apt_install dos2unix
-    # system_apt_install git
-    # system_apt_install python3
-    # system_apt_install sudo
-    # system_apt_install vim
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
