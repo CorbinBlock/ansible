@@ -430,6 +430,11 @@ system_nas_setup()
     sudo mount /dev/sdd ~/.local/share/hdd_two/
 }
 
+system_reboot()
+{
+    sudo systemctl reboot -i
+}
+
 system_report()
 {
     source ~/.profile
