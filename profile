@@ -143,11 +143,8 @@ system_apk_setup()
     echo "apk: Setup alpine server."
     mkdir -p ~/.local/bin/
     system_apk_upgrade
-    # package_list=( bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go)
-    # for i in "${package_list[@]}"
-    # do
-    #     system_apk_install $i
-    # done
+    set -- bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go
+    for item in "$@"; do system_apk_install "$item"; done
     system_apk_upgrade
     system_ssh_create
     sudo rc-update add docker
@@ -164,14 +161,9 @@ system_apk_setup_ish()
     mkdir -p ~/.local/bin/
     system_apk_upgrade_ish
     # i3status i3status-doc i3wm i3wm-doc i3lock i3lock-doc sshfs ttf-dejavu xorg-server xterm xvfb
-    # package_list=( bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy)
-    #for i in "${package_list[@]}"
-    #do
-    #    apk_install $i
-    # done
     sudo apk add bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
     system_ssh_create
-    # sudo rc-update add sshd
+    sudo rc-update add sshd || exit 0
     /usr/sbin/sshd
 }
 
@@ -574,14 +566,13 @@ system_ssh_localhost()
 system_ssh_mount()
 {
     sudo chown $USER /mnt
-    # node_list=(kvm_debian_test dev prod dell lenovo)
-    # for i in "${node_list[@]}"
-    # do
-    #     echo "$i"
-    #     mkdir -p /mnt/$i
-    #     sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
-    # done
-}
+    set -- kvm_debian_test dev prod dell lenovo
+    for item in "$@"
+    do system_apt_install "$item"
+        echo "$i"
+        mkdir -p /mnt/$i
+        sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
+    don}
 
 system_ssh_unmount()
 {
@@ -656,24 +647,6 @@ system_tmux_session()
 system_tmux_split()
 {
     tmux new-session \; split-window -h \; split-window -v \; attach
-}
-
-system_tmux_wsl()
-{
-    pkill tmux
-    # session_list=(emerge powershell scroll ssh)
-    # for i in "${session_list[@]}"
-    # do
-    #     echo "$i"
-    #     system_tmux_session $i
-    # done
-    system_tmux_list
-    system_tmux_send powershell "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
-    system_tmux_send emerge "source ~/.profile; sudo emerge-webrsync"
-    system_tmux_send ssh "source ~/.profile; powershell.exe -c ssh_tunnel"
-    system_tmux_send scroll "source ~/.profile; powershell.exe -c scroll"
-    system_tmux_session wsl
-    system_tmux_send wsl "source ~/.profile; powershell.exe -c pwsh.exe -nologo"
 }
 
 system_venv_create()
