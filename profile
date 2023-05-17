@@ -722,7 +722,7 @@ system_x_stop_lockscreen()
 main ()
 {
     system_config
-    neofetch
+    # neofetch
 	source /etc/profile
 }
 main
