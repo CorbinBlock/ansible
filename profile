@@ -26,7 +26,7 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-api_secret()
+api_get_secret()
 {
     secret_path=$1
     database=$XDG_DATA_HOME/docs/data/secrets.kdbx
@@ -36,100 +36,76 @@ api_secret()
     eval $command
 }
 
-api_virsh_dhcp()
+api_get_virsh_dhcp()
 {
     sudo virsh net-dhcp-leases default
 }
 
-api_virsh_import_debian()
-{
-    api_virsh_list
-    sudo virt-install --name KVMDEBPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMDEBPROD01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_import_debian_dev()
-{
-    api_virsh_list
-    sudo virt-install --name KVMDEBDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMDEBDEV01_20230211.qcow2 --import --os-variant debian11 --network default --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_import_windows() 
-{
-    api_virsh_list
-    sudo virt-install --name KVMWINPROD01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMWINPROD01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_import_windows_dev()
-{
-    api_virsh_list
-    sudo virt-install --name KVMWINDEV01 --memory 6000 --vcpus 4 --disk ~/.local/state/KVMWINDEV01_20230317.qcow2 --import --os-variant win10 --network default --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_install_debian()
-{
-    api_virsh_list
-	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_install_debian_dev()
-{
-    api_virsh_list
-	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_install_windows()
-{
-    api_virsh_list
-    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_install_windows_dev()
-{
-    api_virsh_list
-    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
-}
-
-api_virsh_install_windows11()
-{
-    api_virsh_list
-    vm="KVMWIN11TEST01_20230210.qcow2"
-    vm_size=300
-    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
-}
-
-api_virsh_list() 
+api_get_virsh_list() 
 {
     sudo virsh list --all
 }
 
-api_virsh_start_network() 
+api_set_virsh_install_debian()
 {
-    api_virsh_list
-    sudo virsh net-create ~/.local/share/docs/data/default.xml
-	sudo virsh net-start default
+    api_get_virsh_list
+	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
 }
 
-api_virsh_viewer_debian()
+api_set_virsh_install_debian_dev()
 {
-    api_virsh_list
+    api_get_virsh_list
+	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
+}
+
+api_set_virsh_install_windows()
+{
+    api_get_virsh_list
+    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
+}
+
+api_get_virsh_viewer_debian()
+{
+    api_get_virsh_list
     VM="KVMDEBPROD01"
     system_ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
-api_virsh_viewer_windows()
+api_get_virsh_viewer_windows()
 {
-    api_virsh_list
+    api_get_virsh_list
     VM="KVMWINPROD02"
     system_ssh_dev "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
-api_x_secret()
+api_get_x_secret()
 {
     system_tmux_kill secret
     system_tmux_session secret
     system_tmux_send secret "bash"
     system_tmux_send secret "source ~/.profile; ssh_dev"
     system_tmux_send secret "secret $1"
+}
+
+api_set_virsh_install_windows_dev()
+{
+    api_get_virsh_list
+    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
+}
+
+api_set_virsh_install_windows11()
+{
+    api_get_virsh_list
+    vm="KVMWIN11TEST01_20230210.qcow2"
+    vm_size=300
+    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
+}
+
+api_set_virsh_start_network() 
+{
+    api_get_virsh_list
+    sudo virsh net-create ~/.local/share/docs/data/default.xml
+	sudo virsh net-start default
 }
 
 system_apk_install()
@@ -366,7 +342,7 @@ system_ide()
 system_git_pull()
 {
     echo "git: Update repo in current directory"
-    api_x_secret git
+    api_get_x_secret git
     pwd
     git pull --no-rebase
 }
@@ -383,7 +359,7 @@ system_git_push_ansible()
 
 system_git_push()
 {
-    api_x_secret git
+    # api_get_x_secret git
     git add --all
     git add all*
     git add be*
@@ -399,7 +375,7 @@ system_git_push()
 
 system_git_push_docs()
 {
-    api_x_secret git
+    # api_get_x_secret git
     cd $DOCS_DIR
     system_git_push
 }
@@ -424,7 +400,7 @@ system_report()
     date
     system_tmux_list
     sudo docker ps
-    api_virsh_list
+    api_get_virsh_list
     df -BG
 }
 
