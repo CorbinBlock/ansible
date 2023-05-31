@@ -699,7 +699,7 @@ main ()
 {
     system_config
     # neofetch
-	 . /etc/profile
+     . /etc/profile
 }
 main
 # End profile
