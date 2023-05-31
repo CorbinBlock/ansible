@@ -68,14 +68,14 @@ api_get_virsh_viewer_debian()
 {
     api_get_virsh_list
     VM="KVMDEBPROD01"
-    system_ssh_prod "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    system_ssh_prod " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 api_get_virsh_viewer_windows()
 {
     api_get_virsh_list
     VM="KVMWINPROD02"
-    system_ssh_dev "source ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    system_ssh_dev " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 api_get_x_secret()
@@ -83,7 +83,7 @@ api_get_x_secret()
     system_tmux_kill secret
     system_tmux_session secret
     system_tmux_send secret "bash"
-    system_tmux_send secret "source ~/.profile; ssh_dev"
+    system_tmux_send secret " . ~/.profile; ssh_dev"
     system_tmux_send secret "secret $1"
 }
 
@@ -155,7 +155,7 @@ system_apk_upgrade()
 system_apk_upgrade_ish()
 {
     system_rsync_git_prod
-    source ~/.profile
+     . ~/.profile
     echo "apk: Upgrading Alpine Linux node"
     sudo apk -U upgrade
 }
@@ -201,10 +201,10 @@ system_apt_setup()
      sudo su $USER -c "mkdir -p ~/.local/share/"
      sudo su $USER -c "mkdir -p ~/.local/state/"
      sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-     sudo su $USER -c "source ~/.profile; system_apt_upgrade"
-     sudo su $USER -c "source ~/.profile; system_ssh_create"
-     sudo su $USER -c "source ~/.profile; system_x_stop_lockscreen"
-     sudo su $USER -c "source ~/.profile; system_rsync_git_prod"
+     sudo su $USER -c " . ~/.profile; system_apt_upgrade"
+     sudo su $USER -c " . ~/.profile; system_ssh_create"
+     sudo su $USER -c " . ~/.profile; system_x_stop_lockscreen"
+     sudo su $USER -c " . ~/.profile; system_rsync_git_prod"
      sudo su $USER -c "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 
 }
@@ -216,14 +216,14 @@ system_apt_setup_all()
     # for i in "${node_list[@]}"
     # do
     #     echo "apt - Updating all debian nodes - Current node: $i"
-    #     system_ssh_helper "X" "22" "$i" "source ~/.profile; system_apt_setup"
+    #     system_ssh_helper "X" "22" "$i" " . ~/.profile; system_apt_setup"
     # done
-    system_ssh_dev "ssh KVMDEBTEST01 'source ~/.profile; system_apt_setup'"
-    system_ssh_prod "source ~/.profile; system_apt_setup"
-    system_ssh_dev "source ~/.profile; system_apt_setup"
-    system_ssh_dell "source ~/.profile; system_apt_setup"
-    system_ssh_lenovo "source ~/.profile; system_apt_setup"
-    system_ssh_acer "source ~/.profile; system_apt_setup"
+    system_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; system_apt_setup'"
+    system_ssh_prod " . ~/.profile; system_apt_setup"
+    system_ssh_dev " . ~/.profile; system_apt_setup"
+    system_ssh_dell " . ~/.profile; system_apt_setup"
+    system_ssh_lenovo " . ~/.profile; system_apt_setup"
+    system_ssh_acer " . ~/.profile; system_apt_setup"
 }
 
 system_apt_upgrade()
@@ -394,7 +394,7 @@ system_reboot()
 
 system_report()
 {
-    source ~/.profile
+     . ~/.profile
     clear
     neofetch
     date
@@ -414,7 +414,7 @@ system_rsync_git_prod()
     sudo mkdir -p /etc/ansible
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME
     sudo mv $XDG_DATA_HOME/hosts /etc/ansible
-    ssh -p $PORT $USER@$DOMAIN "source ~/.profile; system_source_profile"
+    ssh -p $PORT $USER@$DOMAIN " . ~/.profile; system_source_profile"
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.profile ~/.profile
@@ -459,7 +459,7 @@ system_source_profile()
     system_git_pull
     sudo cp ~/.local/bin/ansible/profile ~/.profile
     dos2unix ~/.profile
-    source ~/.profile
+     . ~/.profile
 }
 
 system_ssh_acer()
@@ -593,11 +593,11 @@ system_tmux_env()
     system_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
     sleep 20
     system_tmux_send ssh_tunnel "bash"
-    system_tmux_send ssh_tunnel "source ~/.profile; sleep 3; system_ssh_tunnel"
+    system_tmux_send ssh_tunnel " . ~/.profile; sleep 3; system_ssh_tunnel"
     # system_tmux_send firefox "bash"
     # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
     # system_tmux_send ide "bash"
-    # tmux_send ide "source ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
+    # tmux_send ide " . ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
     # system_tmux_send prod "bash"
 }
 
@@ -666,7 +666,7 @@ system_venv_activate()
 
 system_venv_activate_source()
 {
-    source ~/.local/bin/venv/bin/activate
+    . ~/.local/bin/venv/bin/activate
 }
 
 system_spice_all()
@@ -699,7 +699,7 @@ main ()
 {
     system_config
     # neofetch
-	source /etc/profile
+	 . /etc/profile
 }
 main
 # End profile
