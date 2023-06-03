@@ -57,6 +57,87 @@ api_get_secret()
     eval $command
 }
 
+api_get_spice_all()
+{
+    remote-viewer --full-screen spice://localhost:5911 &
+    remote-viewer --full-screen spice://localhost:5912 &
+    remote-viewer --full-screen spice://localhost:5913 &
+    remote-viewer --full-screen spice://localhost:5914 &
+    remote-viewer --full-screen spice://localhost:5915 &
+    remote-viewer --full-screen spice://localhost:5916 &
+    remote-viewer --full-screen spice://localhost:5917 &
+    remote-viewer --full-screen spice://localhost:5918 &
+    remote-viewer --full-screen spice://localhost:5919 &
+    remote-viewer --full-screen spice://localhost:5920 &
+    remote-viewer --full-screen spice://localhost:5921 &
+}
+
+api_get_ssh_acer()
+{
+    ssh -X -p 50500 $DOMAIN  "$1"
+}
+
+api_get_ssh_any()
+{
+    api_get_ssh_all $1 "$2"
+}
+
+api_get_ssh_all()
+{
+    # port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
+    # for i in "${port_list[@]}"
+    # do
+    # echo "ssh: Attempt connection via port $i"
+    # if api_get_ssh_helper "X" "$i" "$1" "$2" ; then
+    #     echo "ssh: Connection succeeded"
+    #     break
+    # else
+    #     echo "ssh: Connection failed, retrying."
+    # fi
+    # done
+    echo "ssh: Exiting!"
+}
+
+api_get_ssh_helper()
+{
+    ssh -$1 -p $2 $3 "$4"
+}
+
+api_get_ssh_terminal()
+{
+    api_get_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
+}
+
+api_get_ssh_dell()
+{
+    ssh -X -p 50400 $DOMAIN  "$1"
+}
+
+api_get_ssh_dev()
+{
+    ssh -X -p 50200 $DOMAIN "$1"
+}
+
+api_get_ssh_ipad()
+{
+    api_get_ssh_all ipad "$1"
+}
+
+api_get_ssh_iphone()
+{
+    api_get_ssh_all iphone "$1"
+}
+
+api_get_ssh_lenovo()
+{
+    ssh -X -p 50300 $DOMAIN  "$1"
+}
+
+api_get_ssh_localhost()
+{
+    api_get_ssh_all localhost "$1"
+}
+
 api_get_virsh_dhcp()
 {
     sudo virsh net-dhcp-leases default
@@ -89,7 +170,6 @@ api_get_x_secret()
     api_set_tmux_send secret " . ~/.profile; ssh_dev"
     api_set_tmux_send secret "secret $1"
 }
-
 
 api_set_apk_setup()
 {
@@ -419,42 +499,6 @@ api_set_source_profile()
      . ~/.profile
 }
 
-api_get_ssh_acer()
-{
-    ssh -X -p 50500 $DOMAIN  "$1"
-}
-
-api_get_ssh_any()
-{
-    api_get_ssh_all $1 "$2"
-}
-
-api_get_ssh_all()
-{
-    # port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
-    # for i in "${port_list[@]}"
-    # do
-    # echo "ssh: Attempt connection via port $i"
-    # if api_get_ssh_helper "X" "$i" "$1" "$2" ; then
-    #     echo "ssh: Connection succeeded"
-    #     break
-    # else
-    #     echo "ssh: Connection failed, retrying."
-    # fi
-    # done
-    echo "ssh: Exiting!"
-}
-
-api_get_ssh_helper()
-{
-    ssh -$1 -p $2 $3 "$4"
-}
-
-api_get_ssh_terminal()
-{
-    api_get_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
-}
-
 api_set_ssh_create()
 {
     FILE=~/.ssh/id_ed25519
@@ -464,36 +508,6 @@ api_set_ssh_create()
     else
         echo "$FILE exists!"
     fi
-}
-
-api_get_ssh_dell()
-{
-    ssh -X -p 50400 $DOMAIN  "$1"
-}
-
-api_get_ssh_dev()
-{
-    ssh -X -p 50200 $DOMAIN "$1"
-}
-
-api_get_ssh_ipad()
-{
-    api_get_ssh_all ipad "$1"
-}
-
-api_get_ssh_iphone()
-{
-    api_get_ssh_all iphone "$1"
-}
-
-api_get_ssh_lenovo()
-{
-    ssh -X -p 50300 $DOMAIN  "$1"
-}
-
-api_get_ssh_localhost()
-{
-    api_get_ssh_all localhost "$1"
 }
 
 api_set_ssh_mount()
@@ -658,21 +672,6 @@ api_set_apk_install()
     sudo apk add $1
 }
 
-api_set_spice_all()
-{
-    remote-viewer --full-screen spice://localhost:5911 &
-    remote-viewer --full-screen spice://localhost:5912 &
-    remote-viewer --full-screen spice://localhost:5913 &
-    remote-viewer --full-screen spice://localhost:5914 &
-    remote-viewer --full-screen spice://localhost:5915 &
-    remote-viewer --full-screen spice://localhost:5916 &
-    remote-viewer --full-screen spice://localhost:5917 &
-    remote-viewer --full-screen spice://localhost:5918 &
-    remote-viewer --full-screen spice://localhost:5919 &
-    remote-viewer --full-screen spice://localhost:5920 &
-    remote-viewer --full-screen spice://localhost:5921 &
-}
-
 api_set_x_check_battery()
 {
     upower -i `upower -e | grep 'BAT'`
@@ -687,7 +686,6 @@ api_set_x_stop_lockscreen()
 main ()
 {
     api_set_config
-    # neofetch
      . /etc/profile
 }
 main
