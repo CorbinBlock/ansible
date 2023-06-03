@@ -48,6 +48,29 @@ api_get_virsh_list()
     sudo virsh list --all
 }
 
+api_get_virsh_viewer_debian()
+{
+    api_get_virsh_list
+    VM="KVMDEBPROD01"
+    api_set_ssh_prod " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+}
+
+api_get_virsh_viewer_windows()
+{
+    api_get_virsh_list
+    VM="KVMWINPROD02"
+    api_set_ssh_dev " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+}
+
+api_get_x_secret()
+{
+    api_set_tmux_kill secret
+    api_set_tmux_session secret
+    api_set_tmux_send secret "bash"
+    api_set_tmux_send secret " . ~/.profile; ssh_dev"
+    api_set_tmux_send secret "secret $1"
+}
+
 api_set_virsh_install_debian()
 {
     api_get_virsh_list
@@ -64,29 +87,6 @@ api_set_virsh_install_windows()
 {
     api_get_virsh_list
     sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
-}
-
-api_get_virsh_viewer_debian()
-{
-    api_get_virsh_list
-    VM="KVMDEBPROD01"
-    system_ssh_prod " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
-}
-
-api_get_virsh_viewer_windows()
-{
-    api_get_virsh_list
-    VM="KVMWINPROD02"
-    system_ssh_dev " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
-}
-
-api_get_x_secret()
-{
-    system_tmux_kill secret
-    system_tmux_session secret
-    system_tmux_send secret "bash"
-    system_tmux_send secret " . ~/.profile; ssh_dev"
-    system_tmux_send secret "secret $1"
 }
 
 api_set_virsh_install_windows_dev()
@@ -110,21 +110,21 @@ api_set_virsh_start_network()
 	sudo virsh net-start default
 }
 
-system_apk_install()
+api_set_apk_install()
 {
     echo "apk: Attempting to install or update - $1"
     sudo apk add $1
 }
 
-system_apk_setup()
+api_set_apk_setup()
 {
     echo "apk: Setup alpine server."
     mkdir -p ~/.local/bin/
-    system_apk_upgrade
+    api_set_apk_upgrade
     set -- bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go
-    for item in "$@"; do system_apk_install "$item"; done
-    system_apk_upgrade
-    system_ssh_create
+    for item in "$@"; do api_set_apk_install "$item"; done
+    api_set_apk_upgrade
+    api_set_ssh_create
     sudo rc-update add docker
     sudo service docker start
     sudo docker run --rm hello-world
@@ -133,36 +133,36 @@ system_apk_setup()
     sudo usermod -G docker,flatpak,kvm,libvirt,wheel $USER
 }
 
-system_apk_setup_ish()
+api_set_apk_setup_ish()
 {
     echo "apk: Setup alpine server for iSH iOS app."
     mkdir -p ~/.local/bin/
-    system_apk_upgrade_ish
+    api_set_apk_upgrade_ish
     # i3status i3status-doc i3wm i3wm-doc i3lock i3lock-doc sshfs ttf-dejavu xorg-server xterm xvfb
     sudo apk add bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
-    system_ssh_create
+    api_set_ssh_create
     sudo rc-update add sshd || exit 0
     /usr/sbin/sshd
 }
 
-system_apk_upgrade()
+api_set_apk_upgrade()
 {
-    system_source_profile
-    system_venv_create
-    system_git_update_all
+    api_set_source_profile
+    api_set_venv_create
+    api_set_git_update_all
     echo "apk: Upgrading Alpine Linux node"
     sudo apk -U upgrade
 }
 
-system_apk_upgrade_ish()
+api_set_apk_upgrade_ish()
 {
-    system_rsync_git_prod
+    api_set_rsync_git_prod
      . ~/.profile
     echo "apk: Upgrading Alpine Linux node"
     sudo apk -U upgrade
 }
 
-system_apt_install()
+api_set_apt_install()
 {
     echo "apt: Attempting to install or update - $1"
     sudo apt-get install "$1"
@@ -173,7 +173,7 @@ api_set_apt_setup()
 {
     echo "apt: Setup debian server."
     set -- dos2unix git python3 sudo vim
-    for item in "$@"; do system_apt_install "$item"; done
+    for item in "$@"; do api_set_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
@@ -203,9 +203,9 @@ api_set_apt_setup()
      sudo su $USER -c "mkdir -p ~/.local/state/"
      sudo su $USER -c "mkdir -p ~/.local/share/tmp"
      sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
-     sudo su $USER -c " . ~/.profile; system_ssh_create"
-     sudo su $USER -c " . ~/.profile; system_x_stop_lockscreen"
-     sudo su $USER -c " . ~/.profile; system_rsync_git_prod"
+     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
+     sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
+     sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
      sudo su $USER -c "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 
 }
@@ -213,18 +213,18 @@ api_set_apt_setup()
 
 api_set_apt_setup_all()
 {
-    # node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
+    # node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01 HQDEBARM01)
     # for i in "${node_list[@]}"
     # do
     #     echo "apt - Updating all debian nodes - Current node: $i"
-    #     system_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
+    #     api_set_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
     # done
-    system_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
-    system_ssh_prod " . ~/.profile; api_set_apt_setup"
-    system_ssh_dev " . ~/.profile; api_set_apt_setup"
-    system_ssh_dell " . ~/.profile; api_set_apt_setup"
-    system_ssh_lenovo " . ~/.profile; api_set_apt_setup"
-    system_ssh_acer " . ~/.profile; api_set_apt_setup"
+    api_set_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
+    api_set_ssh_prod " . ~/.profile; api_set_apt_setup"
+    api_set_ssh_dev " . ~/.profile; api_set_apt_setup"
+    api_set_ssh_dell " . ~/.profile; api_set_apt_setup"
+    api_set_ssh_lenovo " . ~/.profile; api_set_apt_setup"
+    api_set_ssh_acer " . ~/.profile; api_set_apt_setup"
 }
 
 api_set_apt_upgrade()
@@ -233,8 +233,8 @@ api_set_apt_upgrade()
     sudo apt-get update
     sudo apt-get --with-new-pkgs upgrade -y
     yes | sudo apt-get autoremove
-    system_source_profile
-    system_venv_create
+    api_set_source_profile
+    api_set_venv_create
     ansible-playbook ~/.local/bin/ansible/apt_all.yml
 }
 
@@ -243,13 +243,13 @@ api_set_apt_upgrade_wsl()
     sudo apt-get update
     sudo apt-get --with-new-pkgs upgrade -y
     sudo apt-get autoremove -y
-    system_source_profile
-    system_venv_create
-    system_git_update_all
+    api_set_source_profile
+    api_set_venv_create
+    api_set_git_update_all
     ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
 }
 
-system_config()
+api_set_config()
 {
     SEARCH_URL=duckduckgo.com
     JAVA_WIN=/c/Users/$USER/.local/share/docs/java/bin/
@@ -276,41 +276,41 @@ system_config()
     alias get_clipboard="xclip -selection c -o"    
 }
 
-system_docker_delete()
+api_set_docker_delete()
 {
     sudo docker rm$(docker ps --filter status=exited -q)
     sudo docker system prune --all --force --volumes
 }
 
-system_docker_firefox()
+api_set_docker_firefox()
 {
-    system_docker_delete
+    api_set_docker_delete
     cd $XDG_DATA_HOME/docs/docker/docker_firefox/
     ./setup.sh
 }
 
-system_docker_gentoo()
+api_set_docker_gentoo()
 {
     cd $DOCS_DIR
     cd linux/gentoo
     sudo docker build .
 }
 
-system_dnf_upgrade()
+api_set_dnf_upgrade()
 {
     sudo dnf upgrade -y
 }
 
-system_email_source_profile()
+api_set_email_source_profile()
 {
     cd $XDG_DATA_HOME/docs/python
-    python3 send_email.py "$(hostname) - The profile was refreshed. - $(date)" " . ~/.profile; system_source_profile"
+    python3 send_email.py "$(hostname) - The profile was refreshed. - $(date)" " . ~/.profile; api_set_source_profile"
 }
 
-system_emerge_setup()
+api_set_emerge_setup()
 {
     sudo eselect profile set default/linux/amd64/17.1/desktop
-    system_emerge_update
+    api_set_emerge_update
     set -- app-admin/sudo app-admin/keepassxc app-containers/docker app-containers/docker-compose app-editors/vim app-emulation/libvirt app-emulation/qemu app-emulation/virt-viewer app-misc/jq app-misc/neofetch app-misc/tmux app-text/dos2unix app-text/tree dev-java/openjdk dev-java/maven-bin dev-python/pip dev-vcs/git net-analyzer/nmap net-misc/rsync sys-apps/dmidecode sys-apps/flatpak sys-apps/lshw sys-devel/distcc virtual/cron www-client/lynx x11-misc/xclip
     for item in "$@"; do sudo emerge "$item"; done
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || exit 0
@@ -318,29 +318,29 @@ system_emerge_setup()
     sudo eselect news read
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G docker,kvm,wheel $USER
-    system_ssh_create
+    api_set_ssh_create
 }
 
-system_emerge_sync()
+api_set_emerge_sync()
 {
     sudo emaint -a sync
 }
 
-system_emerge_update()
+api_set_emerge_update()
 {
     sudo emerge-webrsync
     sudo emerge --ask --verbose --update --deep --newuse @world
     sudo emerge --depclean
 }
 
-system_ide()
+api_set_ide()
 {
-    system_tmux_kill ide
-    system_tmux_session ide
-	system_tmux_send "~/.local/bin/idea/bin/idea.sh"
+    api_set_tmux_kill ide
+    api_set_tmux_session ide
+	api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
 }
 
-system_git_pull()
+api_set_git_pull()
 {
     echo "git: Update repo in current directory"
     api_get_x_secret git
@@ -348,17 +348,17 @@ system_git_pull()
     git pull --no-rebase
 }
 
-system_git_push_ansible()
+api_set_git_push_ansible()
 {
     echo "git: Push ansible repo to main branch + Test on nodes"
     cd ~/.local/bin/ansible/
     cp ~/.local/share/docs/ansible/.profile ~/.local/share/docs/ansible/profile
     cp ~/.local/share/docs/ansible/profile ~/.local/bin/ansible/
 	cp ~/.local/share/docs/ansible/apt_all.yml ~/.local/bin/ansible/
-    system_git_push
+    api_set_git_push
 }
 
-system_git_push()
+api_set_git_push()
 {
     # api_get_x_secret git
     git add --all
@@ -374,38 +374,38 @@ system_git_push()
     git push
 }
 
-system_git_push_docs()
+api_set_git_push_docs()
 {
     # api_get_x_secret git
     cd $DOCS_DIR
-    system_git_push
+    api_set_git_push
 }
 
-system_nas_setup()
+api_set_nas_setup()
 {
     sudo mount /dev/sdb ~/.local/share/ssd/
     sudo mount /dev/sdc ~/.local/share/hdd/
     sudo mount /dev/sdd ~/.local/share/hdd_two/
 }
 
-system_reboot()
+api_set_reboot()
 {
     sudo systemctl reboot -i
 }
 
-system_report()
+api_set_report()
 {
      . ~/.profile
     clear
     neofetch
     date
-    system_tmux_list
+    api_set_tmux_list
     sudo docker ps
     api_get_virsh_list
     df -BG
 }
 
-system_rsync_git_prod()
+api_set_rsync_git_prod()
 {
     sudo cp /etc/hosts $XDG_DATA_HOME
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/hosts $XDG_DATA_HOME
@@ -415,39 +415,39 @@ system_rsync_git_prod()
     sudo mkdir -p /etc/ansible
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME
     sudo mv $XDG_DATA_HOME/hosts /etc/ansible
-    ssh -p $PORT $USER@$DOMAIN " . ~/.profile; system_source_profile"
+    ssh -p $PORT $USER@$DOMAIN " . ~/.profile; api_set_source_profile"
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.profile ~/.profile
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.zshrc ~/.zshrc
 }
 
-system_rsync_git_dev()
+api_set_rsync_git_dev()
 {
     rsync -avP prod:~/.local/share/dev/ ~/.local/share/dev/
 }
 
-system_rsync_git_dev_push()
+api_set_rsync_git_dev_push()
 {
     rsync -avP ~/.local/share/dev/ prod:~/.local/share/dev/
 }
 
-system_rsync_git_win()
+api_set_rsync_git_win()
 {
     rsync -avP prod:~/.local/share/docs/ /c/Users/$USER/.local/share/docs/
 }
 
-system_rsync_nas_two()
+api_set_rsync_nas_two()
 {
-   system_ssh_dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
+   api_set_ssh_dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
 }
 
-system_rsync_vm_prod()
+api_set_rsync_vm_prod()
 {
-   system_ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
+   api_set_ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
 }
 
-system_source_profile()
+api_set_source_profile()
 {
     echo "git: Update profile from Git and load into session"
     cd ~/.local/bin/
@@ -457,29 +457,29 @@ system_source_profile()
         git clone https://github.com/CorbinBlock/ansible.git
     fi
     cd $FILE
-    system_git_pull
+    api_set_git_pull
     sudo cp ~/.local/bin/ansible/profile ~/.profile
     dos2unix ~/.profile
      . ~/.profile
 }
 
-system_ssh_acer()
+api_set_ssh_acer()
 {
     ssh -X -p 50500 $DOMAIN  "$1"
 }
 
-system_ssh_any()
+api_set_ssh_any()
 {
-    system_ssh_all $1 "$2"
+    api_set_ssh_all $1 "$2"
 }
 
-system_ssh_all()
+api_set_ssh_all()
 {
     # port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
     # for i in "${port_list[@]}"
     # do
     # echo "ssh: Attempt connection via port $i"
-    # if system_ssh_helper "X" "$i" "$1" "$2" ; then
+    # if api_set_ssh_helper "X" "$i" "$1" "$2" ; then
     #     echo "ssh: Connection succeeded"
     #     break
     # else
@@ -489,17 +489,17 @@ system_ssh_all()
     echo "ssh: Exiting!"
 }
 
-system_ssh_helper()
+api_set_ssh_helper()
 {
     ssh -$1 -p $2 $3 "$4"
 }
 
-system_ssh_terminal()
+api_set_ssh_terminal()
 {
-    system_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
+    api_set_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
 }
 
-system_ssh_create()
+api_set_ssh_create()
 {
     FILE=~/.ssh/id_ed25519
     if [ ! -f "$FILE" ]  ; then
@@ -510,49 +510,49 @@ system_ssh_create()
     fi
 }
 
-system_ssh_dell()
+api_set_ssh_dell()
 {
     ssh -X -p 50400 $DOMAIN  "$1"
 }
 
-system_ssh_dev()
+api_set_ssh_dev()
 {
     ssh -X -p 50200 $DOMAIN "$1"
 }
 
-system_ssh_ipad()
+api_set_ssh_ipad()
 {
-    system_ssh_all ipad "$1"
+    api_set_ssh_all ipad "$1"
 }
 
-system_ssh_iphone()
+api_set_ssh_iphone()
 {
-    system_ssh_all iphone "$1"
+    api_set_ssh_all iphone "$1"
 }
 
-system_ssh_lenovo()
+api_set_ssh_lenovo()
 {
     ssh -X -p 50300 $DOMAIN  "$1"
 }
 
-system_ssh_localhost()
+api_set_ssh_localhost()
 {
-    system_ssh_all localhost "$1"
+    api_set_ssh_all localhost "$1"
 }
 
-system_ssh_mount()
+api_set_ssh_mount()
 {
     sudo chown $USER /mnt
     set -- kvm_debian_test dev prod dell lenovo
     for item in "$@"
-    do system_apt_install "$item"
+    do api_set_apt_install "$item"
         echo "$i"
         mkdir -p /mnt/$i
         sshfs -o allow_other,IdentityFile=/home/$USER/.ssh/id_ed25519 $USER@$i:/home/$USER/ /mnt/$i/
     done
 }
 
-system_ssh_unmount()
+api_set_ssh_unmount()
 {
     sudo chown $USER /mnt
     # node_list=(kvm_debian_test dev prod dell lenovo)
@@ -563,73 +563,73 @@ system_ssh_unmount()
     # done
 }
 
-system_ssh_prod()
+api_set_ssh_prod()
 {
     ssh -X -p 50100 $DOMAIN "$1"
 }
 
-system_ssh_tunnel()
+api_set_ssh_tunnel()
 {
     ssh -X -p 50100 -L 3391:KVMWINPROD01:3389 -L 3392:KVMWINDEV01:3389 -L 3393:KVMWINPROD02:3389  -L 3394:KVMWINDEV02:3389 -L 3395:KVMWINLENOVO01:3389 -L 3396:KVMWINLENOVO02:3389 -L 3397:KVMWINDELL01:3389 -L 3398:KVMWINDELL02:3389 -L 3399:KVMWINACER01:3389 -L 3340:KVMWINACER02:3389  -L 8081:KVMDEBPROD01:8080 -L 9091:KVMDEBPROD01:9090 -L 5911:HQDEBPROD01:5901 -L 5912:HQDEBPROD01:5902 -L 5913:HQDEBPROD01:5903 -L 5914:HQDEBPROD01:5904 -L 5915:HQDEBDEV01:5901 -L 5916:HQDEBDEV01:5902 -L 5917:HQDEBLENOVO01:5901 -L 5918:HQDEBLENOVO01:5902 -L 5919:HQDEBACER01:5901 -L 5920:HQDEBDELL01:5901 -L 5921:HQDEBDELL01:5902 -L 8081:HQDEBPROD01:8080 -L 9091:KVMDEBPROD01:9090 $USER@$DOMAIN "$1"
 }
 
-system_tmux_attach()
+api_set_tmux_attach()
 {
     tmux attach -t $1
 }
 
-system_tmux_env()
+api_set_tmux_env()
 {
     # ssh tunnel session created in crontab
     # session_list=(firefox ide prod ssh_tunnel_vm wifi )
     # for i in "${session_list[@]}"
     # do
     #    echo "$i"
-    #    system_tmux_session $i
+    #    api_set_tmux_session $i
     # done
     
-    system_tmux_session wifi
-    system_tmux_session ssh_tunnel
-    system_tmux_send wifi "bash"
-    system_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
+    api_set_tmux_session wifi
+    api_set_tmux_session ssh_tunnel
+    api_set_tmux_send wifi "bash"
+    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
     sleep 20
-    system_tmux_send ssh_tunnel "bash"
-    system_tmux_send ssh_tunnel " . ~/.profile; sleep 3; system_ssh_tunnel"
-    # system_tmux_send firefox "bash"
+    api_set_tmux_send ssh_tunnel "bash"
+    api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 3; api_set_ssh_tunnel"
+    # api_set_tmux_send firefox "bash"
     # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
-    # system_tmux_send ide "bash"
+    # api_set_tmux_send ide "bash"
     # tmux_send ide " . ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
-    # system_tmux_send prod "bash"
+    # api_set_tmux_send prod "bash"
 }
 
-system_tmux_kill()
+api_set_tmux_kill()
 {
     tmux kill-session -t $1
 }
 
-system_tmux_list()
+api_set_tmux_list()
 {
     tmux ls
 }
 
-system_tmux_send()
+api_set_tmux_send()
 {
     tmux send-keys -t $1 "$2" C-m
 }
 
-system_tmux_session()
+api_set_tmux_session()
 {
     tmux new-session -dt $1
 }
 
-system_tmux_split()
+api_set_tmux_split()
 {
     tmux new-session \; split-window -h \; split-window -v \; attach
 }
 
-system_venv_create()
+api_set_venv_create()
 {
-    system_source_profile
+    api_set_source_profile
     cd ~/.local/bin/
     FILE=~/.local/bin/venv/
     if [ -d "$FILE" ]  ; then
@@ -638,7 +638,7 @@ system_venv_create()
     fi
     python3 -m pip install --upgrade --user pip
     python3 -m venv venv
-    system_venv_activate_source
+    api_set_venv_activate_source
     # package_list=(pip setuptools wheel paramiko ansible pyspark)
     # for i in "${package_list[@]}"
     # do
@@ -653,7 +653,7 @@ system_venv_create()
     python3 -m pip install --upgrade pyspark
 }
 
-system_venv_activate()
+api_set_venv_activate()
 {
     cd ~/.local/bin/
     FILE=~/.local/bin/venv/
@@ -665,12 +665,12 @@ system_venv_activate()
     cd -
 }
 
-system_venv_activate_source()
+api_set_venv_activate_source()
 {
     . ~/.local/bin/venv/bin/activate
 }
 
-system_spice_all()
+api_set_spice_all()
 {
     remote-viewer --full-screen spice://localhost:5911 &
     remote-viewer --full-screen spice://localhost:5912 &
@@ -685,12 +685,12 @@ system_spice_all()
     remote-viewer --full-screen spice://localhost:5921 &
 }
 
-system_x_check_battery()
+api_set_x_check_battery()
 {
     upower -i `upower -e | grep 'BAT'`
 }
 
-system_x_stop_lockscreen()
+api_set_x_stop_lockscreen()
 {
     xset -dpms
     xset s off
@@ -698,7 +698,7 @@ system_x_stop_lockscreen()
 
 main ()
 {
-    system_config
+    api_set_config
     # neofetch
      . /etc/profile
 }
