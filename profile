@@ -262,7 +262,6 @@ api_set_apt_setup()
      sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
      sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
      sudo su $USER -c "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
-
 }
 
 
@@ -276,6 +275,7 @@ api_set_apt_setup_all()
     # done
     api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
     api_get_ssh_prod " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_apt_setup'"
     api_get_ssh_dev " . ~/.profile; api_set_apt_setup"
     api_get_ssh_dell " . ~/.profile; api_set_apt_setup"
     api_get_ssh_lenovo " . ~/.profile; api_set_apt_setup"
