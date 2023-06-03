@@ -1,3 +1,5 @@
+# Note: Using positional parameters as makeshift array to use POSIX shell instead of bash for maximum OS compatibility 
+
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
@@ -167,10 +169,9 @@ system_apt_install()
 }
 
 
-system_apt_setup()
+api_set_apt_setup()
 {
     echo "apt: Setup debian server."
-    # Using positional parameters as makeshift array to use POSIX shell instead of bash for maximum OS compatibility 
     set -- dos2unix git python3 sudo vim
     for item in "$@"; do system_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
@@ -201,7 +202,7 @@ system_apt_setup()
      sudo su $USER -c "mkdir -p ~/.local/share/"
      sudo su $USER -c "mkdir -p ~/.local/state/"
      sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-     sudo su $USER -c " . ~/.profile; system_apt_upgrade"
+     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
      sudo su $USER -c " . ~/.profile; system_ssh_create"
      sudo su $USER -c " . ~/.profile; system_x_stop_lockscreen"
      sudo su $USER -c " . ~/.profile; system_rsync_git_prod"
@@ -210,23 +211,23 @@ system_apt_setup()
 }
 
 
-system_apt_setup_all()
+api_set_apt_setup_all()
 {
     # node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01)
     # for i in "${node_list[@]}"
     # do
     #     echo "apt - Updating all debian nodes - Current node: $i"
-    #     system_ssh_helper "X" "22" "$i" " . ~/.profile; system_apt_setup"
+    #     system_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
     # done
-    system_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; system_apt_setup'"
-    system_ssh_prod " . ~/.profile; system_apt_setup"
-    system_ssh_dev " . ~/.profile; system_apt_setup"
-    system_ssh_dell " . ~/.profile; system_apt_setup"
-    system_ssh_lenovo " . ~/.profile; system_apt_setup"
-    system_ssh_acer " . ~/.profile; system_apt_setup"
+    system_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
+    system_ssh_prod " . ~/.profile; api_set_apt_setup"
+    system_ssh_dev " . ~/.profile; api_set_apt_setup"
+    system_ssh_dell " . ~/.profile; api_set_apt_setup"
+    system_ssh_lenovo " . ~/.profile; api_set_apt_setup"
+    system_ssh_acer " . ~/.profile; api_set_apt_setup"
 }
 
-system_apt_upgrade()
+api_set_apt_upgrade()
 {
     echo "apt: Update debian server."
     sudo apt-get update
@@ -237,7 +238,7 @@ system_apt_upgrade()
     ansible-playbook ~/.local/bin/ansible/apt_all.yml
 }
 
-system_apt_upgrade_wsl()
+api_set_apt_upgrade_wsl()
 {
     sudo apt-get update
     sudo apt-get --with-new-pkgs upgrade -y
