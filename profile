@@ -28,6 +28,25 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+api_get_ide()
+{
+    api_set_tmux_kill ide
+    api_set_tmux_session ide
+	api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
+}
+
+api_get_report()
+{
+     . ~/.profile
+    clear
+    neofetch
+    date
+    api_set_tmux_list
+    sudo docker ps
+    api_get_virsh_list
+    df -BG
+}
+
 api_get_secret()
 {
     secret_path=$1
@@ -52,14 +71,14 @@ api_get_virsh_viewer_debian()
 {
     api_get_virsh_list
     VM="KVMDEBPROD01"
-    api_set_ssh_prod " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    api_get_ssh_prod " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 api_get_virsh_viewer_windows()
 {
     api_get_virsh_list
     VM="KVMWINPROD02"
-    api_set_ssh_dev " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
+    api_get_ssh_dev " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
 }
 
 api_get_x_secret()
@@ -71,50 +90,6 @@ api_get_x_secret()
     api_set_tmux_send secret "secret $1"
 }
 
-api_set_virsh_install_debian()
-{
-    api_get_virsh_list
-	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
-}
-
-api_set_virsh_install_debian_dev()
-{
-    api_get_virsh_list
-	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
-}
-
-api_set_virsh_install_windows()
-{
-    api_get_virsh_list
-    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
-}
-
-api_set_virsh_install_windows_dev()
-{
-    api_get_virsh_list
-    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
-}
-
-api_set_virsh_install_windows11()
-{
-    api_get_virsh_list
-    vm="KVMWIN11TEST01_20230210.qcow2"
-    vm_size=300
-    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
-}
-
-api_set_virsh_start_network() 
-{
-    api_get_virsh_list
-    sudo virsh net-create ~/.local/share/docs/data/default.xml
-	sudo virsh net-start default
-}
-
-api_set_apk_install()
-{
-    echo "apk: Attempting to install or update - $1"
-    sudo apk add $1
-}
 
 api_set_apk_setup()
 {
@@ -217,14 +192,14 @@ api_set_apt_setup_all()
     # for i in "${node_list[@]}"
     # do
     #     echo "apt - Updating all debian nodes - Current node: $i"
-    #     api_set_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
+    #     api_get_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
     # done
-    api_set_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
-    api_set_ssh_prod " . ~/.profile; api_set_apt_setup"
-    api_set_ssh_dev " . ~/.profile; api_set_apt_setup"
-    api_set_ssh_dell " . ~/.profile; api_set_apt_setup"
-    api_set_ssh_lenovo " . ~/.profile; api_set_apt_setup"
-    api_set_ssh_acer " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
+    api_get_ssh_prod " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_dev " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_dell " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_lenovo " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_acer " . ~/.profile; api_set_apt_setup"
 }
 
 api_set_apt_upgrade()
@@ -333,13 +308,6 @@ api_set_emerge_update()
     sudo emerge --depclean
 }
 
-api_set_ide()
-{
-    api_set_tmux_kill ide
-    api_set_tmux_session ide
-	api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
-}
-
 api_set_git_pull()
 {
     echo "git: Update repo in current directory"
@@ -393,18 +361,6 @@ api_set_reboot()
     sudo systemctl reboot -i
 }
 
-api_set_report()
-{
-     . ~/.profile
-    clear
-    neofetch
-    date
-    api_set_tmux_list
-    sudo docker ps
-    api_get_virsh_list
-    df -BG
-}
-
 api_set_rsync_git_prod()
 {
     sudo cp /etc/hosts $XDG_DATA_HOME
@@ -439,12 +395,12 @@ api_set_rsync_git_win()
 
 api_set_rsync_nas_two()
 {
-   api_set_ssh_dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
+   api_get_ssh_dev "rsync --archive --inplace --partial --progress --verbose ~/.local/share/hdd/* ~/.local/share/hdd_two/"
 }
 
 api_set_rsync_vm_prod()
 {
-   api_set_ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
+   api_get_ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
 }
 
 api_set_source_profile()
@@ -463,23 +419,23 @@ api_set_source_profile()
      . ~/.profile
 }
 
-api_set_ssh_acer()
+api_get_ssh_acer()
 {
     ssh -X -p 50500 $DOMAIN  "$1"
 }
 
-api_set_ssh_any()
+api_get_ssh_any()
 {
-    api_set_ssh_all $1 "$2"
+    api_get_ssh_all $1 "$2"
 }
 
-api_set_ssh_all()
+api_get_ssh_all()
 {
     # port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
     # for i in "${port_list[@]}"
     # do
     # echo "ssh: Attempt connection via port $i"
-    # if api_set_ssh_helper "X" "$i" "$1" "$2" ; then
+    # if api_get_ssh_helper "X" "$i" "$1" "$2" ; then
     #     echo "ssh: Connection succeeded"
     #     break
     # else
@@ -489,14 +445,14 @@ api_set_ssh_all()
     echo "ssh: Exiting!"
 }
 
-api_set_ssh_helper()
+api_get_ssh_helper()
 {
     ssh -$1 -p $2 $3 "$4"
 }
 
-api_set_ssh_terminal()
+api_get_ssh_terminal()
 {
-    api_set_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
+    api_get_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
 }
 
 api_set_ssh_create()
@@ -510,34 +466,34 @@ api_set_ssh_create()
     fi
 }
 
-api_set_ssh_dell()
+api_get_ssh_dell()
 {
     ssh -X -p 50400 $DOMAIN  "$1"
 }
 
-api_set_ssh_dev()
+api_get_ssh_dev()
 {
     ssh -X -p 50200 $DOMAIN "$1"
 }
 
-api_set_ssh_ipad()
+api_get_ssh_ipad()
 {
-    api_set_ssh_all ipad "$1"
+    api_get_ssh_all ipad "$1"
 }
 
-api_set_ssh_iphone()
+api_get_ssh_iphone()
 {
-    api_set_ssh_all iphone "$1"
+    api_get_ssh_all iphone "$1"
 }
 
-api_set_ssh_lenovo()
+api_get_ssh_lenovo()
 {
     ssh -X -p 50300 $DOMAIN  "$1"
 }
 
-api_set_ssh_localhost()
+api_get_ssh_localhost()
 {
-    api_set_ssh_all localhost "$1"
+    api_get_ssh_all localhost "$1"
 }
 
 api_set_ssh_mount()
@@ -563,7 +519,7 @@ api_set_ssh_unmount()
     # done
 }
 
-api_set_ssh_prod()
+api_get_ssh_prod()
 {
     ssh -X -p 50100 $DOMAIN "$1"
 }
@@ -580,26 +536,13 @@ api_set_tmux_attach()
 
 api_set_tmux_env()
 {
-    # ssh tunnel session created in crontab
-    # session_list=(firefox ide prod ssh_tunnel_vm wifi )
-    # for i in "${session_list[@]}"
-    # do
-    #    echo "$i"
-    #    api_set_tmux_session $i
-    # done
-    
     api_set_tmux_session wifi
     api_set_tmux_session ssh_tunnel
     api_set_tmux_send wifi "bash"
     api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
     sleep 20
     api_set_tmux_send ssh_tunnel "bash"
-    api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 3; api_set_ssh_tunnel"
-    # api_set_tmux_send firefox "bash"
-    # tmux_send firefox "sleep 3; export DISPLAY=:0; flatpak run org.mozilla.firefox"
-    # api_set_tmux_send ide "bash"
-    # tmux_send ide " . ~/.profile; sleep 3; export DISPLAY=:0; flatpak run com.jetbrains.IntelliJ-IDEA-Community"
-    # api_set_tmux_send prod "bash"
+    api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 3; api_get_ssh_tunnel"
 }
 
 api_set_tmux_kill()
@@ -668,6 +611,51 @@ api_set_venv_activate()
 api_set_venv_activate_source()
 {
     . ~/.local/bin/venv/bin/activate
+}
+
+api_set_virsh_install_debian()
+{
+    api_get_virsh_list
+	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
+}
+
+api_set_virsh_install_debian_dev()
+{
+    api_get_virsh_list
+	sudo virt-install --name KVMDEBDEV01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBDEV01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5902,listen=0.0.0.0 --noautoconsole
+}
+
+api_set_virsh_install_windows()
+{
+    api_get_virsh_list
+    sudo virt-install --name KVMWINPROD01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINPROD01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5903,listen=0.0.0.0 --noautoconsole
+}
+
+api_set_virsh_install_windows_dev()
+{
+    api_get_virsh_list
+    sudo virt-install --name KVMWINDEV01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMWINDEV01_20230317.qcow2,size=120 --os-variant win10 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win10_21H2_English_x64.iso --graphics vnc,port=5904,listen=0.0.0.0 --noautoconsole
+}
+
+api_set_virsh_install_windows11()
+{
+    api_get_virsh_list
+    vm="KVMWIN11TEST01_20230210.qcow2"
+    vm_size=300
+    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
+}
+
+api_set_virsh_start_network() 
+{
+    api_get_virsh_list
+    sudo virsh net-create ~/.local/share/docs/data/default.xml
+	sudo virsh net-start default
+}
+
+api_set_apk_install()
+{
+    echo "apk: Attempting to install or update - $1"
+    sudo apk add $1
 }
 
 api_set_spice_all()
