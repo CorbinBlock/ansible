@@ -176,8 +176,8 @@ api_set_apk_setup()
     echo "apk: Setup alpine server."
     mkdir -p ~/.local/bin/
     api_set_apk_upgrade
-    set -- bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go
-    for item in "$@"; do api_set_apk_install "$item"; done
+    # set -- bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go
+    # for item in "$@"; do api_set_apk_install "$item"; done
     api_set_apk_upgrade
     api_set_ssh_create
     sudo rc-update add docker
@@ -552,11 +552,9 @@ api_set_tmux_env()
 {
     api_set_tmux_session wifi
     api_set_tmux_session ssh_tunnel
-    api_set_tmux_send wifi "bash"
-    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
-    sleep 20
-    api_set_tmux_send ssh_tunnel "bash"
-    api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 3; api_get_ssh_tunnel"
+    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3; api_set_apt_setup"
+    sleep 5
+    api_set_tmux_send ssh_tunnel " . ~/.profile; api_set_ssh_tunnel"
 }
 
 api_set_tmux_kill()
