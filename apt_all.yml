@@ -21,7 +21,6 @@
           - cockpit-machines
           - cockpit-pcp
           - curl
-          # - dbus-x11
           - dnsutils
           - debian-goodies
           - debianutils 
@@ -31,22 +30,19 @@
           - dpkg
           - file
           - findutils
-          # - flatpak
+          - firefox-esr
           - gcc
           - git
           - git-lfs
           - gnupg
           - gnupg-agent
-          # - golang-go
           - htop
-          # - ipheth-utils
           - iproute2 
           - iputils-ping
           - isc-dhcp-client
           - ispell
           - iw
-          # - jq
-          # - keepassxc
+          # - kde-full
           - keyutils 
           - less
           - libvirt-clients
@@ -62,7 +58,6 @@
           - openssl
           - postgresql
           - pciutils
-          # - pipewire
           - procps
           - python3
           - python3-apt
@@ -73,7 +68,6 @@
           - python3-venv
           - realmd
           - rsync
-          # - rsyslog
           - sed
           - software-properties-common
           - sqlite3
@@ -88,17 +82,11 @@
           - usbutils
           - vim
           - virtinst
-          # - virt-manager
-          # - virt-viewer
+          - virt-manager
+          - virt-viewer
           - wget
           - whois
-          # - wireguard
           - wireless-tools
-          # - x11-common
-          # - x11-utils
-          # - xclip
-          # - xfce4
-          # - xfce4-terminal
           - xz-utils
           - zstd
           - zsh
