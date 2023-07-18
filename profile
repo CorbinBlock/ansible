@@ -261,7 +261,6 @@ api_set_apt_setup()
      sudo su $USER -c " . ~/.profile; api_set_ssh_create"
      sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
      sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
-     sudo su $USER -c "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 }
 
 
