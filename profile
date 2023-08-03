@@ -618,7 +618,7 @@ api_set_venv_activate()
         echo "$FILE does not exist. Creating venv."
         venv_create
     fi
-    venv_activate_source
+    api_set_venv_activate_source
     cd -
 }
 
@@ -689,4 +689,3 @@ main ()
      . /etc/profile
 }
 main
-# End profile
