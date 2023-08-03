@@ -231,7 +231,20 @@ api_set_apt_setup()
     for item in "$@"; do api_set_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
+    sudo su $USER -c "mkdir -p ~/.local/"
+    sudo su $USER -c "mkdir -p ~/.local/bin/"
+    sudo su $USER -c "mkdir -p ~/.local/share/"
+    sudo su $USER -c "mkdir -p ~/.local/state/"
+    sudo su $USER -c "mkdir -p ~/.local/share/tmp"
+    sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
+    # sudo su $USER -c " . ~/.profile; api_set_ssh_create"
+    # sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
+    sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
     sudo systemctl enable --now libvirtd
+}
+
+api_set_apt_setup_archive()
+{
     file=/opt/maven/bin/mvn
      if [ ! -f $file ]; then
      echo "$file not found!"
@@ -252,16 +265,7 @@ api_set_apt_setup()
      sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
      sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
      fi
-     sudo su $USER -c "mkdir -p ~/.local/"
-     sudo su $USER -c "mkdir -p ~/.local/bin/"
-     sudo su $USER -c "mkdir -p ~/.local/share/"
-     sudo su $USER -c "mkdir -p ~/.local/state/"
-     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
-     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-     sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
-     sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
-}
+{
 
 
 api_set_apt_setup_all()
@@ -274,7 +278,7 @@ api_set_apt_setup_all()
     # done
     api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
     api_get_ssh_prod " . ~/.profile; api_set_apt_setup"
-    api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_apt_setup'"
+    # api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_apt_setup'"
     api_get_ssh_dev " . ~/.profile; api_set_apt_setup"
     api_get_ssh_dell " . ~/.profile; api_set_apt_setup"
     api_get_ssh_lenovo " . ~/.profile; api_set_apt_setup"
