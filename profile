@@ -227,7 +227,7 @@ api_set_apt_install()
 api_set_apt_setup()
 {
     echo "apt: Setup debian server."
-    set -- dos2unix git python3 sudo vim
+    set -- dos2unix git python3 kde-standard sudo vim firefox-esr xinit tmux keepassxc rsync htop xclip virt-viewer virt-manager neofetch
     for item in "$@"; do api_set_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
