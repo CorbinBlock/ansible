@@ -265,7 +265,7 @@ api_set_apt_setup_archive()
      sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
      sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
      fi
-{
+}
 
 
 api_set_apt_setup_all()
