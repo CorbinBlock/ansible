@@ -400,7 +400,7 @@ api_set_encrypt_docs() {
     target_dir="$HOME/.local/share/docs"
     
     # Encrypt all files in the target directory with GPG
-    find "$target_dir" -type f -exec gpg -r $EMAIL --encrypt {} \;  -exec rm {} \;
+    find "$target_dir" -type f -exec gpg -r $EMAIL --encrypt {} \;  -exec rm -f {} \;
 }
 
 api_set_git_pull()
