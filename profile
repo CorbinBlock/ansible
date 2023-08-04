@@ -334,8 +334,17 @@ api_set_decrypt_docs() {
     # Set the target directory
     target_dir="$HOME/.local/share/docs"
     
-    # Decrypt all files in the target directory with GPG
-    find "$target_dir" -type f -name "*.gpg" -exec gpg -r $EMAIL --decrypt {} \;
+    # Create a temporary directory to store decrypted files
+    temp_dir=$(mktemp -d)
+
+    # Decrypt all .gpg files in the target directory and move them to the temporary directory
+    find "$target_dir" -type f -name "*.gpg" -exec gpg --decrypt {} \; -exec mv {} "$temp_dir" \;
+
+    # Move the decrypted files back to the target directory
+    find "$temp_dir" -type f -exec mv {} "$target_dir" \;
+
+    # Remove the temporary directory
+    rm -r "$temp_dir"
 }
 
 api_set_docker_delete()
