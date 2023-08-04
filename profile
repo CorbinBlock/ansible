@@ -340,11 +340,8 @@ api_set_decrypt_docs() {
     # Decrypt the encrypted archive using GPG
     gpg --decrypt "$target_dir/docs.tar.gz.gpg" > "$temp_dir/docs.tar.gz"
 
-    # Extract the decrypted tar archive
-    tar -xzf "$temp_dir/docs.tar.gz" -C "$temp_dir"
-
-    # Move the decrypted files back to the target directory
-    find "$temp_dir" -type f -exec mv {} "$target_dir/" \;
+    # Extract the decrypted tar archive into the target directory
+    tar -xzf "$temp_dir/docs.tar.gz" -C "$target_dir"
 
     # Remove the decrypted tar archive and the encrypted archive
     rm "$temp_dir/docs.tar.gz" "$target_dir/docs.tar.gz.gpg"
