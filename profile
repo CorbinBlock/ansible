@@ -408,8 +408,26 @@ api_set_encrypt_docs() {
     # Set the target directory
     target_dir="$HOME/.local/share/docs"
     
-    # Encrypt all files in the target directory with GPG
-    find "$target_dir" -type f -exec gpg -r $EMAIL --encrypt {} \;  -exec rm -f {} \;
+    # Create a temporary directory to store the encrypted archive
+    temp_dir=$(mktemp -d)
+
+    # Create a tar archive of the target directory
+    tar -czf "$temp_dir/docs.tar.gz" -C "$target_dir" .
+
+    # Encrypt the tar archive using GPG
+    gpg -er $EMAIL --output "$temp_dir/docs.tar.gz.gpg" --encrypt "$temp_dir/docs.tar.gz"
+
+    # Remove the original tar archive
+    rm "$temp_dir/docs.tar.gz"
+
+    # Remove the original files in the target directory
+    find "$target_dir" -type f -exec rm {} \;
+
+    # Move the encrypted archive back to the target directory
+    mv "$temp_dir/docs.tar.gz.gpg" "$target_dir/"
+
+    # Remove the temporary directory
+    rmdir "$temp_dir"
 }
 
 api_set_git_pull()
