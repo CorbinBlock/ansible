@@ -333,18 +333,24 @@ api_set_config()
 api_set_decrypt_docs() {
     # Set the target directory
     target_dir="$HOME/.local/share/docs"
-    
-    # Create a temporary directory to store decrypted files
+
+    # Create a temporary directory to extract the decrypted files
     temp_dir=$(mktemp -d)
 
-    # Decrypt all .gpg files in the target directory and move them to the temporary directory
-    find "$target_dir" -type f -name "*.gpg" -exec gpg --decrypt {} \; -exec mv {} "$temp_dir" \;
+    # Decrypt the encrypted archive using GPG
+    gpg --decrypt "$target_dir/docs.tar.gz.gpg" > "$temp_dir/docs.tar.gz"
+
+    # Extract the decrypted tar archive
+    tar -xzf "$temp_dir/docs.tar.gz" -C "$temp_dir"
 
     # Move the decrypted files back to the target directory
-    find "$temp_dir" -type f -exec mv {} "$target_dir" \;
+    find "$temp_dir" -type f -exec mv {} "$target_dir/" \;
+
+    # Remove the decrypted tar archive and the encrypted archive
+    rm "$temp_dir/docs.tar.gz" "$target_dir/docs.tar.gz.gpg"
 
     # Remove the temporary directory
-    rm -r "$temp_dir"
+    rmdir "$temp_dir"
 }
 
 api_set_docker_delete()
