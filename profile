@@ -335,7 +335,7 @@ api_set_decrypt_docs() {
     target_dir="$HOME/.local/share/docs"
     
     # Decrypt all files in the target directory with GPG
-    find "$target_dir" -type f -name "*.gpg" -exec gpg --decrypt {} \;
+    find "$target_dir" -type f -name "*.gpg" -exec gpg -r $EMAIL --decrypt {} \;
 }
 
 api_set_docker_delete()
@@ -400,7 +400,7 @@ api_set_encrypt_docs() {
     target_dir="$HOME/.local/share/docs"
     
     # Encrypt all files in the target directory with GPG
-    find "$target_dir" -type f -exec gpg --encrypt {} \;
+    find "$target_dir" -type f -exec gpg -r $EMAIL --encrypt {} \;
 }
 
 api_set_git_pull()
