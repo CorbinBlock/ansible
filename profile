@@ -421,7 +421,7 @@ api_set_encrypt_docs() {
     rm "$temp_dir/docs.tar.gz"
 
     # Remove the original files in the target directory
-    find "$target_dir" -type f -exec rm {} \;
+    find "$target_dir" -type f -exec rm -f {} \;
 
     # Move the encrypted archive back to the target directory
     mv "$temp_dir/docs.tar.gz.gpg" "$target_dir/"
