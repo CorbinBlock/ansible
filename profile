@@ -227,24 +227,11 @@ api_set_apt_install()
 api_set_apt_setup()
 {
     echo "apt: Setup debian server."
-    set -- dos2unix git python3 kde-standard sudo vim firefox-esr xinit tmux keepassxc rsync htop xclip virt-viewer virt-manager neofetch
+    set -- dos2unix git python3 sudo vim
     for item in "$@"; do api_set_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
-    sudo su $USER -c "mkdir -p ~/.local/"
-    sudo su $USER -c "mkdir -p ~/.local/bin/"
-    sudo su $USER -c "mkdir -p ~/.local/share/"
-    sudo su $USER -c "mkdir -p ~/.local/state/"
-    sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-    sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
-    # sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-    # sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
-    sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
     sudo systemctl enable --now libvirtd
-}
-
-api_set_apt_setup_archive()
-{
     file=/opt/maven/bin/mvn
      if [ ! -f $file ]; then
      echo "$file not found!"
@@ -265,6 +252,15 @@ api_set_apt_setup_archive()
      sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
      sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
      fi
+     sudo su $USER -c "mkdir -p ~/.local/"
+     sudo su $USER -c "mkdir -p ~/.local/bin/"
+     sudo su $USER -c "mkdir -p ~/.local/share/"
+     sudo su $USER -c "mkdir -p ~/.local/state/"
+     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
+     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
+     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
+     sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
+     sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
 }
 
 
@@ -278,7 +274,7 @@ api_set_apt_setup_all()
     # done
     api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
     api_get_ssh_prod " . ~/.profile; api_set_apt_setup"
-    # api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_apt_setup'"
+    api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_apt_setup'"
     api_get_ssh_dev " . ~/.profile; api_set_apt_setup"
     api_get_ssh_dell " . ~/.profile; api_set_apt_setup"
     api_get_ssh_lenovo " . ~/.profile; api_set_apt_setup"
@@ -332,6 +328,14 @@ api_set_config()
     alias python="python3"
     alias set_clipboard="xclip -selection c"
     alias get_clipboard="xclip -selection c -o"    
+}
+
+api_set_decrypt_docs() {
+    # Set the target directory
+    target_dir="$HOME/.local/share/docs"
+    
+    # Decrypt all files in the target directory with GPG
+    find "$target_dir" -type f -name "*.gpg" -exec gpg --decrypt {} \;
 }
 
 api_set_docker_delete()
@@ -389,6 +393,14 @@ api_set_emerge_update()
     sudo emerge-webrsync
     sudo emerge --ask --verbose --update --deep --newuse @world
     sudo emerge --depclean
+}
+
+api_set_encrypt_docs() {
+    # Set the target directory
+    target_dir="$HOME/.local/share/docs"
+    
+    # Encrypt all files in the target directory with GPG
+    find "$target_dir" -type f -exec gpg --encrypt {} \;
 }
 
 api_set_git_pull()
@@ -555,7 +567,7 @@ api_set_tmux_env()
 {
     api_set_tmux_session wifi
     api_set_tmux_session ssh_tunnel
-    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3"
+    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3; api_set_apt_setup"
     api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 20; api_set_ssh_tunnel"
 }
 
@@ -593,7 +605,7 @@ api_set_venv_create()
         echo "$FILE does exist. Renaming to venv_bkp"
         rsync -avP ~/.local/bin/venv/ ~/.local/bin/venv_bkp/
     fi
-    # python3 -m pip install --upgrade --user pip
+    python3 -m pip install --upgrade --user pip
     python3 -m venv venv
     api_set_venv_activate_source
     # package_list=(pip setuptools wheel paramiko ansible pyspark)
@@ -618,7 +630,7 @@ api_set_venv_activate()
         echo "$FILE does not exist. Creating venv."
         venv_create
     fi
-    api_set_venv_activate_source
+    venv_activate_source
     cd -
 }
 
@@ -689,3 +701,4 @@ main ()
      . /etc/profile
 }
 main
+# End profile

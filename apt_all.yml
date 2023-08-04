@@ -13,8 +13,10 @@
           - bind9
           - bind9-host
           - bridge-utils
+          - btrfs-progs
           - build-essential
           - ca-certificates
+          - calendar 
           - curl
           - dnsutils
           - debian-goodies
@@ -26,6 +28,8 @@
           - findutils
           - firefox-esr
           - gcc
+          - git
+          - git-lfs
           - gnupg
           - gnupg-agent
           - htop
@@ -34,6 +38,7 @@
           - isc-dhcp-client
           - ispell
           - iw
+          - keyutils 
           - less
           - libvirt-clients
           - libvirt-daemon-system
@@ -46,6 +51,7 @@
           - openssh-client
           - openssh-server
           - openssl
+          - postgresql
           - pciutils
           - procps
           - python3
