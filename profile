@@ -246,6 +246,8 @@ api_set_apt_setup()
      file=/etc/pipewire/media-session.d/with-pulseaudio
      if [ ! -f $file ]; then
      echo "$file not found!"
+     sudo su $USER -c "sudo mkdir -p /etc/pipewire/media-session.d/"
+     sudo su $USER -c "sudo mkdir -p /usr/share/doc/pipewire/examples/systemd/user/"
      sudo su $USER -c "sudo touch $file"
      sudo su $USER -c "sudo cp /usr/share/doc/pipewire/examples/systemd/user/pipewire-pulse.* /etc/systemd/user/"
      sudo su $USER -c "systemctl --user daemon-reload"
