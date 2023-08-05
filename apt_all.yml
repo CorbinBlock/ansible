@@ -51,8 +51,8 @@
           - openssh-client
           - openssh-server
           - openssl
-          - postgresql
           - pciutils
+          - pipewire
           - procps
           - python3
           - python3-apt

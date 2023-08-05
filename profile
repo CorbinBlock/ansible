@@ -227,7 +227,7 @@ api_set_apt_install()
 api_set_apt_setup()
 {
     echo "apt: Setup debian server."
-    set -- apt-transport-https apt-utils bash bash-completion bridge-utils build-essential ca-certificates curl dnsutils debian-goodies debianutils diffutils dos2unix dpkg file findutils firefox-esr gcc gnupg gnupg-agent htop iproute2 iputils-ping isc-dhcp-client ispell iw keyutils less libvirt-clients libvirt-daemon-system lsb-release make nano neofetch net-tools openssh-client openssh-server openssl pciutils procps python3 python3-apt python3-debconf python3-debian python3-debianbts python3-pip python3-venv rsync sed software-properties-common sqlite3 ssl-cert sudo tar tmux traceroute tree unzip usbutils vim virtinst virt-manager virt-viewer wget whois wireless-tools xz-utils zstd zsh
+    set -- apt-transport-https apt-utils bash bash-completion bridge-utils build-essential ca-certificates curl dnsutils debian-goodies debianutils diffutils dos2unix dpkg file findutils firefox-esr gcc gnupg gnupg-agent htop iproute2 iputils-ping isc-dhcp-client ispell iw keyutils less libvirt-clients libvirt-daemon-system lsb-release make nano neofetch net-tools openssh-client openssh-server openssl pciutils pipewire procps python3 python3-apt python3-debconf python3-debian python3-debianbts python3-pip python3-venv rsync sed software-properties-common sqlite3 ssl-cert sudo tar tmux traceroute tree unzip usbutils vim virtinst virt-manager virt-viewer wget whois wireless-tools xz-utils zstd zsh
     for item in "$@"; do api_set_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
