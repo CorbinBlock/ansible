@@ -261,7 +261,6 @@ api_set_apt_setup()
      sudo su $USER -c "mkdir -p ~/.local/share/tmp"
      sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
      sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-     sudo su $USER -c " . ~/.profile; api_set_x_stop_lockscreen"
      sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
 }
 
@@ -502,10 +501,10 @@ api_set_source_profile()
 
 api_set_ssh_create()
 {
-    FILE=~/.ssh/id_ed25519
+    FILE=~/.ssh/id_rsa
     if [ ! -f "$FILE" ]  ; then
         echo "$FILE does not exist. Creating ssh key pair."
-        ssh-keygen -t ed25519 -b 4096
+        ssh-keygen -t rsa -b 4096
     else
         echo "$FILE exists!"
     fi
