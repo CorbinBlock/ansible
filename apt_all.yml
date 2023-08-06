@@ -16,7 +16,7 @@
           - btrfs-progs
           - build-essential
           - ca-certificates
-          - calendar 
+          - chromium 
           - curl
           - dnsutils
           - debian-goodies
