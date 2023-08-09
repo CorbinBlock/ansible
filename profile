@@ -28,6 +28,11 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+api_get_check_battery()
+{
+    upower -i `upower -e | grep 'BAT'`
+}
+
 api_get_ide()
 {
     api_set_tmux_kill ide
@@ -599,7 +604,7 @@ api_set_venv_activate_source()
 api_set_virsh_install_debian()
 {
     api_get_virsh_list
-	sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
+    sudo virt-install --name KVMDEBPROD01 --description 'debian' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/KVMDEBPROD01_20230317.qcow2,size=90 --os-variant debian11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/debian-11.5.0-amd64-netinst.iso --graphics vnc,port=5901,listen=0.0.0.0 --noautoconsole
 }
 
 api_set_virsh_install_debian_dev()
@@ -639,17 +644,6 @@ api_set_apk_install()
 {
     echo "apk: Attempting to install or update - $1"
     sudo apk add $1
-}
-
-api_set_x_check_battery()
-{
-    upower -i `upower -e | grep 'BAT'`
-}
-
-api_set_x_stop_lockscreen()
-{
-    xset -dpms
-    xset s off
 }
 
 main ()
