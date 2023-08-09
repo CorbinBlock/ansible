@@ -32,7 +32,7 @@ api_get_ide()
 {
     api_set_tmux_kill ide
     api_set_tmux_session ide
-	api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
+    api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
 }
 
 api_get_report()
@@ -55,21 +55,6 @@ api_get_secret()
     password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
     command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | set_clipboard"
     eval $command
-}
-
-api_get_spice_all()
-{
-    remote-viewer --full-screen spice://localhost:5911 &
-    remote-viewer --full-screen spice://localhost:5912 &
-    remote-viewer --full-screen spice://localhost:5913 &
-    remote-viewer --full-screen spice://localhost:5914 &
-    remote-viewer --full-screen spice://localhost:5915 &
-    remote-viewer --full-screen spice://localhost:5916 &
-    remote-viewer --full-screen spice://localhost:5917 &
-    remote-viewer --full-screen spice://localhost:5918 &
-    remote-viewer --full-screen spice://localhost:5919 &
-    remote-viewer --full-screen spice://localhost:5920 &
-    remote-viewer --full-screen spice://localhost:5921 &
 }
 
 api_get_ssh_acer()
@@ -293,17 +278,6 @@ api_set_apt_upgrade()
     ansible-playbook ~/.local/bin/ansible/apt_all.yml
 }
 
-api_set_apt_upgrade_wsl()
-{
-    sudo apt-get update
-    sudo apt-get --with-new-pkgs upgrade -y
-    sudo apt-get autoremove -y
-    api_set_source_profile
-    api_set_venv_create
-    api_set_git_update_all
-    ansible-playbook ~/.local/share/docs/python/ansible/apt_all.yml
-}
-
 api_set_config()
 {
     SEARCH_URL=duckduckgo.com
@@ -402,13 +376,12 @@ api_set_git_push_ansible()
     cd ~/.local/bin/ansible/
     cp ~/.local/share/docs/ansible/.profile ~/.local/share/docs/ansible/profile
     cp ~/.local/share/docs/ansible/profile ~/.local/bin/ansible/
-	cp ~/.local/share/docs/ansible/apt_all.yml ~/.local/bin/ansible/
+    cp ~/.local/share/docs/ansible/apt_all.yml ~/.local/bin/ansible/
     api_set_git_push
 }
 
 api_set_git_push()
 {
-    # api_get_x_secret git
     git add --all
     git add all*
     git add be*
@@ -424,7 +397,6 @@ api_set_git_push()
 
 api_set_git_push_docs()
 {
-    # api_get_x_secret git
     cd $DOCS_DIR
     api_set_git_push
 }
