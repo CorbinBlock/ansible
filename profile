@@ -214,7 +214,7 @@ api_set_apt_install()
 }
 
 
-api_set_apt_setup()
+api_set_setup()
 {
     echo "apt: Setup debian server."
     set -- apt-transport-https apt-utils bash bash-completion bridge-utils build-essential ca-certificates curl dnsutils debian-goodies debianutils diffutils dos2unix dpkg file findutils firefox-esr gcc gnupg gnupg-agent htop iproute2 iputils-ping isc-dhcp-client ispell iw keyutils less libvirt-clients libvirt-daemon-system lsb-release make nano neofetch net-tools openssh-client openssh-server openssl pciutils pipewire procps python3 python3-apt python3-debconf python3-debian python3-debianbts python3-pip python3-venv rsync sed software-properties-common sqlite3 ssl-cert sudo tar tmux traceroute tree unzip usbutils vim virtinst virt-manager virt-viewer wget whois wireless-tools xz-utils zstd zsh
@@ -255,7 +255,7 @@ api_set_apt_setup()
 }
 
 
-api_set_apt_setup_all()
+api_set_setup_all()
 {
     # node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01 HQDEBARM01)
     # for i in "${node_list[@]}"
@@ -263,13 +263,13 @@ api_set_apt_setup_all()
     #     echo "apt - Updating all debian nodes - Current node: $i"
     #     api_get_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
     # done
-    api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_apt_setup'"
-    api_get_ssh_prod " . ~/.profile; api_set_apt_setup"
-    api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_apt_setup'"
-    api_get_ssh_dev " . ~/.profile; api_set_apt_setup"
-    api_get_ssh_dell " . ~/.profile; api_set_apt_setup"
-    api_get_ssh_lenovo " . ~/.profile; api_set_apt_setup"
-    api_get_ssh_acer " . ~/.profile; api_set_apt_setup"
+    api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_setup'"
+    api_get_ssh_prod " . ~/.profile; api_set_setup"
+    api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_setup'"
+    api_get_ssh_dev " . ~/.profile; api_set_setup"
+    api_get_ssh_dell " . ~/.profile; api_set_setup"
+    api_get_ssh_lenovo " . ~/.profile; api_set_setup"
+    api_get_ssh_acer " . ~/.profile; api_set_setup"
 }
 
 api_set_apt_upgrade()
