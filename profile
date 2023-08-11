@@ -217,7 +217,6 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server."
-    # set -- apt-transport-https apt-utils bash build-essential ca-certificates curl dnsutils debian-goodies debianutils diffutils dos2unix dpkg file findutils firefox-esr gcc gnupg gnupg-agent htop keyutils less libvirt-clients libvirt-daemon-system lsb-release make nano neofetch openssh-client openssh-server openssl pipewire python3 python3-apt python3-debconf python3-debian python3-debianbts python3-pip python3-venv rsync sed software-properties-common ssl-cert sudo tar tmux tree unzip vim virtinst virt-manager virt-viewer wget zstd zsh
     sudo apt-get -y install dos2unix nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
@@ -259,7 +258,6 @@ api_set_setup_all()
 {
     api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_setup'"
     api_get_ssh_prod " . ~/.profile; api_set_setup"
-    api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_setup'"
     api_get_ssh_dev " . ~/.profile; api_set_setup"
     api_get_ssh_dell " . ~/.profile; api_set_setup"
     api_get_ssh_lenovo " . ~/.profile; api_set_setup"
