@@ -217,7 +217,7 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server."
-    set -- apt-transport-https apt-utils bash bash-completion bridge-utils build-essential ca-certificates curl dnsutils debian-goodies debianutils diffutils dos2unix dpkg file findutils firefox-esr gcc gnupg gnupg-agent htop iproute2 iputils-ping isc-dhcp-client ispell iw keyutils less libvirt-clients libvirt-daemon-system lsb-release make nano neofetch net-tools openssh-client openssh-server openssl pciutils pipewire procps python3 python3-apt python3-debconf python3-debian python3-debianbts python3-pip python3-venv rsync sed software-properties-common sqlite3 ssl-cert sudo tar tmux traceroute tree unzip usbutils vim virtinst virt-manager virt-viewer wget whois wireless-tools xz-utils zstd zsh
+    set -- apt-transport-https apt-utils bash build-essential ca-certificates curl dnsutils debian-goodies debianutils diffutils dos2unix dpkg file findutils firefox-esr gcc gnupg gnupg-agent htop keyutils less libvirt-clients libvirt-daemon-system lsb-release make nano neofetch openssh-client openssh-server openssl pipewire python3 python3-apt python3-debconf python3-debian python3-debianbts python3-pip python3-venv rsync sed software-properties-common ssl-cert sudo tar tmux tree unzip vim virtinst virt-manager virt-viewer wget zstd zsh
     for item in "$@"; do api_set_apt_install "$item"; done
     sudo adduser $USER --shell /bin/bash
     sudo usermod -G kvm,libvirt,audio $USER
@@ -257,12 +257,6 @@ api_set_setup()
 
 api_set_setup_all()
 {
-    # node_list=(KVMDEBPROD01 KVMDEBACER01 KVMDEBDELL01 KVMDEBDEV01 KVMDEBTEST01 KVMDEBTEST02 KVMDEBLENOVO01 HQDEBPROD01 HQDEBDEV01 HQDEBDELL01 HQDEBACER01 HQDEBLENOVO01 HQDEBARM01)
-    # for i in "${node_list[@]}"
-    # do
-    #     echo "apt - Updating all debian nodes - Current node: $i"
-    #     api_get_ssh_helper "X" "22" "$i" " . ~/.profile; api_set_apt_setup"
-    # done
     api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_setup'"
     api_get_ssh_prod " . ~/.profile; api_set_setup"
     api_get_ssh_prod "ssh HQDEBARM01 ' . ~/.profile; api_set_setup'"
@@ -285,9 +279,6 @@ api_set_apt_upgrade()
 
 api_set_config()
 {
-    SEARCH_URL=duckduckgo.com
-    JAVA_WIN=/c/Users/$USER/.local/share/docs/java/bin/
-    JAVA_LINUX=/home/$USER/.local/share/docs/java/bin/
     export DEBIAN_FRONTEND=noninteractive
     export DOCS_DIR=~/.local/share/docs
     export EDITOR=/usr/bin/vim
