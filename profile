@@ -283,7 +283,7 @@ api_set_config()
     export DOCS_DIR=~/.local/share/docs
     export EDITOR=/usr/bin/vim
     export PAGER=/usr/bin/less
-    export PROD="10.83.1.111"
+    export PROD="192.168.0.25"
     export LIBGL_ALWAYS_INDIRECT=1
     export DONT_PROMPT_WSL_INSTALL=1
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
@@ -295,7 +295,7 @@ api_set_config()
     export XDG_STATE_HOME=$HOME/.local/state
     export XDG_RUNTIME_DIR=/run/user/$UID
     export XAUTHORITY=$HOME/.Xauthority
-    export WIN_POWERSHELL=/c/$USER/.local/share/docs/powershell/
+    export WIN_POWERSHELL=/c/Users/$USER/.local/share/docs/powershell/
     alias py="python"
     alias python="python3"
     alias set_clipboard="xclip -selection c"
