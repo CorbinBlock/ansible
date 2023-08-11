@@ -286,7 +286,7 @@ api_set_config()
     export PROD="192.168.0.25"
     export LIBGL_ALWAYS_INDIRECT=1
     export DONT_PROMPT_WSL_INSTALL=1
-    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
     export PATH="/opt/maven/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/c/Windows/System32/:/c/Windows/System32/WindowsPowershell/v1.0/:/c/Windows/:/home/$USER/.local/bin:/home/$USER/:/c/Windows/System32/OpenSSH/:/c/Program Files (x86)/Microsoft Office/root/Office16/:"
     export PS1="\\s-\\v$ "
     export XDG_CACHE_HOME=$HOME/.cache
