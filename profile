@@ -495,17 +495,6 @@ api_set_ssh_mount()
     done
 }
 
-api_set_ssh_unmount()
-{
-    sudo chown $USER /mnt
-    # node_list=(kvm_debian_test dev prod dell lenovo)
-    # for i in "${node_list[@]}"
-    # do
-    #     echo "$i"
-    #     sudo umount /mnt/$i
-    # done
-}
-
 api_get_ssh_prod()
 {
     ssh -X -p 50100 $DOMAIN "$1"
@@ -621,7 +610,7 @@ api_set_virsh_start_network()
 {
     api_get_virsh_list
     sudo virsh net-create ~/.local/share/docs/data/default.xml
-	sudo virsh net-start default
+    sudo virsh net-start default
 }
 
 api_set_apk_install()
