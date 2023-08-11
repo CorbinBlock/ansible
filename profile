@@ -566,21 +566,9 @@ api_set_venv_create()
         echo "$FILE does exist. Renaming to venv_bkp"
         rsync -avP ~/.local/bin/venv/ ~/.local/bin/venv_bkp/
     fi
-    python3 -m pip install --upgrade --user pip
     python3 -m venv venv
     api_set_venv_activate_source
-    # package_list=(pip setuptools wheel paramiko ansible pyspark)
-    # for i in "${package_list[@]}"
-    # do
-    #      echo "$i"
-    #      python3 -m pip install --upgrade $i
-    # done
-    python3 -m pip install --upgrade pip
-    python3 -m pip install --upgrade setuptools
-    python3 -m pip install --upgrade wheel
-    python3 -m pip install --upgrade paramiko
-    python3 -m pip install --upgrade ansible
-    python3 -m pip install --upgrade pyspark
+    python3 -m pip install --upgrade ansible paramiko pip pyspark setuptools wheel
 }
 
 api_set_venv_activate()
