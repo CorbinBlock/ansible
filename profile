@@ -589,9 +589,9 @@ api_set_venv_activate()
     FILE=~/.local/bin/venv/
     if [ ! -d "$FILE" ]  ; then
         echo "$FILE does not exist. Creating venv."
-        venv_create
+        api_set_venv_create
     fi
-    venv_activate_source
+    api_set_venv_activate_source
     cd -
 }
 
