@@ -298,6 +298,7 @@ api_set_config()
     export WIN_JAVASCRIPT=/c/Users/$USER/.local/share/docs/javascript/
     export WIN_POWERSHELL=/c/Users/$USER/.local/share/docs/powershell/
     export WIN_PYTHON=/c/Users/$USER/.local/share/docs/python/
+    export WIN_PYTHON=/c/Users/$USER/.local/share/docs/db/General/Scripts/
     export WIN_XDG_CONFIG_HOME=/c/Users/$USER/.config/
     export WIN_XDG_DATA_HOME=/c/Users/$USER/.local/shate/
     export WIN_XDG_STATE_HOME=/c/Users/$USER/.local/state/
