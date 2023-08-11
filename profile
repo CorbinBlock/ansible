@@ -72,30 +72,9 @@ api_get_ssh_any()
     api_get_ssh_all $1 "$2"
 }
 
-api_get_ssh_all()
-{
-    # port_list=( 22 2222 3333 50200 50100 50300 50400 50500 )
-    # for i in "${port_list[@]}"
-    # do
-    # echo "ssh: Attempt connection via port $i"
-    # if api_get_ssh_helper "X" "$i" "$1" "$2" ; then
-    #     echo "ssh: Connection succeeded"
-    #     break
-    # else
-    #     echo "ssh: Connection failed, retrying."
-    # fi
-    # done
-    echo "ssh: Exiting!"
-}
-
 api_get_ssh_helper()
 {
     ssh -$1 -p $2 $3 "$4"
-}
-
-api_get_ssh_terminal()
-{
-    api_get_ssh_prod "ssh_helper 'tt' $1 $2 '$3'"
 }
 
 api_get_ssh_dell()
@@ -219,30 +198,30 @@ api_set_setup()
     echo "apt: Setup debian server."
     sudo apt-get -y install dos2unix nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim
     sudo adduser $USER --shell /bin/bash
-    sudo usermod -G kvm,libvirt,audio $USER
-    sudo systemctl enable --now libvirtd
-    file=/opt/maven/bin/mvn
-     if [ ! -f $file ]; then
-     echo "$file not found!"
-     cd /tmp
-     curl -O https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
-     sudo tar -zxvf apache-maven-3.8.6-bin.tar.gz
-     sudo mv apache-maven-3.8.6 /opt/maven
-     ls /opt/maven
-     mvn -version
-     fi
-     echo "apt: Setup $user."
-     file=/etc/pipewire/media-session.d/with-pulseaudio
-     if [ ! -f $file ]; then
-     echo "$file not found!"
-     sudo su $USER -c "sudo mkdir -p /etc/pipewire/media-session.d/"
-     sudo su $USER -c "sudo mkdir -p /usr/share/doc/pipewire/examples/systemd/user/"
-     sudo su $USER -c "sudo touch $file"
-     sudo su $USER -c "sudo cp /usr/share/doc/pipewire/examples/systemd/user/pipewire-pulse.* /etc/systemd/user/"
-     sudo su $USER -c "systemctl --user daemon-reload"
-     sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
-     sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
-     fi
+    # sudo usermod -G kvm,libvirt,audio $USER
+    # sudo systemctl enable --now libvirtd
+    # file=/opt/maven/bin/mvn
+    # if [ ! -f $file ]; then
+    #  echo "$file not found!"
+    #  cd /tmp
+    #  curl -O https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+    # udo tar -zxvf apache-maven-3.8.6-bin.tar.gz
+    #  sudo mv apache-maven-3.8.6 /opt/maven
+    #  ls /opt/maven
+    #  mvn -version
+    #  fi
+    #  echo "apt: Setup $user."
+    #  file=/etc/pipewire/media-session.d/with-pulseaudio
+    #  if [ ! -f $file ]; then
+    #  echo "$file not found!"
+    #  sudo su $USER -c "sudo mkdir -p /etc/pipewire/media-session.d/"
+    #  sudo su $USER -c "sudo mkdir -p /usr/share/doc/pipewire/examples/systemd/user/"
+    #  sudo su $USER -c "sudo touch $file"
+    #  sudo su $USER -c "sudo cp /usr/share/doc/pipewire/examples/systemd/user/pipewire-pulse.* /etc/systemd/user/"
+    #  sudo su $USER -c "systemctl --user daemon-reload"
+    #  sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
+    #  sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
+    #  fi
      sudo su $USER -c "mkdir -p ~/.local/"
      sudo su $USER -c "mkdir -p ~/.local/bin/"
      sudo su $USER -c "mkdir -p ~/.local/share/"
