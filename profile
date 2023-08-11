@@ -296,6 +296,8 @@ api_set_config()
     export XDG_RUNTIME_DIR=/run/user/$UID
     export XAUTHORITY=$HOME/.Xauthority
     export WIN_POWERSHELL=/c/Users/$USER/.local/share/docs/powershell/
+    export WIN_PYTHON=/c/Users/$USER/.local/share/docs/python/
+    export WIN_XDG_DATA_HOME=/c/Users/$USER/.local/state/
     alias py="python"
     alias python="python3"
     alias set_clipboard="xclip -selection c"
