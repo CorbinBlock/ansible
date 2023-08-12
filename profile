@@ -145,8 +145,6 @@ api_set_apk_setup()
     echo "apk: Setup alpine server."
     mkdir -p ~/.local/bin/
     api_set_apk_upgrade
-    # set -- bash docker docker-compose dos2unix flatpak git git-lfs keepassxc nano neofetch openssh openrc python3 py3-pip sudo tmux vim tree lynx openjdk17 xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus pipewire wireplumber nmap rust go
-    # for item in "$@"; do api_set_apk_install "$item"; done
     api_set_apk_upgrade
     api_set_ssh_create
     sudo rc-update add docker
@@ -162,7 +160,6 @@ api_set_apk_setup_ish()
     echo "apk: Setup alpine server for iSH iOS app."
     mkdir -p ~/.local/bin/
     api_set_apk_upgrade_ish
-    # i3status i3status-doc i3wm i3wm-doc i3lock i3lock-doc sshfs ttf-dejavu xorg-server xterm xvfb
     sudo apk add bash dos2unix git git-lfs lynx nano neofetch openrc openssh openssl python3 py3-pip rsync sqlite sudo tmux tree vim x11vnc x11vnc-doc xdpyinfo xdpyinfo-doc xf86-video-dummy
     api_set_ssh_create
     sudo rc-update add sshd || exit 0
