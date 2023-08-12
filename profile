@@ -254,7 +254,6 @@ api_set_apt_upgrade()
 api_set_config()
 {
     export DEBIAN_FRONTEND=noninteractive
-    export DOCS_DIR=~/.local/share/docs
     export EDITOR=/usr/bin/vim
     export PAGER=/usr/bin/less
     export PROD="192.168.0.25"
@@ -263,12 +262,13 @@ api_set_config()
     export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
     export PATH="/opt/maven/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/c/Windows/System32/:/c/Windows/System32/WindowsPowershell/v1.0/:/c/Windows/:/home/$USER/.local/bin:/home/$USER/:/c/Windows/System32/OpenSSH/:/c/Program Files (x86)/Microsoft Office/root/Office16/:"
     export PS1="\\s-\\v$ "
-    export XDG_CACHE_HOME=$HOME/.cache
-    export XDG_CONFIG_HOME=$HOME/.config
-    export XDG_DATA_HOME=$HOME/.local/share
-    export XDG_STATE_HOME=$HOME/.local/state
+    export XDG_CACHE_HOME=$HOME/.cache/
+    export XDG_CONFIG_HOME=$HOME/.config/
+    export XDG_DATA_HOME=$HOME/.local/share/
+    export XDG_STATE_HOME=$HOME/.local/state/
     export XDG_RUNTIME_DIR=/run/user/$UID
     export XAUTHORITY=$HOME/.Xauthority
+    export WIN_DOCS=/c/Users/$USER/.local/share/docs/
     export WIN_JAVASCRIPT=/c/Users/$USER/.local/share/docs/javascript/
     export WIN_POWERSHELL=/c/Users/$USER/.local/share/docs/powershell/
     export WIN_PYTHON=/c/Users/$USER/.local/share/docs/python/
