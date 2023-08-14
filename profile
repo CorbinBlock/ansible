@@ -342,7 +342,6 @@ api_set_emerge_update()
 api_set_git_pull()
 {
     echo "git: Update repo in current directory"
-    api_get_x_secret git
     pwd
     git pull --no-rebase
 }
