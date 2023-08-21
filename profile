@@ -373,7 +373,7 @@ api_set_git_push()
 
 api_set_git_push_docs()
 {
-    cd $DOCS_DIR
+    cd $XDG_DATA_HOME/docs
     api_set_git_push
 }
 
