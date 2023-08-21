@@ -386,6 +386,9 @@ api_set_nas_setup()
 
 api_set_reboot()
 {
+    pkill chromium
+    pkill firefox
+    pkill yakuake
     sudo systemctl reboot -i
 }
 
