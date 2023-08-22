@@ -232,6 +232,7 @@ api_set_setup()
 
 api_set_setup_all()
 {
+    api_set_setup
     api_get_ssh_dev "ssh KVMDEBTEST01 ' . ~/.profile; api_set_setup'"
     api_get_ssh_prod " . ~/.profile; api_set_setup"
     api_get_ssh_dev " . ~/.profile; api_set_setup"
