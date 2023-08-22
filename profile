@@ -400,8 +400,8 @@ api_set_rsync_git_prod()
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/profile $XDG_DATA_HOME
     sudo mv $XDG_DATA_HOME/profile /etc
     sudo mkdir -p /etc/ansible
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME
-    sudo mv $XDG_DATA_HOME/hosts /etc/ansible
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME/ansible_hosts
+    sudo mv $XDG_DATA_HOME/ansible_hosts /etc/ansible/hosts
     ssh -p $PORT $USER@$DOMAIN " . ~/.profile; api_set_source_profile"
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
