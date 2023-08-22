@@ -492,7 +492,7 @@ api_set_tmux_env()
 {
     api_set_tmux_session wifi
     api_set_tmux_session ssh_tunnel
-    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3; api_set_apt_setup"
+    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3; sleep 10; api_set_setup"
     api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 20; api_set_ssh_tunnel"
 }
 
