@@ -492,7 +492,7 @@ api_set_tmux_env()
 {
     api_set_tmux_session update
     api_set_tmux_session ssh_tunnel
-    api_set_tmux_send update "api_set_setup"
+    api_set_tmux_send update "api_set_setup; api_set_setup_all"
     api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 20; api_set_ssh_tunnel"
 }
 
