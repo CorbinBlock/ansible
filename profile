@@ -64,7 +64,7 @@ api_get_secret()
 
 api_get_ssh_acer()
 {
-    ssh -X -p 50500 $DOMAIN  "$1"
+    ssh -tt -X HQDEBACER01 "$1"
 }
 
 api_get_ssh_any()
@@ -79,12 +79,12 @@ api_get_ssh_helper()
 
 api_get_ssh_dell()
 {
-    ssh -X -p 50400 $DOMAIN  "$1"
+    ssh -tt -X HQDEBDELL01 "$1"
 }
 
 api_get_ssh_dev()
 {
-    ssh -X -p 50200 $DOMAIN "$1"
+    ssh -tt -X HQDEBDEV01 "$1"
 }
 
 api_get_ssh_ipad()
@@ -99,7 +99,7 @@ api_get_ssh_iphone()
 
 api_get_ssh_lenovo()
 {
-    ssh -X -p 50300 $DOMAIN  "$1"
+    ssh -tt -X HQDEBLENOVO01 "$1"
 }
 
 api_get_ssh_localhost()
