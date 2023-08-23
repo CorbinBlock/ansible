@@ -398,6 +398,8 @@ api_set_rsync_git_prod()
     sudo cp /etc/hosts $XDG_DATA_HOME
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/hosts $XDG_DATA_HOME
     sudo mv $XDG_DATA_HOME/hosts /etc
+    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/apt/sources.list $XDG_DATA_HOME
+    sudo mv $XDG_DATA_HOME/sources.list /etc/apt/
     rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/profile $XDG_DATA_HOME
     sudo mv $XDG_DATA_HOME/profile /etc
     sudo mkdir -p /etc/ansible
