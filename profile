@@ -192,7 +192,7 @@ api_set_apt_install()
 
 api_set_setup()
 {
-    echo "apt: Setup debian server."
+	echo "apt: Setup debian server. $(hostname)"
     sudo apt-get -y install dos2unix nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim
     sudo adduser $USER --shell /bin/bash
     # sudo usermod -G kvm,libvirt,audio $USER
