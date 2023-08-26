@@ -242,7 +242,7 @@ api_set_setup_all()
     ssh -J HQDEBDELL01 KVMDEBDELL01 " . ~/.profile; api_set_setup"
     ssh -J HQDEBACER01 KVMDEBACER01 " . ~/.profile; api_set_setup"
     echo "KVMDEBPROD01 (test env)"
-    ssh -J HQDEBDEV01 KVMDEBTEST01 ssh 192.168.0.195 " . ~/.profile; api_set_setup" 
+    ssh -J HQDEBDEV01 KVMDEBTEST01 'ssh 192.168.0.195 " . ~/.profile; api_set_setup"' 
     ssh -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
     ssh HQDEBPROD01  " . ~/.profile; api_set_setup"
     ssh HQDEBDEV01 " . ~/.profile; api_set_setup"
