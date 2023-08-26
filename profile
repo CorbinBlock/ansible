@@ -235,17 +235,16 @@ api_set_setup_all()
     api_set_setup
     ssh -J HQDEBPROD01 KVMDEBPROD01 " . ~/.profile; api_set_setup"
     ssh -J HQDEBPROD01 KVMDEBDEV01 " . ~/.profile; api_set_setup"
-    api_get_ssh_prod "ssh -tt KVMDEBTEST02 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_prod "ssh -tt KVMDEBLENOVO01 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_prod "ssh -tt KVMDEBWSL01 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_dev "ssh -tt KVMDEBTEST01 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_dell "ssh -tt KVMDEBDELL01 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_acer "ssh -tt KVMDEBACER01 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_prod " . ~/.profile; api_set_setup"
-    api_get_ssh_dev " . ~/.profile; api_set_setup"
-    api_get_ssh_dell " . ~/.profile; api_set_setup"
-    api_get_ssh_lenovo " . ~/.profile; api_set_setup"
-    api_get_ssh_acer " . ~/.profile; api_set_setup"
+    ssh -J HQDEBPROD01 KVMDEBTEST02 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBPROD01 KVMDEBLENOVO01 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBPROD01 KVMDEBWSL01 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBDELL01 KVMDEBDELL01 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBACER01 KVMDEBACER01 " . ~/.profile; api_set_setup"
+    ssh HQDEBPROD01  " . ~/.profile; api_set_setup"
+    ssh HQDEBDEV01 " . ~/.profile; api_set_setup"
+    ssh HQDEBDELL01 " . ~/.profile; api_set_setup"
+    ssh HQDEBACER01 " . ~/.profile; api_set_setup"
 }
 
 api_set_apt_upgrade()
@@ -257,6 +256,7 @@ api_set_apt_upgrade()
     api_set_source_profile
     api_set_venv_create
     ansible-playbook ~/.local/bin/ansible/apt_all.yml
+    echo "Update complete for node: $(hostname)"
 }
 
 api_set_config()
