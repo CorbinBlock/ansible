@@ -233,8 +233,8 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
-    api_get_ssh_prod "ssh -tt KVMDEBDEV01 ' . ~/.profile; api_set_setup'"
-    api_get_ssh_prod "ssh -tt KVMDEBPROD01 ' . ~/.profile; api_set_setup'"
+    ssh -J HQDEBPROD01 KVMDEBPROD01 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBPROD01 KVMDEBDEV01 " . ~/.profile; api_set_setup"
     api_get_ssh_prod "ssh -tt KVMDEBTEST02 ' . ~/.profile; api_set_setup'"
     api_get_ssh_prod "ssh -tt KVMDEBLENOVO01 ' . ~/.profile; api_set_setup'"
     api_get_ssh_prod "ssh -tt KVMDEBWSL01 ' . ~/.profile; api_set_setup'"
