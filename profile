@@ -233,6 +233,13 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBPROD01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBDEV01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBTEST02
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBLENOVO01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBWSL01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDEV01 KVMDEBTEST01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDELL01 KVMDEBDELL01
     ssh -J HQDEBPROD01 KVMDEBPROD01 " . ~/.profile; api_set_setup"
     ssh -J HQDEBPROD01 KVMDEBDEV01 " . ~/.profile; api_set_setup"
     ssh -J HQDEBPROD01 KVMDEBTEST02 " . ~/.profile; api_set_setup"
