@@ -242,6 +242,8 @@ api_set_setup_all()
     ssh -J HQDEBDELL01 KVMDEBDELL01 " . ~/.profile; api_set_setup"
     ssh -J HQDEBACER01 KVMDEBACER01 " . ~/.profile; api_set_setup"
     ssh -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBDEV01,KVMDEBTEST01 192.168.122.195 " . ~/.profile; api_set_setup"
+    ssh -J HQDEBDEV01,KVMDEBTEST01 192.168.122.133 " . ~/.profile; api_set_setup"
     ssh HQDEBPROD01  " . ~/.profile; api_set_setup"
     ssh HQDEBDEV01 " . ~/.profile; api_set_setup"
     ssh HQDEBDELL01 " . ~/.profile; api_set_setup"
