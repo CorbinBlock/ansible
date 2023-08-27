@@ -192,7 +192,7 @@ api_set_apt_install()
 
 api_set_setup()
 {
-	echo "apt: Setup debian server. $(hostname)"
+    echo "apt: Setup debian server. $(hostname)"
     sudo apt-get -y install dos2unix nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim
     sudo adduser $USER --shell /bin/bash
     # sudo usermod -G kvm,libvirt,audio $USER
@@ -219,18 +219,19 @@ api_set_setup()
     #  sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
     #  sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
     #  fi
-     sudo su $USER -c "mkdir -p ~/.local/"
-     sudo su $USER -c "mkdir -p ~/.local/bin/"
-     sudo su $USER -c "mkdir -p ~/.local/share/"
-     sudo su $USER -c "mkdir -p ~/.local/state/"
-     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
-     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-     sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
+    sudo su $USER -c "mkdir -p ~/.local/"
+    sudo su $USER -c "mkdir -p ~/.local/bin/"
+    sudo su $USER -c "mkdir -p ~/.local/share/"
+    sudo su $USER -c "mkdir -p ~/.local/state/"
+    sudo su $USER -c "mkdir -p ~/.local/share/tmp"
+    sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
+    sudo su $USER -c " . ~/.profile; api_set_ssh_create"
+    sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDEV01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBPROD01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBACER01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDELL01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBLENOVO01
     ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBPROD01
     ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBDEV01
     ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBTEST02
@@ -244,28 +245,21 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBPROD01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBDEV01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBTEST02
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBLENOVO01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBWSL01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDEV01 KVMDEBTEST01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDELL01 KVMDEBDELL01
-    ssh -J HQDEBPROD01 KVMDEBPROD01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBPROD01 KVMDEBDEV01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBPROD01 KVMDEBTEST02 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBPROD01 KVMDEBLENOVO01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBPROD01 KVMDEBWSL01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBDELL01 KVMDEBDELL01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBACER01 KVMDEBACER01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBDEV01,KVMDEBTEST01 192.168.122.195 " . ~/.profile; api_set_setup"
-    ssh -J HQDEBDEV01,KVMDEBTEST01 192.168.122.133 " . ~/.profile; api_set_setup"
-    ssh HQDEBPROD01  " . ~/.profile; api_set_setup"
-    ssh HQDEBDEV01 " . ~/.profile; api_set_setup"
-    ssh HQDEBDELL01 " . ~/.profile; api_set_setup"
-    ssh HQDEBACER01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBPROD01 KVMDEBPROD01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBPROD01 KVMDEBDEV01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBPROD01 KVMDEBTEST02 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBPROD01 KVMDEBLENOVO01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBPROD01 KVMDEBWSL01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDELL01 KVMDEBDELL01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBACER01 KVMDEBACER01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.195 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.133 " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBPROD01  " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBDEV01 " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBDELL01 " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBACER01 " . ~/.profile; api_set_setup"
 }
 
 api_set_apt_upgrade()
