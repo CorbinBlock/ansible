@@ -533,7 +533,7 @@ api_set_tmux_env_dell()
 {
     api_set_tmux_session wifi
     api_set_tmux_session ssh_tunnel
-    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i enp0s31f6; sudo dhclient -v enp0s31f6; sleep 10; api_set_setup; api_set_setup_all"
+    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp2s0; sudo dhclient -v wlp2s0; sleep 10; api_set_setup; api_set_setup_all"
     api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 20; api_set_ssh_tunnel"
 }
 
