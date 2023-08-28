@@ -412,7 +412,7 @@ api_set_reboot()
     pkill chromium
     pkill firefox
     pkill yakuake
-    sudo systemctl reboot -i
+    sudo reboot
 }
 
 api_set_rsync_git_prod()
