@@ -193,7 +193,7 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install dos2unix nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim
+    sudo apt-get -y install dos2unix kde-standard keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim xclip
     sudo adduser $USER --shell /bin/bash
     # sudo usermod -G kvm,libvirt,audio $USER
     # sudo systemctl enable --now libvirtd
@@ -227,6 +227,7 @@ api_set_setup()
     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
     sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
+    ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBARM01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDEV01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBPROD01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBACER01
