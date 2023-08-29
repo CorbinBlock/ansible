@@ -193,32 +193,10 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install dos2unix kde-standard keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim xclip
-    sudo adduser $USER --shell /bin/bash
-    # sudo usermod -G kvm,libvirt,audio $USER
-    # sudo systemctl enable --now libvirtd
-    # file=/opt/maven/bin/mvn
-    # if [ ! -f $file ]; then
-    #  echo "$file not found!"
-    #  cd /tmp
-    #  curl -O https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
-    # udo tar -zxvf apache-maven-3.8.6-bin.tar.gz
-    #  sudo mv apache-maven-3.8.6 /opt/maven
-    #  ls /opt/maven
-    #  mvn -version
-    #  fi
-    #  echo "apt: Setup $user."
-    #  file=/etc/pipewire/media-session.d/with-pulseaudio
-    #  if [ ! -f $file ]; then
-    #  echo "$file not found!"
-    #  sudo su $USER -c "sudo mkdir -p /etc/pipewire/media-session.d/"
-    #  sudo su $USER -c "sudo mkdir -p /usr/share/doc/pipewire/examples/systemd/user/"
-    #  sudo su $USER -c "sudo touch $file"
-    #  sudo su $USER -c "sudo cp /usr/share/doc/pipewire/examples/systemd/user/pipewire-pulse.* /etc/systemd/user/"
-    #  sudo su $USER -c "systemctl --user daemon-reload"
-    #  sudo su $USER -c "systemctl --user --now disable pulseaudio.service pulseaudio.socket"
-    #  sudo su $USER -c "systemctl --user --now enable pipewire pipewire-pulse"
-    #  fi
+    sudo apt-get -y install dos2unix kde-standard keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim virt-manager xclip zsh
+    sudo adduser $USER --shell /bin/zsh
+    sudo usermod -G kvm,libvirt,audio $USER
+    sudo systemctl enable --now libvirtd
     sudo su $USER -c "mkdir -p ~/.local/"
     sudo su $USER -c "mkdir -p ~/.local/bin/"
     sudo su $USER -c "mkdir -p ~/.local/share/"
