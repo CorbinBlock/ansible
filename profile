@@ -218,11 +218,11 @@ api_set_setup()
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDEV01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBPROD01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBLENOVO01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBPROD01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBDEV01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBTEST02
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBLENOVO01
-    ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBWSL01
+    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBPROD01
+    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBDEV01
+    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBTEST02
+    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBLENOVO01
+    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBWSL01
     ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDEV01 KVMDEBTEST01
     # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDELL01 KVMDEBDELL01
 }
