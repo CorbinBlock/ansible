@@ -204,9 +204,16 @@ api_set_setup()
     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-    sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
+    # sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
+    sudo cp ~/.local/bin/docs/data/hosts /etc/hosts
+    sudo mkdir -p /etc/ansible/
+    sudo cp ~/.local/bin/docs/data/ansible_hosts /etc/ansible/hosts
+    sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
+    cp ~/.local/bin/docs/data/.profile ~/.profile
+    cp ~/.local/bin/docs/data/.zshrc ~/.zshrc
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBACER01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBARM01
+    ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBASUS01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDELL01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDEV01
     ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBPROD01
