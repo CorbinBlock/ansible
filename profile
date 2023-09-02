@@ -207,6 +207,8 @@ api_set_setup()
     # sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
     sudo cp ~/.local/bin/docs/data/hosts /etc/hosts
     sudo mkdir -p /etc/ansible/
+    cd ~/.local/bin/docs/
+    git pull --no-rebase
     sudo cp ~/.local/bin/docs/data/ansible_hosts /etc/ansible/hosts
     sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
     cp ~/.local/bin/docs/data/.profile ~/.profile
