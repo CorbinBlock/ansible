@@ -207,7 +207,12 @@ api_set_setup()
     # sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
     sudo cp ~/.local/bin/docs/data/hosts /etc/hosts
     sudo mkdir -p /etc/ansible/
+    cd ~/.local/bin
+    git clone git@github.com:CorbinBlock/docs.git
+    git clone git@github.com:CorbinBlock/ansible.git
     cd ~/.local/bin/docs/
+    git pull --no-rebase
+    cd ~/.local/bin/ansible/
     git pull --no-rebase
     sudo cp ~/.local/bin/docs/data/ansible_hosts /etc/ansible/hosts
     sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
@@ -399,7 +404,8 @@ api_set_reboot()
 {
     pkill chromium
     pkill firefox
-    pkill yakuake
+    pkill keepassxc
+    pkill gvim
     sudo reboot
 }
 
