@@ -55,8 +55,8 @@ api_get_report()
 api_get_secret()
 {
     secret_path=$1
-    database=$XDG_DATA_HOME/docs/data/secrets.kdbx
-    key_file=$XDG_DATA_HOME/docs/data/secrets.keyx
+    database=~/.local/bin/docs/data/secrets.kdbx
+    key_file=~/.local/bin//docs/data/secrets.keyx
     password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
     command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | set_clipboard"
     eval $command
