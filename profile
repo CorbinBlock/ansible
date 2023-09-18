@@ -238,17 +238,12 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
-    # ssh -tt -J HQDEBPROD01 KVMDEBPROD01 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBPROD01 KVMDEBDEV01 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBPROD01 KVMDEBTEST02 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBPROD01 KVMDEBLENOVO01 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBPROD01 KVMDEBWSL01 " . ~/.profile; api_set_setup"
-    ssh -tt -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBDELL01 KVMDEBDELL01 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBACER01 KVMDEBACER01 " . ~/.profile; api_set_setup"
     ssh -tt -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
     ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.195 " . ~/.profile; api_set_setup"
     ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.133 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.27 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.140 " . ~/.profile; api_set_setup"
+    ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.6 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBPROD01  " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDEV01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDELL01 " . ~/.profile; api_set_setup"
