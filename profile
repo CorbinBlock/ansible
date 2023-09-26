@@ -504,6 +504,7 @@ api_set_tmux_all()
     api_set_tmux_kill $1
     api_set_tmux_session $1
     api_set_tmux_send "$1" "$1"
+    api_set_tmux_attach $1
 }
 
 api_set_tmux_attach()
