@@ -238,18 +238,11 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
-    # ssh -tt -J HQDEBDEV01 KVMDEBTEST01 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.195 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.133 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.27 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.140 " . ~/.profile; api_set_setup"
-    # ssh -tt -J HQDEBDEV01,KVMDEBTEST01 192.168.122.6 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBPROD01  " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDEV01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDELL01 " . ~/.profile; api_set_setup"
-    # ssh -tt HQDEBACER01 " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBARM01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBASUS01 " . ~/.profile; api_set_setup"
-    # ssh -tt HQDEBLENOVO01 " . ~/.profile; api_set_setup"
 }
 
 api_set_apt_upgrade()
