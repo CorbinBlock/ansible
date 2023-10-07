@@ -508,8 +508,10 @@ api_set_tmux_attach()
 api_set_tmux_env()
 {
     api_set_tmux_all api_get_secret
+    api_set_tmux_send api_get_secret "api_get_secret keepassxc"
     api_set_tmux_all keepassxc
-    api_set_tmux_all firefox
+    api_set_tmux_all docker
+    api_set_tmux_send docker "cd ~/.local/bin/docs/docker/firefox; ./setup.sh"
     api_set_tmux_all htop
 }
 
