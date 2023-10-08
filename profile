@@ -244,6 +244,7 @@ api_set_setup_all()
     ssh -tt HQDEBACER01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBARM01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBASUS01 " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBLENOVO01 " . ~/.profile; api_set_setup"
 }
 
 api_set_setup_docker()
