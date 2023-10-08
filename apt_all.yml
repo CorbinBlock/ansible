@@ -16,7 +16,6 @@
           - btrfs-progs
           - build-essential
           - ca-certificates
-          - chromium 
           - curl
           - dnsutils
           - debian-goodies
@@ -26,7 +25,6 @@
           - dpkg
           - file
           - findutils
-          - firefox-esr
           - gcc
           - git
           - git-lfs
