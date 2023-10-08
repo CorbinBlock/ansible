@@ -259,6 +259,7 @@ api_set_setup_docker()
     "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
+    sudo apt-get install docker-ce -y
 }
 
 api_set_setup_jenkins()
