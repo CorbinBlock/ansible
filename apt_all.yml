@@ -15,6 +15,7 @@
           - bridge-utils
           - btrfs-progs
           - build-essential
+          - chromium
           - ca-certificates
           - curl
           - dnsutils
@@ -25,9 +26,11 @@
           - dpkg
           - file
           - findutils
+          - firefox-esr
           - gcc
           - git
           - git-lfs
+          - gnome
           - gnupg
           - gnupg-agent
           - htop

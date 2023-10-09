@@ -193,7 +193,7 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install dos2unix keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim virt-manager zsh
+    sudo apt-get -y install curl dos2unix keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim virt-manager zsh
     sudo adduser $USER --shell /bin/zsh
     sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
@@ -204,7 +204,6 @@ api_set_setup()
     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-    # sudo su $USER -c " . ~/.profile; api_set_rsync_git_prod"
     sudo cp ~/.local/bin/docs/data/hosts /etc/hosts
     sudo mkdir -p /etc/ansible/
     cd ~/.local/bin
@@ -218,20 +217,6 @@ api_set_setup()
     sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
     cp ~/.local/bin/docs/data/.profile ~/.profile
     cp ~/.local/bin/docs/data/.zshrc ~/.zshrc
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBACER01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBARM01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBASUS01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDELL01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBDEV01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBPROD01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub HQDEBLENOVO01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBPROD01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBDEV01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBTEST02
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBLENOVO01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBPROD01 KVMDEBWSL01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDEV01 KVMDEBTEST01
-    # ssh-copy-id -i ~/.ssh/id_rsa.pub -o ProxyJump=HQDEBDELL01 KVMDEBDELL01
 }
 
 
