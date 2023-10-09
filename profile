@@ -1,4 +1,4 @@
-# Note: Using positional parameters as makeshift array to use POSIX shell instead of bash for maximum OS compatibility 
+﻿# Note: Using positional parameters as makeshift array to use POSIX shell instead of bash for maximum OS compatibility 
 
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
@@ -35,8 +35,7 @@ api_get_check_battery()
 
 api_get_ide()
 {
-    api_set_tmux_kill ide
-    api_set_tmux_session ide
+    api_set_tmux_all ide
     api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
 }
 
@@ -50,16 +49,6 @@ api_get_report()
     sudo docker ps
     api_get_virsh_list
     df -BG
-}
-
-api_get_secret()
-{
-    secret_path=$1
-    database=~/.local/bin/docs/data/secrets.kdbx
-    key_file=~/.local/bin//docs/data/secrets.keyx
-    password=$XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
-    command="cat $password | keepassxc-cli show -sa password -k $key_file $database $secret_path | set_clipboard"
-    eval $command
 }
 
 api_get_ssh_acer()
@@ -252,6 +241,7 @@ api_set_setup_jenkins()
     curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
     echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
     sudo apt-get update
+    sudo apt-get install default-jre -y
     sudo apt-get install jenkins
 }
 
@@ -276,26 +266,16 @@ api_set_config()
     export LIBGL_ALWAYS_INDIRECT=1
     export DONT_PROMPT_WSL_INSTALL=1
     export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
-    export PATH="/opt/maven/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/c/Windows/System32/:/c/Windows/System32/WindowsPowershell/v1.0/:/c/Windows/:/home/$USER/.local/bin:/home/$USER/:/c/Windows/System32/OpenSSH/:/c/Program Files (x86)/Microsoft Office/root/Office16/:"
+    export PATH="/opt/maven/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:"
     export PS1="\\s-\\v$ "
+    export XDG_BIN_HOME=$HOME/.local/bin/
     export XDG_CACHE_HOME=$HOME/.cache/
     export XDG_CONFIG_HOME=$HOME/.config/
     export XDG_DATA_HOME=$HOME/.local/share/
     export XDG_STATE_HOME=$HOME/.local/state/
     export XDG_RUNTIME_DIR=/run/user/$UID
-    export XAUTHORITY=$HOME/.Xauthority
-    export WIN_DOCS=/c/Users/$USER/.local/share/docs/
-    export WIN_JAVASCRIPT=/c/Users/$USER/.local/share/docs/javascript/
-    export WIN_POWERSHELL=/c/Users/$USER/.local/share/docs/powershell/
-    export WIN_PYTHON=/c/Users/$USER/.local/share/docs/python/
-    export WIN_SQL=/c/Users/$USER/.local/share/docs/db/General/Scripts/
-    export WIN_XDG_CONFIG_HOME=/c/Users/$USER/.config/
-    export WIN_XDG_DATA_HOME=/c/Users/$USER/.local/shate/
-    export WIN_XDG_STATE_HOME=/c/Users/$USER/.local/state/
     alias py="python"
-    alias python="python3"
-    alias set_clipboard="xclip -selection c"
-    alias get_clipboard="xclip -selection c -o"    
+    alias python="python3"    
 }
 
 api_set_docker_delete()
@@ -307,7 +287,7 @@ api_set_docker_delete()
 api_set_docker_firefox()
 {
     api_set_docker_delete
-    cd $XDG_DATA_HOME/docs/docker/docker_firefox/
+    cd $XDG_BIN_HOME/docs/docker/firefox/
     ./setup.sh
 }
 
