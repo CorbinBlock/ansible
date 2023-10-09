@@ -193,7 +193,7 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install dos2unix kde-standard keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim virt-manager xclip zsh
+    sudo apt-get -y install dos2unix keepassxc nano neofetch openssh-client openssh-server python3 python3-pip python3-venv rsync sudo vim virt-manager zsh
     sudo adduser $USER --shell /bin/zsh
     sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
