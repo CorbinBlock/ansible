@@ -170,7 +170,7 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install curl chromium dos2unix git gnome keepassxc nano neofetch openssh-server python3 python3-pip python3-venv rsync sudo tmux vim virt-manager wl-clipboard zsh
+    sudo apt-get -y install curl dos2unix git keepassxc nano neofetch openssh-server python3 python3-pip python3-venv rsync sudo tmux vim virt-manage zsh
     sudo adduser $USER --shell /bin/zsh
     sudo usermod -G kvm,libvirt,audio $USER
     sudo systemctl enable --now libvirtd
