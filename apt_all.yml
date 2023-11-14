@@ -24,7 +24,7 @@
           - gcc
           - git
           - git-lfs
-          - gnome
+          - gnome-core
           - gnupg
           - gnupg-agent
           - htop
