@@ -202,7 +202,6 @@ api_set_setup_all()
     ssh -tt HQDEBPROD01  " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDEV01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDELL01 " . ~/.profile; api_set_setup"
-    ssh -tt HQDEBDELL02 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBACER01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBARM01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBASUS01 " . ~/.profile; api_set_setup"
