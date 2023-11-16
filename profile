@@ -376,8 +376,7 @@ api_set_reboot()
     pkill chromium
     pkill firefox
     pkill keepassxc
-    pkill gvim
-    sudo reboot
+    gnome-session-quit --reboot
 }
 
 api_set_rsync_git_prod()
