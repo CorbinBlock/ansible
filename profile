@@ -171,7 +171,6 @@ api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
     sudo apt-get -y install openssh-server python3 python3-pip python3-venv rsync sudo tmux vim zsh
-    # sudo adduser $USER --shell /bin/zsh
     sudo su $USER -c "mkdir -p ~/.local/"
     sudo su $USER -c "mkdir -p ~/.local/bin/"
     sudo su $USER -c "mkdir -p ~/.local/share/"
