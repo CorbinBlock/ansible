@@ -39,51 +39,6 @@ api_get_report()
     df -BG
 }
 
-api_get_ssh_acer()
-{
-    ssh -tt -X HQDEBACER01 "$1"
-}
-
-api_get_ssh_any()
-{
-    api_get_ssh_all $1 "$2"
-}
-
-api_get_ssh_helper()
-{
-    ssh -$1 -p $2 $3 "$4"
-}
-
-api_get_ssh_dell()
-{
-    ssh -tt -X HQDEBDELL01 "$1"
-}
-
-api_get_ssh_dev()
-{
-    ssh -tt -X HQDEBDEV01 "$1"
-}
-
-api_get_ssh_ipad()
-{
-    api_get_ssh_all ipad "$1"
-}
-
-api_get_ssh_iphone()
-{
-    api_get_ssh_all iphone "$1"
-}
-
-api_get_ssh_lenovo()
-{
-    ssh -tt -X HQDEBLENOVO01 "$1"
-}
-
-api_get_ssh_localhost()
-{
-    api_get_ssh_all localhost "$1"
-}
-
 api_get_virsh_dhcp()
 {
     sudo virsh net-dhcp-leases default
