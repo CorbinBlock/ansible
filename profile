@@ -208,7 +208,6 @@ api_set_config()
     export DEBIAN_FRONTEND=noninteractive
     export EDITOR=/usr/bin/vim
     export PAGER=/usr/bin/less
-    export PROD="192.168.0.25"
     export LIBGL_ALWAYS_INDIRECT=1
     export DONT_PROMPT_WSL_INSTALL=1
     export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
@@ -376,6 +375,13 @@ api_set_rsync_nas_two()
 api_set_rsync_vm_prod()
 {
    api_get_ssh_prod "rsync --archive --inplace --partial --progress --verbose ~/.local/state/kvm/* dev:~/.local/share/hdd/kvm/"
+}
+
+api_set_secret()
+{
+    gunzip $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt.gz
+    cat $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
+    gzip $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
 }
 
 api_set_source_profile()
