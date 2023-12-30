@@ -132,7 +132,7 @@ api_set_setup()
     sudo su $USER -c "mkdir -p ~/.local/state/"
     sudo su $USER -c "mkdir -p ~/.local/share/tmp"
     sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
-    sudo usermod -G kvm,libvirt,audio $USER
+    sudo usermod -G kvm,libvirt,audio,sudo $USER
     sudo systemctl enable --now libvirtd
     sudo su $USER -c " . ~/.profile; api_set_ssh_create"
     sudo mkdir -p /etc/ansible/
