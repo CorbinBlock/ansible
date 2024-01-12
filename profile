@@ -154,10 +154,10 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
-    ssh -tt HQDEBDELL01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBACER01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBARM01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBASUS01 " . ~/.profile; api_set_setup"
+    ssh -tt HQDEBDELL01 " . ~/.profile; api-set_setup"
     ssh -tt HQDEBLENOVO01 " . ~/.profile; api_set_setup"
 }
 
