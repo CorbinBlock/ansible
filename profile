@@ -127,15 +127,15 @@ api_set_setup()
     echo "apt: Setup debian server. $(hostname)"
     sudo apt-get -y install chromium cockpit dos2unix git git-lfs gnome keepassxc neofetch openssh-server python3 python3-pip python3-venv rsync sudo tmux vim virt-manager wl-clipboard zsh
     sudo apt-get -y purge firefox-esr
-    # sudo su $USER -c "mkdir -p ~/.local/"
-    # sudo su $USER -c "mkdir -p ~/.local/bin/"
-    # sudo su $USER -c "mkdir -p ~/.local/share/"
-    # sudo su $USER -c "mkdir -p ~/.local/state/"
-    # sudo su $USER -c "mkdir -p ~/.local/share/tmp"
+    mkdir -p ~/.local/
+    mkdir -p ~/.local/bin/
+    mkdir -p ~/.local/share/
+    mkdir -p ~/.local/state/
+    mkdir -p ~/.local/share/tmp
     api_set_apt_upgrade
     sudo usermod -G kvm,libvirt,audio,sudo $USER
     sudo systemctl enable --now libvirtd
-    # sudo su $USER -c " . ~/.profile; api_set_ssh_create"
+    api_set_ssh_create
     # sudo mkdir -p /etc/ansible/
     cd ~/.local/bin
     git clone git@github.com:CorbinBlock/docs.git
