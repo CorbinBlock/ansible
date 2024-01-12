@@ -125,17 +125,17 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install openssh-server python3 python3-pip python3-venv rsync sudo tmux vim zsh
-    sudo su $USER -c "mkdir -p ~/.local/"
-    sudo su $USER -c "mkdir -p ~/.local/bin/"
-    sudo su $USER -c "mkdir -p ~/.local/share/"
-    sudo su $USER -c "mkdir -p ~/.local/state/"
-    sudo su $USER -c "mkdir -p ~/.local/share/tmp"
-    sudo su $USER -c " . ~/.profile; api_set_apt_upgrade"
+    sudo apt-get -y install cockpit dos2unix git git-lfs gnome keepassxc neofetch openssh-server python3 python3-pip python3-venv rsync sudo tmux vim virt-manager wl-clipboard zsh
+    # sudo su $USER -c "mkdir -p ~/.local/"
+    # sudo su $USER -c "mkdir -p ~/.local/bin/"
+    # sudo su $USER -c "mkdir -p ~/.local/share/"
+    # sudo su $USER -c "mkdir -p ~/.local/state/"
+    # sudo su $USER -c "mkdir -p ~/.local/share/tmp"
+    api_set_apt_upgrade
     sudo usermod -G kvm,libvirt,audio,sudo $USER
     sudo systemctl enable --now libvirtd
-    sudo su $USER -c " . ~/.profile; api_set_ssh_create"
-    sudo mkdir -p /etc/ansible/
+    # sudo su $USER -c " . ~/.profile; api_set_ssh_create"
+    # sudo mkdir -p /etc/ansible/
     cd ~/.local/bin
     git clone git@github.com:CorbinBlock/docs.git
     git clone git@github.com:CorbinBlock/ansible.git
@@ -143,8 +143,8 @@ api_set_setup()
     git pull --no-rebase
     cd ~/.local/bin/ansible/
     git pull --no-rebase
-    sudo cp ~/.local/bin/docs/data/ansible_hosts /etc/ansible/hosts
-    sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
+    # sudo cp ~/.local/bin/docs/data/ansible_hosts /etc/ansible/hosts
+    # sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
     cp ~/.local/bin/docs/data/.profile ~/.profile
     cp ~/.local/bin/docs/data/.zshrc ~/.zshrc
 }
@@ -153,8 +153,6 @@ api_set_setup()
 api_set_setup_all()
 {
     api_set_setup
-    ssh -tt HQDEBPROD01  " . ~/.profile; api_set_setup"
-    ssh -tt HQDEBDEV01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBDELL01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBACER01 " . ~/.profile; api_set_setup"
     ssh -tt HQDEBARM01 " . ~/.profile; api_set_setup"
@@ -380,7 +378,9 @@ api_set_rsync_vm_prod()
 api_set_secret()
 {
     gunzip $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt.gz
-    cat $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
+    cat $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt | wl-copy
+    sleep 30
+    echo "" | wl-copy
     gzip $XDG_CONFIG_HOME/keepassxc/.keepassxc.txt
 }
 
@@ -458,22 +458,6 @@ api_set_tmux_env()
     api_set_tmux_all htop
 }
 
-api_set_tmux_env_acer()
-{
-    api_set_tmux_session wifi
-    api_set_tmux_session ssh_tunnel
-    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp0s20f3; sudo dhclient -v wlp0s20f3; sleep 10; api_set_setup; api_set_setup_all"
-    api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 20; api_set_ssh_tunnel"
-}
-
-api_set_tmux_env_dell()
-{
-    api_set_tmux_session wifi
-    api_set_tmux_session ssh_tunnel
-    api_set_tmux_send wifi "sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlp2s0; sudo dhclient -v wlp2s0; sleep 10; api_set_setup; api_set_setup_all"
-    api_set_tmux_send ssh_tunnel " . ~/.profile; sleep 20; api_set_ssh_tunnel"
-}
-
 api_set_tmux_kill()
 {
     tmux kill-session -t $1
@@ -510,7 +494,9 @@ api_set_venv_create()
     fi
     python3 -m venv venv
     api_set_venv_activate_source
-    python3 -m pip install --upgrade ansible paramiko pip pyspark setuptools wheel
+    python3 -m pip install --upgrade pip
+    python3 -m pip install --upgrade wheel
+    python3 -m pip install --upgrade ansible paramiko pyspark setuptools
 }
 
 api_set_venv_activate()
@@ -559,7 +545,7 @@ api_set_virsh_install_windows11()
     api_get_virsh_list
     vm="KVMWIN11TEST01_20230210.qcow2"
     vm_size=300
-    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/kvm/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
+    sudo virt-install --name KVMWIN11TEST01 --description 'Windows' --ram 6000 --vcpus 4 --disk path=/home/$USER/.local/state/$VM,size=$VM_SIZE --os-variant win11 --network bridge=virbr0 --cdrom /home/$USER/.local/state/Win11_22H2_English_x64v1.iso --video virtio --features kvm_hidden=on,smm=on --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.secboot.fd --noautoconsole
 }
 
 api_set_virsh_start_network() 
