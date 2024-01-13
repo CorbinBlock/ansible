@@ -136,6 +136,7 @@ api_set_setup()
     sudo usermod -G kvm,libvirt,audio,sudo $USER
     sudo systemctl enable --now libvirtd
     api_set_ssh_create
+    api_set_setup_docker
     # sudo mkdir -p /etc/ansible/
     cd ~/.local/bin
     git clone git@github.com:CorbinBlock/docs.git
@@ -289,10 +290,10 @@ api_set_git_pull()
 api_set_git_push_ansible()
 {
     echo "git: Push ansible repo to main branch + Test on nodes"
-    cd ~/.local/bin/ansible/
-    cp ~/.local/share/docs/ansible/.profile ~/.local/share/docs/ansible/profile
-    cp ~/.local/share/docs/ansible/profile ~/.local/bin/ansible/
-    cp ~/.local/share/docs/ansible/apt_all.yml ~/.local/bin/ansible/
+    cd $XDG_BIN_HOME/docs
+    cp $XDG_BIN_HOME/docs/data/.profile $XDG_BIN_HOME/ansible/profile
+    api_set_git_push
+    cd $XDG_BIN_HOME/ansible
     api_set_git_push
 }
 
