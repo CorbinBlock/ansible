@@ -105,7 +105,7 @@ api_set_apt_install()
 api_set_setup()
 {
     echo "apt: Setup debian server. $(hostname)"
-    sudo apt-get -y install chromium cockpit cockpit-machines cockpit-storaged dos2unix git git-lfs gnome keepassxc neofetch openssh-server python3 python3-pip python3-venv rsync sudo tmux vim virt-manager wl-clipboard zsh
+    sudo apt-get -y install chromium cockpit cockpit-machines cockpit-networkmanager cockpit-storaged dos2unix git git-lfs gnome keepassxc neofetch openssh-server python3 python3-pip python3-venv rsync sudo tmux vim virt-manager wl-clipboard zsh
     sudo apt-get -y purge firefox-esr
     mkdir -p ~/.local/
     mkdir -p ~/.local/bin/
