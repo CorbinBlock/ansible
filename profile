@@ -16,17 +16,6 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-api_get_check_battery()
-{
-    upower -i `upower -e | grep 'BAT'`
-}
-
-api_get_ide()
-{
-    api_set_tmux_all ide
-    api_set_tmux_send "~/.local/bin/idea/bin/idea.sh"
-}
-
 api_get_report()
 {
      . ~/.profile
@@ -61,15 +50,6 @@ api_get_virsh_viewer_windows()
     api_get_virsh_list
     VM="KVMWINPROD02"
     api_get_ssh_dev " . ~/.profile; sudo virt-viewer --connect qemu:///system $VM"
-}
-
-api_get_x_secret()
-{
-    api_set_tmux_kill secret
-    api_set_tmux_session secret
-    api_set_tmux_send secret "bash"
-    api_set_tmux_send secret " . ~/.profile; ssh_dev"
-    api_set_tmux_send secret "secret $1"
 }
 
 api_set_apk_setup()
@@ -332,40 +312,6 @@ api_set_reboot()
     pkill firefox
     pkill keepassxc
     gnome-session-quit --reboot
-}
-
-api_set_rsync_git_prod()
-{
-    sudo cp /etc/hosts $XDG_DATA_HOME
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/hosts $XDG_DATA_HOME
-    sudo mv $XDG_DATA_HOME/hosts /etc
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/apt/sources.list $XDG_DATA_HOME
-    sudo mv $XDG_DATA_HOME/sources.list /etc/apt/
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/profile $XDG_DATA_HOME
-    sudo mv $XDG_DATA_HOME/profile /etc
-    sudo mkdir -p /etc/ansible
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:/etc/ansible/hosts $XDG_DATA_HOME/ansible_hosts
-    sudo mv $XDG_DATA_HOME/ansible_hosts /etc/ansible/hosts
-    ssh -p $PORT $USER@$DOMAIN " . ~/.profile; api_set_source_profile"
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/share/docs/ ~/.local/share/docs/
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.local/bin/ansible/ ~/.local/bin/ansible/
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.profile ~/.profile
-    rsync -e "ssh -p $PORT" -avP $USER@$DOMAIN:~/.zshrc ~/.zshrc
-}
-
-api_set_rsync_git_dev()
-{
-    rsync -avP prod:~/.local/share/dev/ ~/.local/share/dev/
-}
-
-api_set_rsync_git_dev_push()
-{
-    rsync -avP ~/.local/share/dev/ prod:~/.local/share/dev/
-}
-
-api_set_rsync_git_win()
-{
-    rsync -avP prod:~/.local/share/docs/ /c/Users/$USER/.local/share/docs/
 }
 
 api_set_rsync_nas_two()
