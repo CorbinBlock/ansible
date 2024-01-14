@@ -137,6 +137,7 @@ api_set_setup()
     sudo systemctl enable --now libvirtd
     api_set_ssh_create
     api_set_setup_docker
+    api_set_setup_jenkins
     # sudo mkdir -p /etc/ansible/
     cd ~/.local/bin
     git clone git@github.com:CorbinBlock/docs.git
