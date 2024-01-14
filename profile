@@ -147,8 +147,8 @@ api_set_setup()
     git pull --no-rebase
     # sudo cp ~/.local/bin/docs/data/ansible_hosts /etc/ansible/hosts
     # sudo cp ~/.local/bin/docs/data/sources.list /etc/apt/sources.list
-    cp ~/.local/bin/docs/data/.profile ~/.profile
-    cp ~/.local/bin/docs/data/.zshrc ~/.zshrc
+    cp ~/.local/bin/docs/archive/.profile ~/.profile
+    cp ~/.local/bin/docs/archive/.zshrc ~/.zshrc
 }
 
 
