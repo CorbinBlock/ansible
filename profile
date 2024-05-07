@@ -308,10 +308,9 @@ api_set_nas_setup()
 
 api_set_reboot()
 {
-    pkill chromium
-    pkill firefox
-    pkill keepassxc
-    gnome-session-quit --reboot
+    cd $XDG_BIN_HOME/docs; api_set_git_pull
+    cd $XDG_BIN_HOME/recordings; api_set_git_pull
+    sudo reboot
 }
 
 api_set_rsync_nas_two()
